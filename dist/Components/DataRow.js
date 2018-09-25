@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-export const DataRow = class DataRow extends Component {
+
+class DataRow extends Component {
   render() {
     return React.createElement("tr", {
       key: row.id
@@ -97,7 +98,8 @@ export const DataRow = class DataRow extends Component {
     }, button.name);
   }
 
-};
+}
+
 DataRow.propTypes = {
   row: PropTypes.object,
   buttons: PropTypes.array,
@@ -105,3 +107,4 @@ DataRow.propTypes = {
   checkboxChange: PropTypes.func,
   dataItemManipulator: PropTypes.func
 };
+export default DataRow;

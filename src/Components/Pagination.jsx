@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export const Pagination = class Pagination extends Component {
+class Pagination extends Component {
 
     render() {
         const pageLinks = [];
@@ -61,3 +61,4 @@ DataRow.propTypes = {
     changePage: PropTypes.func,
 };
 
+export default Pagination;

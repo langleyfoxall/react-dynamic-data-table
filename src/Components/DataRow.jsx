@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
-export const DataRow = class DataRow extends Component {
+class DataRow extends Component {
 
     render() {
 
@@ -120,3 +119,4 @@ DataRow.propTypes = {
     dataItemManipulator: PropTypes.func,
 };
 
+export default DataRow;
