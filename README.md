@@ -15,6 +15,12 @@ npm install @langleyfoxall/react-dynamic-data-table
 yarn add @langleyfoxall/react-dynamic-data-table
 ```
 
+Remember to import the `DynamicDataTable` component where it is needed.
+
+```JSX
+import DynamicDataTable from "@langleyfoxall/react-dynamic-data-table";
+```
+
 ## Usage
 
 At its most basic, you can create a new `<DynamicDataTable />` with just the `rows` prop.
