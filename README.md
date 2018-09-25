@@ -1,5 +1,7 @@
 # React Dynamic Data Table
 
+[![npm version](https://badge.fury.io/js/%40langleyfoxall%2Freact-dynamic-data-table.svg)](https://badge.fury.io/js/%40langleyfoxall%2Freact-dynamic-data-table)
+
 This package provides a React Dynamic Data Table component that supports sortable columns, 
 pagination, field mapping, data manipulation, and more.
 
