@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataRow from "./Components/DataRow";
+import Pagination from "./Components/Pagination";
 
 class DynamicDataTable extends Component {
     constructor(props) {
@@ -283,59 +284,6 @@ class DynamicDataTable extends Component {
         this.setState({ checkedRowIds });
     }
 
-    renderButtons(row) {
-
-        if (!this.props.buttons.length) {
-            return ( <td></td> );
-        }
-
-        if (this.props.buttons.length===1) {
-            return (
-                <td>
-                    <button type="button" className="btn btn-primary"
-                            onClick={() => { this.props.buttons[0].callback(row) }}>
-                        { this.props.buttons[0].name }
-                    </button>
-                </td>
-            )
-        }
-
-        return (
-            <td>
-                <div className="btn-group">
-                    <button type="button" className="btn btn-primary"
-                            onClick={() => { this.props.buttons[0].callback(row) }}>
-                        { this.props.buttons[0].name }
-                    </button>
-                    <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span className="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        { this.props.buttons.map((button, index) => this.renderButton(button, index, row))}
-                    </div>
-                </div>
-            </td>
-        );
-    }
-
-    renderButton(button, index, row) {
-
-        if (index===0) {
-            return;
-        }
-
-        return (
-            <div
-                style={{cursor: 'pointer'}}
-                key={`button_${button.name}`}
-                className="dropdown-item"
-                onClick={() => { button.callback(row) }}>
-                { button.name }
-            </div>
-        )
-    }
-
     renderLoadingTable() {
         return (
             <div className="table-responsive">
@@ -397,52 +345,15 @@ class DynamicDataTable extends Component {
     }
 
     renderPagination() {
-        const pageLinks = [];
         const props = this.props;
-        const currentPage = props.currentPage;
-        const totalPages = props.totalPages;
-
-        if (totalPages <= 1) {
-            return;
-        }
-
-        for (let i = 1; i <= totalPages; i++) {
-            pageLinks.push(
-                <li key={`page_${i}`} className={`page-item ${currentPage === i ? 'active' : ''}`}>
-                    <button type="button" className="page-link" onClick={() => this.changePage(i)}>{ i }</button>
-                </li>,
-            );
-        }
 
         return (
-            <nav aria-label="Page navigation">
-                <ul className="pagination">
-                    <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
-                        <button type="button" className="page-link" onClick={() => this.previousPage()}>Previous</button>
-                    </li>
-                    { pageLinks }
-                    <li className={`page-item ${currentPage >= totalPages ? 'disabled' : ''}`}>
-                        <button type="button" className="page-link" onClick={() => this.nextPage()}>Next</button>
-                    </li>
-                </ul>
-            </nav>
+            <Pagination
+                currentPage={props.currentPage}
+                totalPages={props.totalPages}
+                changePage={(page) => props.changePage(page)}
+            />
         );
-    }
-
-    changePage(page) {
-        this.props.changePage(page);
-    }
-
-    previousPage() {
-        if (this.props.currentPage > 1) {
-            this.changePage(this.props.currentPage - 1);
-        }
-    }
-
-    nextPage() {
-        if (this.props.currentPage < this.props.totalPages) {
-            this.changePage(this.props.currentPage + 1);
-        }
     }
 }
 

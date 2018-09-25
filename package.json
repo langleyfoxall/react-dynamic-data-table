@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-data-table",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Re-usable data table for React with sortable columns, pagination and more.",
   "main": "index.js",
   "scripts": {

@@ -55,6 +55,60 @@ class DataRow extends Component {
         );
     }
 
+    renderButtons(row) {
+        const buttons = this.props.buttons;
+
+        if (!buttons.length) {
+            return ( <td></td> );
+        }
+
+        if (buttons.length===1) {
+            return (
+                <td>
+                    <button type="button" className="btn btn-primary"
+                            onClick={() => { buttons[0].callback(row) }}>
+                        { buttons[0].name }
+                    </button>
+                </td>
+            )
+        }
+
+        return (
+            <td>
+                <div className="btn-group">
+                    <button type="button" className="btn btn-primary"
+                            onClick={() => { buttons[0].callback(row) }}>
+                        { buttons[0].name }
+                    </button>
+                    <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span className="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        { buttons.map((button, index) => this.renderButton(button, index, row))}
+                    </div>
+                </div>
+            </td>
+        );
+    }
+
+    renderButton(button, index, row) {
+
+        if (index===0) {
+            return;
+        }
+
+        return (
+            <div
+                style={{cursor: 'pointer'}}
+                key={`button_${button.name}`}
+                className="dropdown-item"
+                onClick={() => { button.callback(row) }}>
+                { button.name }
+            </div>
+        )
+    }
+
 }
 
 DataRow.propTypes = {
