@@ -55,7 +55,7 @@ class Pagination extends Component {
 }
 
 
-DataRow.propTypes = {
+Pagination.propTypes = {
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
     changePage: PropTypes.func,
