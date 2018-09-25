@@ -116,11 +116,11 @@ headings, you can use the `changeOrder` prop. This is shown in the example below
 
 ```JSX
 changeOrder(field, direction) {
-        this.setState({ orderByField: field, orderByDirection: direction }, () => {
-            const users = /* Get sorted data from API endpoint */
-            this.setState({ users: users });
-        });
-    }
+    this.setState({ orderByField: field, orderByDirection: direction }, () => {
+        const users = /* Get sorted data from API endpoint */
+        this.setState({ users: users });
+    });
+}
 ```
 
 The `changeOrder` prop expects a callable. This callable should:
