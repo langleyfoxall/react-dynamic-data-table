@@ -75,10 +75,10 @@ The `fieldMap` prop expects an object which maps the `rows` keys to alternative 
 ### Ordering data
 
 The React Dynamic Data Table will display the `rows` in the order they are provided 
-in the array. However, it is possible to automatically to show in the column header
-that the data has been ordered.
+in the array. However, it is possible to show, in the column header, that the data 
+has been sorted.
 
-In the example below, the users name column header will show a down arrow indicating 
+In the example below, the name column header will show a down arrow indicating 
 that the data has been sorted by name (ascending).
 
 ```JSX
