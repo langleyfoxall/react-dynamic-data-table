@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 class DataRow extends Component {
 
     render() {
+        const props = this.props;
+        const row = props.row;
 
         return (
             <tr key={row.id}>
                 { this.renderCheckboxCell(row.id) }
-                { this.props.fields.map(field => this.renderCell(field, row)) }
+                { props.fields.map(field => this.renderCell(field, row)) }
                 { this.renderButtons(row) }
             </tr>
         );
