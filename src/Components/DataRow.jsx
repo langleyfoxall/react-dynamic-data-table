@@ -120,4 +120,4 @@ DataRow.propTypes = {
 };
 
 
-export default DynamicDataTable;
+export default DataRow;
