@@ -1,11 +1,11 @@
 {
   "name": "@langleyfoxall/react-dynamic-data-table",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Re-usable data table for React with sortable columns, pagination and more.",
-  "main": "dist/bundle.js",
+  "main": "dist/DynamicDataTable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ./node_modules/@babel/cli/bin/babel src/ --out-file dist/bundle.js",
+    "build": "node ./node_modules/@babel/cli/bin/babel src/ --out-dir dist/",
     "prepublishOnly": "npm run build"
   },
   "repository": {

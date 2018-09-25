@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import DynamicDataTable from "../DynamicDataTable";
 
-class DataRow extends Component {
+export const DataRow = class DataRow extends Component {
 
     render() {
 
@@ -119,5 +118,3 @@ DataRow.propTypes = {
     dataItemManipulator: PropTypes.func,
 };
 
-
-export default DataRow;

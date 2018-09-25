@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import DataRow from "./Components/DataRow";
-import Pagination from "./Components/Pagination";
+import {DataRow} from "./Components/DataRow";
+import {Pagination} from "./Components/Pagination";
 
 class DynamicDataTable extends Component {
     constructor(props) {
