@@ -8,7 +8,7 @@ class DataRow extends Component {
         const row = props.row;
 
         return (
-            <tr key={row.id}>
+            <tr>
                 { this.renderCheckboxCell(row.id) }
                 { props.fields.map(field => this.renderCell(field, row)) }
                 { this.renderButtons(row) }

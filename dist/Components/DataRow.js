@@ -5,9 +5,7 @@ class DataRow extends Component {
   render() {
     const props = this.props;
     const row = props.row;
-    return React.createElement("tr", {
-      key: row.id
-    }, this.renderCheckboxCell(row.id), props.fields.map(field => this.renderCell(field, row)), this.renderButtons(row));
+    return React.createElement("tr", null, this.renderCheckboxCell(row.id), props.fields.map(field => this.renderCell(field, row)), this.renderButtons(row));
   }
 
   renderCheckboxCell(value) {

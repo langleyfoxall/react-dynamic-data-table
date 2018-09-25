@@ -9,7 +9,7 @@ class Pagination extends Component {
     const totalPages = props.totalPages;
 
     if (totalPages <= 1) {
-      return;
+      return null;
     }
 
     for (let i = 1; i <= totalPages; i++) {

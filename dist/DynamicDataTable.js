@@ -107,6 +107,7 @@ class DynamicDataTable extends Component {
 
   renderRow(row) {
     return React.createElement(DataRow, {
+      key: row.id,
       row: row,
       buttons: this.props.buttons,
       fields: this.getFields(),
