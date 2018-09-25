@@ -15,6 +15,12 @@ npm install @langleyfoxall/react-dynamic-data-table
 yarn add @langleyfoxall/react-dynamic-data-table
 ```
 
+Remember to import the `DynamicDataTable` component where it is needed.
+
+```JSX
+import DynamicDataTable from "@langleyfoxall/react-dynamic-data-table";
+```
+
 ## Usage
 
 At its most basic, you can create a new `<DynamicDataTable />` with just the `rows` prop.
@@ -70,10 +76,10 @@ The `fieldMap` prop expects an object which maps the `rows` keys to alternative 
 ### Ordering data
 
 The React Dynamic Data Table will display the `rows` in the order they are provided 
-in the array. However, it is possible to automatically to show in the column header
-that the data has been ordered.
+in the array. However, it is possible to show, in the column header, that the data 
+has been sorted.
 
-In the example below, the users name column header will show a down arrow indicating 
+In the example below, the name column header will show a down arrow indicating 
 that the data has been sorted by name (ascending).
 
 ```JSX
@@ -111,11 +117,11 @@ headings, you can use the `changeOrder` prop. This is shown in the example below
 
 ```JSX
 changeOrder(field, direction) {
-        this.setState({ orderByField: field, orderByDirection: direction }, () => {
-            const users = /* Get sorted data from API endpoint */
-            this.setState({ users: users });
-        });
-    }
+    this.setState({ orderByField: field, orderByDirection: direction }, () => {
+        const users = /* Get sorted data from API endpoint */
+        this.setState({ users: users });
+    });
+}
 ```
 
 The `changeOrder` prop expects a callable. This callable should:
