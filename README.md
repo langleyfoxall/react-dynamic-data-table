@@ -51,8 +51,9 @@ The `excludeFields` prop expects an array of strings that represent the fields t
 
 ### Mapping fields
 
-By default, React Dynamic Data Table create the table headers based on the field name
-with underscores replaced with spaces. You can override this behaviour with a field map.
+By default, React Dynamic Data Table creates table headers based on the field name,
+with underscores replaced with spaces and each word's first letter converted to uppercase.
+You can override this behaviour with a field map.
 
 In the example below, you can render the `email` field as 'Email Address'.
 

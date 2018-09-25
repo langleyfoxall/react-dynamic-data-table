@@ -55,7 +55,9 @@ class DynamicDataTable extends Component {
         }
 
         if (!exists) {
-          const label = rowFieldName.replace(new RegExp('_', 'g'), ' ').trim();
+          const label = rowFieldName.replace(new RegExp('_', 'g'), ' ').replace(/^(.)|\s+(.)/g, function ($1) {
+            return $1.toUpperCase();
+          }).trim();
           fields.push({
             name: rowFieldName,
             label
