@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 
 export const DataRow = class DataRow extends Component {
 

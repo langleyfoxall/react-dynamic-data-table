@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 export const Pagination = class Pagination extends Component {
   render() {
     const pageLinks = [];

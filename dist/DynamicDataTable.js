@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { DataRow } from "./Components/DataRow";
 import { Pagination } from "./Components/Pagination";
+import PropTypes from 'prop-types';
 
 class DynamicDataTable extends Component {
   constructor(props) {
