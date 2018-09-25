@@ -107,6 +107,7 @@ DataRow.propTypes = {
   buttons: PropTypes.array,
   checkboxIsChecked: PropTypes.func,
   checkboxChange: PropTypes.func,
-  dataItemManipulator: PropTypes.func
+  dataItemManipulator: PropTypes.func,
+  renderCheckboxes: PropTypes.bool
 };
 export default DataRow;

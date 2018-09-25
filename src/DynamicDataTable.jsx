@@ -132,6 +132,7 @@ class DynamicDataTable extends Component {
                 checkboxIsChecked={(value) => this.checkboxIsChecked(value)}
                 checkboxChange={(e) => this.checkboxChange(e)}
                 dataItemManipulator={(field, value) => this.props.dataItemManipulator(field, value)}
+                renderCheckboxes={this.props.renderCheckboxes}
             />
         );
     }
