@@ -9,6 +9,9 @@ You can install this package with either `npm` or `yarn` as shown below.
 
 ```bash
 npm install @langleyfoxall/react-dynamic-data-table
+```
+
+```bash
 yarn add @langleyfoxall/react-dynamic-data-table
 ```
 
@@ -114,7 +117,7 @@ changeOrder(field, direction) {
     }
 ```
 
-The `changeOrder` expects a callable. This callable should:
+The `changeOrder` prop expects a callable. This callable should:
 
 1. Change the `orderByField` and `orderByDirection` props, based on the passed `field` 
 and `direction` parameters respectively.
