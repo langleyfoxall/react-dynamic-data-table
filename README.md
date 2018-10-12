@@ -264,8 +264,27 @@ An example of show to use bulk actions is shown below.
 
 ### Loading message & indicator
 
-TODO
+By default, the React Dynamic Data Table will not show indication that it is
+loading. On slow connections, this may make the table appear unresponsive or 
+sluggish when initialing loading, changing pages, re-ordering, and so on.
+
+If you wish you can specify a `loadingMessage` prop when you are loading in
+your data, or performing other operations. This prop expects a string, which 
+should contain a message when loading, such as `Loading...`. When loading is 
+completed, this prop must be reset to an empty string in order to ensure
+the data table is displayed.
+
+Optionally, you can specify a `loadingComponent` prop. Whenever the 
+`loadingMessage` prop is specified, the component passed into the 
+`loadingComponent` prop will be rendered above it.
 
 ### Error message
 
-TODO
+In the case that something goes wrong, such as data failing to load, you 
+can display and error message in place of the normal React Dynamic
+Data Table output.
+
+In order to display an error message, you just need to set the optional
+`errorMessage` prop. This prop expects a string such as `An error has occurred
+while loading user data.`. If the error is resolved, this prop must be reset 
+to an empty string in order to ensure the data table is displayed.
