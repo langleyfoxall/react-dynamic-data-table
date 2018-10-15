@@ -135,24 +135,156 @@ and `direction` parameters respectively.
 
 ### Pagination
 
-TODO
+Making pagination work with React Dynamic Data Table requires three extra
+props. These are the `currentPage`, `totalPages` and `changePage` props. Once
+these props are set correctly, a Bootstrap style pagination will be displayed 
+below the table.
+
+The `currentPage` prop expects an integer representing the current page number
+(one or above).
+
+The `totalPages` prop expects an integer representing the total number of
+pages in the data set (one or above). Pagination will only be shown if the 
+total number of pages is greater than one.
+
+The `changePage` props expect a callable with a `page` argument, indicating the
+new page number to load. This callable should:
+
+1. Load a new page of data into the `rows` prop based on the passed `page` 
+argument.
+2. Set the `currentPage` prop to be equal to the passed `page` argument. 
+
+A example of this is shown below:
+
+```JSX
+// this.state.currentPage = 1;
+// this.state.totalPages = 5;
+
+<DynamicDataTable
+        rows={this.state.users}
+        currentPage={this.state.currentPage}
+        totalPages={this.state.totalPages}
+        changePage={page => this.changePage(page)}
+    />
+```
+
+```JSX
+changePage(page) {
+    const users = /* Get page of data from API endpoint */
+    this.setState({ users: users, currentPage: page });
+}
+```
 
 ### Row buttons
 
-TODO
+Row buttons appear on the right hand side of every row in the React Dynamic Data 
+Table. By default, a 'View' button is provided, which simply links the user to
+the current URL with the row's `id` appended.
+
+You can completely override the row buttons that are displayed by provided a
+`buttons` prop. This prop expects an array of objects, each containing a `name`
+and `callback`.
+
+The `name` is string, such as 'View', 'Edit', 'Delete', etc.
+
+The `callback` is a callable with a single argument. The argument will
+contain an object representing the data of the row on which the button is 
+situated. 
+
+An example of setting custom row buttons is shown below.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    buttons={[
+        {
+            name: 'Edit',
+            callback: (user) => {
+                // Show edit user view...
+            }
+        },
+        {
+            name: 'Delete',
+            callback: (user) => {
+                // Delete user...
+            }
+        }
+    ]}
+    />
+```
 
 ### Bulk select checkboxes
 
-TODO
+If you wish to allow users to bulk select users in a React Dynamic Data Table,
+you can specify the `renderCheckboxes` prop. This will render a series of 
+checkboxes against each row, on the left side of the table.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    renderCheckboxes
+    />
+```
+
+Bulk select checkboxes are usually combined with bulk actions to perform
+actions on one or more rows at once.
 
 ### Bulk actions
 
-TODO
+Bulk actions, when combined with bulk select checkboxes allow you perform
+actions of multiple rows at once. When in use, a menu will be rendered
+in the top right of the table allowing your users to choose a bulk action
+that will be applied to the selected rows.
+
+To use bulk actions in your React Dynamic Data Table, you must specify the
+`actions` props. This prop expects an array of objects, each containing a `name` 
+and `callback`.
+
+The `name` is string, such as 'Delete user(s)', 'Duplicate user(s)' etc.
+
+The `callback` is a callable with a single argument. The argument will
+contain an array of `id` properties, from all selected rows. 
+
+An example of show to use bulk actions is shown below.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    renderCheckboxes
+    actions={[
+        {
+            name: 'Delete user(s)',
+            callback: (ids) => { 
+                // Delete users...
+            },
+        },
+    ]}
+/>
+```
 
 ### Loading message & indicator
 
-TODO
+By default, the React Dynamic Data Table will not show indication that it is
+loading. On slow connections, this may make the table appear unresponsive or 
+sluggish when initialing loading, changing pages, re-ordering, and so on.
+
+If you wish you can specify a `loadingMessage` prop when you are loading in
+your data, or performing other operations. This prop expects a string, which 
+should contain a message when loading, such as `Loading...`. When loading is 
+completed, this prop must be reset to an empty string in order to ensure
+the data table is displayed.
+
+Optionally, you can specify a `loadingComponent` prop. Whenever the 
+`loadingMessage` prop is specified, the component passed into the 
+`loadingComponent` prop will be rendered above it.
 
 ### Error message
 
-TODO
+In the case that something goes wrong, such as data failing to load, you 
+can display and error message in place of the normal React Dynamic
+Data Table output.
+
+In order to display an error message, you just need to set the optional
+`errorMessage` prop. This prop expects a string such as `An error has occurred
+while loading user data.`. If the error is resolved, this prop must be reset 
+to an empty string in order to ensure the data table is displayed.
