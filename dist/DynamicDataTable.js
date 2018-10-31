@@ -142,7 +142,7 @@ class DynamicDataTable extends Component {
     const state = this.state;
 
     if (!props.renderCheckboxes || !this.props.actions.length) {
-      return;
+      return React.createElement("th", null);
     }
 
     return React.createElement("th", null, React.createElement("div", {
