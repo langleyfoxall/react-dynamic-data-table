@@ -165,7 +165,9 @@ class DynamicDataTable extends Component {
         const state = this.state;
 
         if (!props.renderCheckboxes || !this.props.actions.length) {
-            return;
+            return (
+                <th> </th>
+            );
         }
 
         return (
