@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DynamicDataTable from "./DynamicDataTable";
+import {AxiosInstance as axios} from "axios";
 
 class AjaxDynamicDataTable extends Component {
 
@@ -32,25 +34,31 @@ class AjaxDynamicDataTable extends Component {
                 orderByDirection={state.orderByDirection}
                 changePage={page => this.changePage(page)}
                 changeOrder={(field, direction) => this.changeOrder(field, direction)}
+                {...this.props}
             />
         );
     }
 
     loadPage(page) {
-        axois.get(this.props.apiUrl, {
+
+        const state = this.state;
+        const axios = require('axios');
+
+        axios.get(this.props.apiUrl, {
 
             page: page,
-            orderByField: this.state.api.orderByField,
-            orderByDirection: this.state.api.orderByDirection,
+            orderByField: state.orderByField,
+            orderByDirection: state.orderByDirection,
 
         }).then((response) => {
 
             const data = response.data.data;
-            const meta = response.data.meta;
+            const rows = data.data;
+
             this.setState({
-                rows: data,
-                currentPage: meta.current_page,
-                totalPages: meta.last_page,
+                rows: rows,
+                currentPage: data.current_page,
+                totalPages: data.last_page,
             });
 
         });
@@ -71,7 +79,7 @@ class AjaxDynamicDataTable extends Component {
 }
 
 DynamicDataTable.propTypes = {
-    apiUrl: PropTypes.apiUrl,
+    apiUrl: PropTypes.string,
 };
 
 DynamicDataTable.defaultProps = {
