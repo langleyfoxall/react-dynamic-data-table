@@ -3,7 +3,6 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DynamicDataTable from "./DynamicDataTable";
-import { AxiosInstance as axios } from "axios";
 
 class AjaxDynamicDataTable extends Component {
   constructor(props) {
@@ -69,10 +68,10 @@ class AjaxDynamicDataTable extends Component {
 
 }
 
-DynamicDataTable.propTypes = {
+AjaxDynamicDataTable.propTypes = {
   apiUrl: PropTypes.string
 };
-DynamicDataTable.defaultProps = {
+AjaxDynamicDataTable.defaultProps = {
   apiUrl: null
 };
 export default AjaxDynamicDataTable;

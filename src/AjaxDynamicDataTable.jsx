@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DynamicDataTable from "./DynamicDataTable";
-import {AxiosInstance as axios} from "axios";
 
 class AjaxDynamicDataTable extends Component {
 
@@ -78,11 +77,11 @@ class AjaxDynamicDataTable extends Component {
 
 }
 
-DynamicDataTable.propTypes = {
+AjaxDynamicDataTable.propTypes = {
     apiUrl: PropTypes.string,
 };
 
-DynamicDataTable.defaultProps = {
+AjaxDynamicDataTable.defaultProps = {
     apiUrl: null,
 };
 
