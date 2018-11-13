@@ -14,7 +14,7 @@ class AjaxDynamicDataTable extends Component {
   }
 
   componentDidMount() {
-    this.loadPage();
+    this.loadPage(1);
   }
 
   render() {
