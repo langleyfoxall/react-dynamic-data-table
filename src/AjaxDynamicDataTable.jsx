@@ -44,11 +44,11 @@ class AjaxDynamicDataTable extends Component {
         const axios = require('axios');
 
         axios.get(this.props.apiUrl, {
-
-            page: page,
-            orderByField: state.orderByField,
-            orderByDirection: state.orderByDirection,
-
+            params: {
+                page: page,
+                orderByField: state.orderByField,
+                orderByDirection: state.orderByDirection,
+            },
         }).then((response) => {
 
             const data = response.data.data;
