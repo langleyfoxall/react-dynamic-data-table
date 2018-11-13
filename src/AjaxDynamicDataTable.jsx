@@ -82,7 +82,6 @@ AjaxDynamicDataTable.propTypes = {
 };
 
 AjaxDynamicDataTable.defaultProps = {
-    apiUrl: null,
 };
 
 export default AjaxDynamicDataTable;
