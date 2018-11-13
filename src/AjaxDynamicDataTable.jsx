@@ -5,8 +5,8 @@ import {AxiosInstance as axios} from "axios";
 
 class AjaxDynamicDataTable extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             rows: [],
@@ -15,6 +15,9 @@ class AjaxDynamicDataTable extends Component {
             orderByField: null,
             orderByDirection: null,
         };
+
+        this.changePage = this.changePage.bind(this);
+        this.changeOrder = this.changeOrder.bind(this);
     }
 
     componentDidMount() {
@@ -32,8 +35,8 @@ class AjaxDynamicDataTable extends Component {
                 totalPages={totalPages}
                 orderByField={orderByField}
                 orderByDirection={orderByDirection}
-                changePage={this.changePage.bind(this)}
-                changeOrder={this.changeOrder.bind(this)}
+                changePage={this.changePage}
+                changeOrder={this.changeOrder}
                 {...this.props}
             />
         );
