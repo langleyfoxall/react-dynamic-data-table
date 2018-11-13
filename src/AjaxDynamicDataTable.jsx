@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DynamicDataTable from "./DynamicDataTable";
+import {AxiosInstance as axios} from "axios";
 
 class AjaxDynamicDataTable extends Component {
 
@@ -44,11 +45,13 @@ class AjaxDynamicDataTable extends Component {
         const axios = require('axios');
 
         axios.get(this.props.apiUrl, {
+
             params: {
                 page: page,
                 orderByField: state.orderByField,
                 orderByDirection: state.orderByDirection,
-            },
+            }
+
         }).then((response) => {
 
             const data = response.data.data;
