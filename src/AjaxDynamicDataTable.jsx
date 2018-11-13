@@ -23,17 +23,17 @@ class AjaxDynamicDataTable extends Component {
 
     render() {
 
-        const state = this.state;
+        const {rows, currentPage, totalPages, orderByField, orderByDirection} = this.state;
 
         return (
             <DynamicDataTable
-                rows={state.rows}
-                currentPage={state.currentPage}
-                totalPages={state.totalPages}
-                orderByField={state.orderByField}
-                orderByDirection={state.orderByDirection}
-                changePage={page => this.changePage(page)}
-                changeOrder={(field, direction) => this.changeOrder(field, direction)}
+                rows={rows}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                orderByField={orderByField}
+                orderByDirection={orderByDirection}
+                changePage={this.changePage.bind(this)}
+                changeOrder={this.changeOrder.bind(this)}
                 {...this.props}
             />
         );
@@ -41,26 +41,26 @@ class AjaxDynamicDataTable extends Component {
 
     loadPage(page) {
 
-        const state = this.state;
+        const {orderByField, orderByDirection} = this.state;
         const axios = require('axios');
 
         axios.get(this.props.apiUrl, {
 
             params: {
                 page: page,
-                orderByField: state.orderByField,
-                orderByDirection: state.orderByDirection,
+                orderByField: orderByField,
+                orderByDirection: orderByDirection,
             }
 
         }).then((response) => {
 
-            const data = response.data.data;
-            const rows = data.data;
+            const {current_page, last_page} = response.data.data;
+            const rows = response.data.data.data;
 
             this.setState({
                 rows: rows,
-                currentPage: data.current_page,
-                totalPages: data.last_page,
+                currentPage: current_page,
+                totalPages: last_page,
             });
 
         });
