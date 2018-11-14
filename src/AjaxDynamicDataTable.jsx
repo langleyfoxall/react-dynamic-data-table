@@ -49,22 +49,14 @@ class AjaxDynamicDataTable extends Component {
 
         axios.get(this.props.apiUrl, {
 
-            params: {
-                page: page,
-                orderByField: orderByField,
-                orderByDirection: orderByDirection,
-            }
+            params: { page, orderByField, orderByDirection }
 
         }).then((response) => {
 
             const {current_page, last_page} = response.data.data;
             const rows = response.data.data.data;
 
-            this.setState({
-                rows: rows,
-                currentPage: current_page,
-                totalPages: last_page,
-            });
+            this.setState({ rows, currentPage: current_page, totalPages: last_page });
 
         });
     }
@@ -85,9 +77,6 @@ class AjaxDynamicDataTable extends Component {
 
 AjaxDynamicDataTable.propTypes = {
     apiUrl: PropTypes.string,
-};
-
-AjaxDynamicDataTable.defaultProps = {
 };
 
 export default AjaxDynamicDataTable;
