@@ -3,7 +3,6 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DynamicDataTable from "./DynamicDataTable";
-import { AxiosInstance as axios } from "axios";
 
 class AjaxDynamicDataTable extends Component {
   constructor() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import DataRow from "./Components/DataRow";
 import Pagination from "./Components/Pagination";
 
@@ -9,6 +10,7 @@ class DynamicDataTable extends Component {
     this.state = {
       checkedRowIds: []
     };
+    this.className = this.className.bind(this);
   }
 
   componentWillUpdate(nextProps) {
@@ -17,6 +19,15 @@ class DynamicDataTable extends Component {
         checkedRowIds: []
       });
     }
+  }
+
+  className() {
+    const {
+      onClick
+    } = this.props;
+    return classNames(['table', 'table-striped', {
+      'table-hover': !!onClick
+    }]);
   }
 
   getFields() {
@@ -103,20 +114,27 @@ class DynamicDataTable extends Component {
     return React.createElement("div", null, React.createElement("div", {
       className: "table-responsive"
     }, React.createElement("table", {
-      className: "table table-striped"
+      className: this.classNames()
     }, React.createElement("thead", null, React.createElement("tr", null, this.renderCheckboxCell('all'), fields.map(field => this.renderHeader(field)), this.renderActionsCell())), React.createElement("tbody", null, rows.map(row => this.renderRow(row))))), this.renderPagination());
   }
 
   renderRow(row) {
+    const {
+      onClick,
+      buttons,
+      renderCheckBoxes,
+      dataItemManipulator
+    } = this.props;
     return React.createElement(DataRow, {
       key: row.id,
       row: row,
-      buttons: this.props.buttons,
+      onClick: onClick,
+      buttons: buttons,
       fields: this.getFields(),
       checkboxIsChecked: value => this.checkboxIsChecked(value),
       checkboxChange: e => this.checkboxChange(e),
-      dataItemManipulator: (field, value) => this.props.dataItemManipulator(field, value),
-      renderCheckboxes: this.props.renderCheckboxes
+      dataItemManipulator: (field, value) => dataItemManipulator(field, value),
+      renderCheckboxes: renderCheckBoxes
     });
   }
 
