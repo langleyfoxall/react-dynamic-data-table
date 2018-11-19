@@ -114,7 +114,7 @@ class DynamicDataTable extends Component {
     return React.createElement("div", null, React.createElement("div", {
       className: "table-responsive"
     }, React.createElement("table", {
-      className: this.classNames()
+      className: this.className()
     }, React.createElement("thead", null, React.createElement("tr", null, this.renderCheckboxCell('all'), fields.map(field => this.renderHeader(field)), this.renderActionsCell())), React.createElement("tbody", null, rows.map(row => this.renderRow(row))))), this.renderPagination());
   }
 

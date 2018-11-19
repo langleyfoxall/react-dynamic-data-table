@@ -123,7 +123,7 @@ class DynamicDataTable extends Component {
         return (
             <div>
                 <div className="table-responsive">
-                    <table className={this.classNames()}>
+                    <table className={this.className()}>
                         <thead>
                             <tr>
                                 { this.renderCheckboxCell('all') }
