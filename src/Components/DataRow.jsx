@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 class DataRow extends Component {
 
     handleOnClick(row) {
+        const { onClick } = this.props;
+
         if (!!onClick) {
             return onClick(row);
         }
@@ -13,7 +15,7 @@ class DataRow extends Component {
         const { row, fields } = this.props;
 
         return (
-            <tr onClick={() => handleOnClick(row)}>
+            <tr onClick={() => this.handleOnClick(row)}>
                 { this.renderCheckboxCell(row.id) }
                 { fields.map(field => this.renderCell(field, row)) }
                 { this.renderButtons(row) }
