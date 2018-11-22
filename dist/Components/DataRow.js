@@ -50,7 +50,9 @@ class DataRow extends Component {
     }
 
     if (buttons.length === 1) {
-      return React.createElement("td", null, React.createElement("button", {
+      return React.createElement("td", {
+        className: "rddt-action-cell"
+      }, React.createElement("button", {
         type: "button",
         className: "btn btn-primary",
         onClick: () => {
@@ -59,7 +61,9 @@ class DataRow extends Component {
       }, buttons[0].name));
     }
 
-    return React.createElement("td", null, React.createElement("div", {
+    return React.createElement("td", {
+      className: "rddt-action-cell"
+    }, React.createElement("div", {
       className: "btn-group"
     }, React.createElement("button", {
       type: "button",
