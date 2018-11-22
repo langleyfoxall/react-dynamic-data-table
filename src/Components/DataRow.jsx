@@ -76,7 +76,7 @@ class DataRow extends Component {
         }
 
         return (
-            <td className="action-cell">
+            <td className="rddt-action-cell">
                 <div className="btn-group">
                     <button type="button" className="btn btn-primary"
                             onClick={() => { buttons[0].callback(row) }}>
