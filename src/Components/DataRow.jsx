@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 
 class DataRow extends Component {
 
+    handleOnClick(row) {
+        const { onClick } = this.props;
+
+        if (!!onClick) {
+            return onClick(row);
+        }
+    }
+
     render() {
-        const props = this.props;
-        const row = props.row;
+        const { row, fields } = this.props;
 
         return (
-            <tr>
+            <tr onClick={() => this.handleOnClick(row)}>
                 { this.renderCheckboxCell(row.id) }
-                { props.fields.map(field => this.renderCell(field, row)) }
+                { fields.map(field => this.renderCell(field, row)) }
                 { this.renderButtons(row) }
             </tr>
         );
@@ -119,7 +126,8 @@ DataRow.propTypes = {
     checkboxIsChecked: PropTypes.func,
     checkboxChange: PropTypes.func,
     dataItemManipulator: PropTypes.func,
-    renderCheckboxes: PropTypes.bool
+    renderCheckboxes: PropTypes.bool,
+    onClick: PropTypes.func
 };
 
 export default DataRow;

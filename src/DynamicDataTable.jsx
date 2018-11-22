@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 import DataRow from "./Components/DataRow";
 import Pagination from "./Components/Pagination";
 
@@ -10,6 +12,8 @@ class DynamicDataTable extends Component {
         this.state = {
             checkedRowIds: [],
         };
+
+        this.className = this.className.bind(this);
     }
 
     componentWillUpdate(nextProps) {
@@ -18,6 +22,15 @@ class DynamicDataTable extends Component {
                 checkedRowIds: [],
             });
         }
+    }
+
+    className() {
+        const { onClick } = this.props;
+
+        return classNames([
+            'table', 'table-striped',
+            { 'table-hover': !!onClick }
+        ]);
     }
 
     getFields() {
@@ -110,7 +123,7 @@ class DynamicDataTable extends Component {
         return (
             <div>
                 <div className="table-responsive">
-                    <table className="table table-striped">
+                    <table className={this.className()}>
                         <thead>
                             <tr>
                                 { this.renderCheckboxCell('all') }
@@ -129,16 +142,19 @@ class DynamicDataTable extends Component {
     }
 
     renderRow(row) {
+        const { onClick, buttons, renderCheckBoxes, dataItemManipulator } = this.props;
+
         return (
             <DataRow
                 key={row.id}
                 row={row}
-                buttons={this.props.buttons}
+                onClick={onClick}
+                buttons={buttons}
                 fields={this.getFields()}
                 checkboxIsChecked={(value) => this.checkboxIsChecked(value)}
                 checkboxChange={(e) => this.checkboxChange(e)}
-                dataItemManipulator={(field, value) => this.props.dataItemManipulator(field, value)}
-                renderCheckboxes={this.props.renderCheckboxes}
+                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+                renderCheckboxes={renderCheckBoxes}
             />
         );
     }

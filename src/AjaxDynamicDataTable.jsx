@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DynamicDataTable from "./DynamicDataTable";
-import {AxiosInstance as axios} from "axios";
 
 class AjaxDynamicDataTable extends Component {
 

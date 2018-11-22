@@ -2,10 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class DataRow extends Component {
+  handleOnClick(row) {
+    const {
+      onClick
+    } = this.props;
+
+    if (!!onClick) {
+      return onClick(row);
+    }
+  }
+
   render() {
-    const props = this.props;
-    const row = props.row;
-    return React.createElement("tr", null, this.renderCheckboxCell(row.id), props.fields.map(field => this.renderCell(field, row)), this.renderButtons(row));
+    const {
+      row,
+      fields
+    } = this.props;
+    return React.createElement("tr", {
+      onClick: () => this.handleOnClick(row)
+    }, this.renderCheckboxCell(row.id), fields.map(field => this.renderCell(field, row)), this.renderButtons(row));
   }
 
   renderCheckboxCell(value) {
@@ -110,6 +124,7 @@ DataRow.propTypes = {
   checkboxIsChecked: PropTypes.func,
   checkboxChange: PropTypes.func,
   dataItemManipulator: PropTypes.func,
-  renderCheckboxes: PropTypes.bool
+  renderCheckboxes: PropTypes.bool,
+  onClick: PropTypes.func
 };
 export default DataRow;

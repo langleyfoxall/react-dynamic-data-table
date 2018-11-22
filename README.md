@@ -215,6 +215,18 @@ An example of setting custom row buttons is shown below.
     />
 ```
 
+### Clickable rows
+
+Clickable rows allows an `onClick` prop to be passed which will return an instance of
+the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    onClick={row => console.warn(row.name)}
+/>
+```
+
 ### Bulk select checkboxes
 
 If you wish to allow users to bulk select users in a React Dynamic Data Table,
