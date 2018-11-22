@@ -66,7 +66,7 @@ class DataRow extends Component {
 
         if (buttons.length===1) {
             return (
-                <td>
+                <td className="rddt-action-cell">
                     <button type="button" className="btn btn-primary"
                             onClick={() => { buttons[0].callback(row) }}>
                         { buttons[0].name }
@@ -76,7 +76,7 @@ class DataRow extends Component {
         }
 
         return (
-            <td>
+            <td className="action-cell">
                 <div className="btn-group">
                     <button type="button" className="btn btn-primary"
                             onClick={() => { buttons[0].callback(row) }}>
