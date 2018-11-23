@@ -229,43 +229,26 @@ the row that is clicked. It also adds the bootstrap `table-hover` class onto the
 
 ### Rendering custom rows
 
-If you come across a situation where the auto generated rows are not suitable for your project
-you can use the `rowRenderer` prop to return a `React.isValidElement` (hopefully a TR!). 
-When used the data table will pass back an object with properties that consist of variables
-and functions that could be used to recreate the default row.
+If you come across a situation where the automatically generated rows are not suitable for your project
+you can use the `rowRenderer` prop. This prop expects a callable that receives a single argument, 
+and returns a valid React element, which should be a `<tr>` element.
 
-The default prop value is used for generating the default row:
-```JSX
-static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
-    return (
-        <DataRow
-            key={row.id}
-            row={row}
-            onClick={onClick}
-            buttons={buttons}
-            fields={fields}
-            renderCheckboxes={renderCheckboxes}
-            checkboxIsChecked={checkboxIsChecked}
-            checkboxChange={onCheckboxChange}
-            dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
-        />
-    );
-}
-```
+The argument passed to the `rowRenderer` callable is a JavaScript object that contain the following properties.
 
-The properties are used for the following things:
 ```JS
 {
-  row, // Instance of row
-  onClick, // On click handler
-  buttons, // Array of buttons
-  fields, // Visible fields
-  renderCheckboxes, // Bool for rendering checkboxes
-  checkboxIsChecked, // Check if checkbox is checked
-  onCheckboxChange, // Function to add checkbox to state
-  dataItemManipulator // Handle data manipulation
+  row,                // Instance of data row
+  onClick,            // Row on click handler
+  buttons,            // Array of buttons
+  fields,             // Visible fields
+  renderCheckboxes,   // Boolean indicating whether to render checkboxes
+  checkboxIsChecked,  // Boolean indicating if checkbox is checked
+  onCheckboxChange,   // Callable that is called when a per row checkbox is changed
+  dataItemManipulator // Callable that handles manipulation of every item in the data row
 }
 ```
+
+For implementation details regarding these properties, see the other relevant areas of the documentatio.
 
 ### Bulk select checkboxes
 
