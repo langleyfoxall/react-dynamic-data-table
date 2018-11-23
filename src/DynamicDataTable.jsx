@@ -16,6 +16,22 @@ class DynamicDataTable extends Component {
         this.className = this.className.bind(this);
     }
 
+    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
+        return (
+            <DataRow
+                key={row.id}
+                row={row}
+                onClick={onClick}
+                buttons={buttons}
+                fields={fields}
+                renderCheckboxes={renderCheckboxes}
+                checkboxIsChecked={checkboxIsChecked}
+                checkboxChange={onCheckboxChange}
+                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+            />
+        );
+    }
+
     componentWillUpdate(nextProps) {
         if (nextProps.rows !== this.props.rows) {
             this.setState({
@@ -142,21 +158,19 @@ class DynamicDataTable extends Component {
     }
 
     renderRow(row) {
-        const { onClick, buttons, renderCheckBoxes, dataItemManipulator } = this.props;
+        const { onClick, buttons, renderCheckBoxes: renderCheckboxes, dataItemManipulator, rowRenderer } = this.props;
 
-        return (
-            <DataRow
-                key={row.id}
-                row={row}
-                onClick={onClick}
-                buttons={buttons}
-                fields={this.getFields()}
-                checkboxIsChecked={(value) => this.checkboxIsChecked(value)}
-                checkboxChange={(e) => this.checkboxChange(e)}
-                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
-                renderCheckboxes={renderCheckBoxes}
-            />
-        );
+        return rowRenderer({
+            row,
+            onClick,
+            buttons,
+            renderCheckboxes,
+            key: row.id,
+            fields: this.getFields(),
+            dataItemManipulator: (field, value) => dataItemManipulator(field, value),
+            checkboxIsChecked: (value) => this.checkboxIsChecked(value),
+            onCheckboxChange: (e) => this.checkboxChange(e),
+        });
     }
 
     renderHeader(field) {
@@ -399,6 +413,7 @@ DynamicDataTable.propTypes = {
     noDataMessage: PropTypes.string,
     dataItemManipulator: PropTypes.func,
     buttons: PropTypes.array,
+    rowRenderer: PropTypes.func,
 };
 
 DynamicDataTable.defaultProps = {
@@ -424,6 +439,7 @@ DynamicDataTable.defaultProps = {
             }
         },
     ],
+    rowRenderer: DynamicDataTable.rowRenderer,
 };
 
 export default DynamicDataTable;

@@ -227,6 +227,29 @@ the row that is clicked. It also adds the bootstrap `table-hover` class onto the
 />
 ```
 
+### Rendering custom rows
+
+If you come across a situation where the automatically generated rows are not suitable for your project
+you can use the `rowRenderer` prop. This prop expects a callable that receives a single argument, 
+and returns a valid React element, which should be a `<tr>` element.
+
+The argument passed to the `rowRenderer` callable is a JavaScript object that contain the following properties.
+
+```JS
+{
+  row,                // Instance of data row
+  onClick,            // Row on click handler
+  buttons,            // Array of buttons
+  fields,             // Visible fields
+  renderCheckboxes,   // Boolean indicating whether to render checkboxes
+  checkboxIsChecked,  // Boolean indicating if checkbox is checked
+  onCheckboxChange,   // Callable that is called when a per row checkbox is changed
+  dataItemManipulator // Callable that handles manipulation of every item in the data row
+}
+```
+
+For implementation details regarding these properties, see the other relevant areas of the documentatio.
+
 ### Bulk select checkboxes
 
 If you wish to allow users to bulk select users in a React Dynamic Data Table,

@@ -13,6 +13,29 @@ class DynamicDataTable extends Component {
     this.className = this.className.bind(this);
   }
 
+  static rowRenderer({
+    row,
+    onClick,
+    buttons,
+    fields,
+    renderCheckboxes,
+    checkboxIsChecked,
+    onCheckboxChange,
+    dataItemManipulator
+  }) {
+    return React.createElement(DataRow, {
+      key: row.id,
+      row: row,
+      onClick: onClick,
+      buttons: buttons,
+      fields: fields,
+      renderCheckboxes: renderCheckboxes,
+      checkboxIsChecked: checkboxIsChecked,
+      checkboxChange: onCheckboxChange,
+      dataItemManipulator: (field, value) => dataItemManipulator(field, value)
+    });
+  }
+
   componentWillUpdate(nextProps) {
     if (nextProps.rows !== this.props.rows) {
       this.setState({
@@ -122,19 +145,20 @@ class DynamicDataTable extends Component {
     const {
       onClick,
       buttons,
-      renderCheckBoxes,
-      dataItemManipulator
+      renderCheckBoxes: renderCheckboxes,
+      dataItemManipulator,
+      rowRenderer
     } = this.props;
-    return React.createElement(DataRow, {
+    return rowRenderer({
+      row,
+      onClick,
+      buttons,
+      renderCheckboxes,
       key: row.id,
-      row: row,
-      onClick: onClick,
-      buttons: buttons,
       fields: this.getFields(),
-      checkboxIsChecked: value => this.checkboxIsChecked(value),
-      checkboxChange: e => this.checkboxChange(e),
       dataItemManipulator: (field, value) => dataItemManipulator(field, value),
-      renderCheckboxes: renderCheckBoxes
+      checkboxIsChecked: value => this.checkboxIsChecked(value),
+      onCheckboxChange: e => this.checkboxChange(e)
     });
   }
 
@@ -349,7 +373,8 @@ DynamicDataTable.propTypes = {
   errorMessage: PropTypes.string,
   noDataMessage: PropTypes.string,
   dataItemManipulator: PropTypes.func,
-  buttons: PropTypes.array
+  buttons: PropTypes.array,
+  rowRenderer: PropTypes.func
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -373,6 +398,7 @@ DynamicDataTable.defaultProps = {
     callback: row => {
       window.location = `${location.href}/${row.id}`;
     }
-  }]
+  }],
+  rowRenderer: DynamicDataTable.rowRenderer
 };
 export default DynamicDataTable;
