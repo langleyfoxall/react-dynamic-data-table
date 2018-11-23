@@ -13,6 +13,29 @@ class DynamicDataTable extends Component {
     this.className = this.className.bind(this);
   }
 
+  static rowRenderer({
+    row,
+    onClick,
+    buttons,
+    fields,
+    renderCheckboxes,
+    checkboxIsChecked,
+    onCheckboxChange,
+    dataItemManipulator
+  }) {
+    return React.createElement(DataRow, {
+      key: row.id,
+      row: row,
+      onClick: onClick,
+      buttons: buttons,
+      fields: fields,
+      renderCheckboxes: renderCheckboxes,
+      checkboxIsChecked: checkboxIsChecked,
+      checkboxChange: onCheckboxChange,
+      dataItemManipulator: (field, value) => dataItemManipulator(field, value)
+    });
+  }
+
   componentWillUpdate(nextProps) {
     if (nextProps.rows !== this.props.rows) {
       this.setState({
@@ -335,27 +358,6 @@ class DynamicDataTable extends Component {
 
 }
 
-const rowRenderer = ({
-  row,
-  onClick,
-  buttons,
-  fields,
-  renderCheckboxes,
-  checkboxIsChecked,
-  onCheckboxChange,
-  dataItemManipulator
-}) => React.createElement(DataRow, {
-  key: row.id,
-  row: row,
-  onClick: onClick,
-  buttons: buttons,
-  fields: fields,
-  renderCheckboxes: renderCheckboxes,
-  checkboxIsChecked: checkboxIsChecked,
-  checkboxChange: onCheckboxChange,
-  dataItemManipulator: (field, value) => dataItemManipulator(field, value)
-});
-
 DynamicDataTable.propTypes = {
   rows: PropTypes.array,
   fieldsToExclude: PropTypes.array,
@@ -397,6 +399,6 @@ DynamicDataTable.defaultProps = {
       window.location = `${location.href}/${row.id}`;
     }
   }],
-  rowRenderer: rowRenderer
+  rowRenderer: DynamicDataTable.rowRenderer
 };
 export default DynamicDataTable;
