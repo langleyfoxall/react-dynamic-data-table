@@ -227,6 +227,46 @@ the row that is clicked. It also adds the bootstrap `table-hover` class onto the
 />
 ```
 
+### Rendering custom rows
+
+If you come across a situation where the auto generated rows are not suitable for your project
+you can use the `rowRenderer` prop to return a `React.isValidElement` (hopefully a TR!). 
+When used the data table will pass back an object with properties that consist of variables
+and functions that could be used to recreate the default row.
+
+The default prop value is used for generating the default row:
+```JSX
+static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
+    return (
+        <DataRow
+            key={row.id}
+            row={row}
+            onClick={onClick}
+            buttons={buttons}
+            fields={fields}
+            renderCheckboxes={renderCheckboxes}
+            checkboxIsChecked={checkboxIsChecked}
+            checkboxChange={onCheckboxChange}
+            dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+        />
+    );
+}
+```
+
+The properties are used for the following things:
+```JS
+{
+  row, // Instance of row
+  onClick, // On click handler
+  buttons, // Array of buttons
+  fields, // Visible fields
+  renderCheckboxes, // Bool for rendering checkboxes
+  checkboxIsChecked, // Check if checkbox is checked
+  onCheckboxChange, // Function to add checkbox to state
+  dataItemManipulator // Handle data manipulation
+}
+```
+
 ### Bulk select checkboxes
 
 If you wish to allow users to bulk select users in a React Dynamic Data Table,
