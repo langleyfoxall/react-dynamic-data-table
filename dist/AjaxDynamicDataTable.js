@@ -42,13 +42,15 @@ class AjaxDynamicDataTable extends Component {
   }
 
   loadPage(page) {
+    const axios = require('axios');
+
     const {
       orderByField,
       orderByDirection
     } = this.state;
-
-    const axios = require('axios');
-
+    const {
+      onLoad
+    } = this.props;
     axios.get(this.props.apiUrl, {
       params: {
         page,
@@ -61,11 +63,13 @@ class AjaxDynamicDataTable extends Component {
         last_page
       } = response.data.data;
       const rows = response.data.data.data;
-      this.setState({
+      const newState = {
         rows,
         currentPage: current_page,
         totalPages: last_page
-      });
+      };
+      this.setState(newState);
+      onLoad(newState);
     });
   }
 
@@ -84,7 +88,11 @@ class AjaxDynamicDataTable extends Component {
 
 }
 
+AjaxDynamicDataTable.defaultProps = {
+  onLoad: () => null
+};
 AjaxDynamicDataTable.propTypes = {
-  apiUrl: PropTypes.string
+  apiUrl: PropTypes.string,
+  onLoad: PropTypes.func
 };
 export default AjaxDynamicDataTable;
