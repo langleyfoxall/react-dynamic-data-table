@@ -121,14 +121,14 @@ class DynamicDataTable extends Component {
     }
 
     render() {
+        const { errorMessage, loading, rows } = this.props;
         const fields = this.getFields();
-        const rows = this.props.rows;
 
-        if (this.props.errorMessage) {
+        if (errorMessage) {
             return this.renderErrorTable();
         }
 
-        if (this.props.loadingMessage) {
+        if (loading) {
             return this.renderLoadingTable();
         }
 
@@ -325,18 +325,28 @@ class DynamicDataTable extends Component {
     }
 
     renderLoadingTable() {
+        const { loadingIndicator, loadingMessage, loadingComponent } = this.props;
+
+        if (loadingComponent) {
+            return loadingComponent;
+        }
+
         return (
             <div className="table-responsive">
                 <table className="table table-striped">
                     <tbody>
                         <tr>
                             <td className="text-center">
-                                <div className="mt-5">
-                                    { this.props.loadingIndicator ? this.props.loadingIndicator : null }
-                                </div>
-                                <div className="mt-5">
-                                    { this.props.loadingMessage }
-                                </div>
+                                {!!loadingIndicator && (
+                                    <div>
+                                        { loadingIndicator }
+                                    </div>
+                                )}
+                                {!!loadingMessage && (
+                                    <div>
+                                        { loadingMessage }
+                                    </div>
+                                )}
                             </td>
                         </tr>
                     </tbody>
@@ -407,8 +417,10 @@ DynamicDataTable.propTypes = {
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
     renderCheckboxes: PropTypes.bool,
     actions: PropTypes.array,
+    loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
-    loadingComponent: PropTypes.object,
+    loadingIndicator: PropTypes.element,
+    loadingComponent: PropTypes.element,
     errorMessage: PropTypes.string,
     noDataMessage: PropTypes.string,
     noDataComponent: PropTypes.element,
@@ -427,7 +439,9 @@ DynamicDataTable.defaultProps = {
     orderByDirection: 'asc',
     renderCheckboxes: false,
     actions: [],
-    loadingMessage: '',
+    loading: false,
+    loadingMessage: 'Loading data...',
+    loadingIndicator: null,
     loadingComponent: null,
     errorMessage: '',
     noDataMessage: 'No data.',
