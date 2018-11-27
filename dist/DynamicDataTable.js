@@ -328,9 +328,7 @@ class DynamicDataTable extends Component {
       className: "table table-striped"
     }, React.createElement("tbody", null, React.createElement("tr", null, React.createElement("td", {
       className: "text-center"
-    }, !!loadingIndicator && !loadingMessage && React.createElement("div", null, loadingIndicator), !!loadingMessage && !loadingIndicator && React.createElement("div", null, loadingMessage), !!loadingMessage && !!loadingIndicator && React.createElement(React.Fragment, null, React.createElement("div", null, loadingIndicator), React.createElement("div", {
-      className: "mt-5"
-    }, loadingMessage)))))));
+    }, !!loadingIndicator && React.createElement("div", null, loadingIndicator), !!loadingMessage && React.createElement("div", null, loadingMessage))))));
   }
 
   renderErrorTable() {

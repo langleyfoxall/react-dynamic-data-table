@@ -337,25 +337,15 @@ class DynamicDataTable extends Component {
                     <tbody>
                         <tr>
                             <td className="text-center">
-                                {!!loadingIndicator && !loadingMessage && (
+                                {!!loadingIndicator && (
                                     <div>
                                         { loadingIndicator }
                                     </div>
                                 )}
-                                {!!loadingMessage && !loadingIndicator && (
+                                {!!loadingMessage && (
                                     <div>
                                         { loadingMessage }
                                     </div>
-                                )}
-                                {!!loadingMessage && !!loadingIndicator && (
-                                    <React.Fragment>
-                                        <div>
-                                            { loadingIndicator }
-                                        </div>
-                                        <div className="mt-5">
-                                            { loadingMessage }
-                                        </div>
-                                    </React.Fragment>
                                 )}
                             </td>
                         </tr>
