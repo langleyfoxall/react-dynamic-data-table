@@ -8,7 +8,7 @@ class DynamicDataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkRows: []
+      checkedRows: []
     };
     this.className = this.className.bind(this);
   }
@@ -39,7 +39,7 @@ class DynamicDataTable extends Component {
   componentWillUpdate(nextProps) {
     if (nextProps.rows !== this.props.rows) {
       this.setState({
-        checkRows: []
+        checkedRows: []
       });
     }
   }
@@ -202,7 +202,7 @@ class DynamicDataTable extends Component {
       "data-toggle": "dropdown",
       "aria-haspopup": "true",
       "aria-expanded": "false",
-      disabled: !state.checkRows.length
+      disabled: !state.checkedRows.length
     }, "Actions"), React.createElement("div", {
       className: "dropdown-menu",
       "aria-labelledby": "dropdownMenuButton"
@@ -215,9 +215,9 @@ class DynamicDataTable extends Component {
       type: "button",
       className: "dropdown-item",
       onClick: () => {
-        action.callback(this.state.checkRows);
+        action.callback(this.state.checkedRows);
         this.setState({
-          checkRows: []
+          checkedRows: []
         });
       }
     }, action.name);
@@ -264,21 +264,21 @@ class DynamicDataTable extends Component {
 
   checkboxIsChecked(row) {
     const {
-      checkRows
+      checkedRows
     } = this.state;
     const {
       rows
     } = this.props;
 
     if (row === 'all') {
-      return checkRows.length === rows.length;
+      return checkedRows.length === rows.length;
     }
 
     let index = -1;
     const selected = JSON.stringify(row);
 
-    for (let i = 0; i < checkRows.length; i++) {
-      const current = JSON.stringify(checkRows[i]);
+    for (let i = 0; i < checkedRows.length; i++) {
+      const current = JSON.stringify(checkedRows[i]);
 
       if (current === selected) {
         index = i;
@@ -302,14 +302,14 @@ class DynamicDataTable extends Component {
 
     if (row === 'all') {
       if (target.checked) {
-        const checkRows = [];
-        rows.forEach(row => checkRows.push(row));
+        const checkedRows = [];
+        rows.forEach(row => checkedRows.push(row));
         this.setState({
-          checkRows
+          checkedRows
         });
       } else {
         this.setState({
-          checkRows: []
+          checkedRows: []
         });
       }
 
@@ -318,12 +318,12 @@ class DynamicDataTable extends Component {
 
     let index = -1;
     const {
-      checkRows
+      checkedRows
     } = this.state;
     const selected = JSON.stringify(row);
 
-    for (let i = 0; i < checkRows.length; i++) {
-      const current = JSON.stringify(checkRows[i]);
+    for (let i = 0; i < checkedRows.length; i++) {
+      const current = JSON.stringify(checkedRows[i]);
 
       if (current === selected) {
         index = i;
@@ -333,16 +333,16 @@ class DynamicDataTable extends Component {
 
     if (target.checked) {
       if (index === -1) {
-        checkRows.push(row);
+        checkedRows.push(row);
       }
     } else {
       if (index !== -1) {
-        checkRows.splice(index, 1);
+        checkedRows.splice(index, 1);
       }
     }
 
     this.setState({
-      checkRows
+      checkedRows
     });
   }
 
