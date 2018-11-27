@@ -363,10 +363,10 @@ class DynamicDataTable extends Component {
 
     renderEmptyTable() {
 
-        let noDataMessage = 'No data.';
+        const { noDataMessage, noDataComponent } = this.props;
 
-        if (this.props.noDataMessage) {
-            noDataMessage = this.props.noDataMessage;
+        if (React.isValidElement(noDataComponent)) {
+            return noDataComponent;
         }
 
         return (
@@ -411,6 +411,7 @@ DynamicDataTable.propTypes = {
     loadingComponent: PropTypes.object,
     errorMessage: PropTypes.string,
     noDataMessage: PropTypes.string,
+    noDataComponent: PropTypes.element,
     dataItemManipulator: PropTypes.func,
     buttons: PropTypes.array,
     rowRenderer: PropTypes.func,
@@ -429,7 +430,8 @@ DynamicDataTable.defaultProps = {
     loadingMessage: '',
     loadingComponent: null,
     errorMessage: '',
-    noDataMessage: '',
+    noDataMessage: 'No data.',
+    noDataComponent: null,
     dataItemManipulator: (field, value) => { return value; },
     buttons: [
         {

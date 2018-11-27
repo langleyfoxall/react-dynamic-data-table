@@ -250,6 +250,20 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
 
 For implementation details regarding these properties, see the other relevant areas of the documentatio.
 
+### Render no data component
+
+If you wish to render something other than the table when no rows are present you can take advantage of
+`noDataComponent` which accepts a valid react element. This will replace the table until there are rows.
+
+```JSX
+<DynamicDataTable
+    row={[]}
+    noDataComponent={(
+        <p>I replace the table, not just the text inside it.</p>
+    )}
+/>
+```
+
 ### Bulk select checkboxes
 
 If you wish to allow users to bulk select users in a React Dynamic Data Table,
