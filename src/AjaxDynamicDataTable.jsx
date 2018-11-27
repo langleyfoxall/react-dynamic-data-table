@@ -13,6 +13,7 @@ class AjaxDynamicDataTable extends Component {
             totalPages: 1,
             orderByField: null,
             orderByDirection: null,
+            loading: false,
         };
 
         this.changePage = this.changePage.bind(this);
@@ -25,7 +26,7 @@ class AjaxDynamicDataTable extends Component {
 
     render() {
 
-        const {rows, currentPage, totalPages, orderByField, orderByDirection} = this.state;
+        const {rows, currentPage, totalPages, orderByField, orderByDirection, loading} = this.state;
 
         return (
             <DynamicDataTable
@@ -34,6 +35,7 @@ class AjaxDynamicDataTable extends Component {
                 totalPages={totalPages}
                 orderByField={orderByField}
                 orderByDirection={orderByDirection}
+                loading={loading}
                 changePage={this.changePage}
                 changeOrder={this.changeOrder}
                 {...this.props}
@@ -47,19 +49,23 @@ class AjaxDynamicDataTable extends Component {
         const {orderByField, orderByDirection} = this.state;
         const {onLoad} = this.props;
 
-        axios.get(this.props.apiUrl, {
+        this.setState(
+            { loading: true },
+            () => {
+                axios.get(this.props.apiUrl, {
 
-            params: { page, orderByField, orderByDirection }
-
-        }).then((response) => {
-
-            const {current_page, last_page} = response.data.data;
-            const rows = response.data.data.data;
-            const newState = { rows, currentPage: current_page, totalPages: last_page };
-
-            this.setState(newState);
-            onLoad(newState);
-        });
+                    params: { page, orderByField, orderByDirection }
+        
+                }).then((response) => {
+        
+                    const { data: rows, current_page, last_page } = response.data.data;
+                    const newState = { rows, currentPage: current_page, totalPages: last_page, loading: false };
+        
+                    this.setState(newState);
+                    onLoad(newState);
+                });
+            }
+        );
     }
 
     changePage(page) {

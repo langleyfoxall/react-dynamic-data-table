@@ -12,7 +12,8 @@ class AjaxDynamicDataTable extends Component {
       currentPage: 1,
       totalPages: 1,
       orderByField: null,
-      orderByDirection: null
+      orderByDirection: null,
+      loading: false
     };
     this.changePage = this.changePage.bind(this);
     this.changeOrder = this.changeOrder.bind(this);
@@ -28,7 +29,8 @@ class AjaxDynamicDataTable extends Component {
       currentPage,
       totalPages,
       orderByField,
-      orderByDirection
+      orderByDirection,
+      loading
     } = this.state;
     return React.createElement(DynamicDataTable, _extends({
       rows: rows,
@@ -36,6 +38,7 @@ class AjaxDynamicDataTable extends Component {
       totalPages: totalPages,
       orderByField: orderByField,
       orderByDirection: orderByDirection,
+      loading: loading,
       changePage: this.changePage,
       changeOrder: this.changeOrder
     }, this.props));
@@ -51,25 +54,30 @@ class AjaxDynamicDataTable extends Component {
     const {
       onLoad
     } = this.props;
-    axios.get(this.props.apiUrl, {
-      params: {
-        page,
-        orderByField,
-        orderByDirection
-      }
-    }).then(response => {
-      const {
-        current_page,
-        last_page
-      } = response.data.data;
-      const rows = response.data.data.data;
-      const newState = {
-        rows,
-        currentPage: current_page,
-        totalPages: last_page
-      };
-      this.setState(newState);
-      onLoad(newState);
+    this.setState({
+      loading: true
+    }, () => {
+      axios.get(this.props.apiUrl, {
+        params: {
+          page,
+          orderByField,
+          orderByDirection
+        }
+      }).then(response => {
+        const {
+          data: rows,
+          current_page,
+          last_page
+        } = response.data.data;
+        const newState = {
+          rows,
+          currentPage: current_page,
+          totalPages: last_page,
+          loading: false
+        };
+        this.setState(newState);
+        onLoad(newState);
+      });
     });
   }
 
