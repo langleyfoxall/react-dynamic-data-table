@@ -411,6 +411,7 @@ DynamicDataTable.propTypes = {
     loadingComponent: PropTypes.object,
     errorMessage: PropTypes.string,
     noDataMessage: PropTypes.string,
+    noDataComponent: PropTypes.element,
     dataItemManipulator: PropTypes.func,
     buttons: PropTypes.array,
     rowRenderer: PropTypes.func,
@@ -430,6 +431,7 @@ DynamicDataTable.defaultProps = {
     loadingComponent: null,
     errorMessage: '',
     noDataMessage: 'No data.',
+    noDataComponent: null,
     dataItemManipulator: (field, value) => { return value; },
     buttons: [
         {
