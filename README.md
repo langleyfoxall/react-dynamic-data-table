@@ -328,7 +328,7 @@ above the textual loading message.
 ```JSX
 <DynamicDataTable
     loading={true}
-    loadingMessage={'User data is now loading...'}
+    loadingMessage={"User data is now loading..."}
     loadingComponent={(
         <img src="/loading-animation.gif">
     )}
