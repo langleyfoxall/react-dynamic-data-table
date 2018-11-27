@@ -327,7 +327,7 @@ class DynamicDataTable extends Component {
     renderLoadingTable() {
         const { loadingIndicator, loadingMessage, loadingComponent } = this.props;
 
-        if (!!loadingComponent) {
+        if (loadingComponent) {
             return loadingComponent;
         }
 
@@ -349,7 +349,7 @@ class DynamicDataTable extends Component {
                                 )}
                                 {!!loadingMessage && !!loadingIndicator && (
                                     <React.Fragment>
-                                        <div className="mt-5">
+                                        <div>
                                             { loadingIndicator }
                                         </div>
                                         <div className="mt-5">
