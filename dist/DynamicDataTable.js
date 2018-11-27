@@ -8,7 +8,7 @@ class DynamicDataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedRowIds: []
+      checkRows: []
     };
     this.className = this.className.bind(this);
   }
@@ -39,7 +39,7 @@ class DynamicDataTable extends Component {
   componentWillUpdate(nextProps) {
     if (nextProps.rows !== this.props.rows) {
       this.setState({
-        checkedRowIds: []
+        checkRows: []
       });
     }
   }
@@ -149,7 +149,7 @@ class DynamicDataTable extends Component {
     const {
       onClick,
       buttons,
-      renderCheckBoxes: renderCheckboxes,
+      renderCheckboxes,
       dataItemManipulator,
       rowRenderer
     } = this.props;
@@ -191,7 +191,9 @@ class DynamicDataTable extends Component {
       return React.createElement("th", null);
     }
 
-    return React.createElement("th", null, React.createElement("div", {
+    return React.createElement("th", {
+      className: "rddt-action-cell"
+    }, React.createElement("div", {
       className: "dropdown"
     }, React.createElement("button", {
       className: "btn btn-secondary dropdown-toggle",
@@ -200,7 +202,7 @@ class DynamicDataTable extends Component {
       "data-toggle": "dropdown",
       "aria-haspopup": "true",
       "aria-expanded": "false",
-      disabled: !state.checkedRowIds.length
+      disabled: !state.checkRows.length
     }, "Actions"), React.createElement("div", {
       className: "dropdown-menu",
       "aria-labelledby": "dropdownMenuButton"
@@ -213,9 +215,9 @@ class DynamicDataTable extends Component {
       type: "button",
       className: "dropdown-item",
       onClick: () => {
-        action.callback(this.state.checkedRowIds);
+        action.callback(this.state.checkRows);
         this.setState({
-          checkedRowIds: []
+          checkRows: []
         });
       }
     }, action.name);
@@ -247,7 +249,10 @@ class DynamicDataTable extends Component {
       type: "checkbox",
       value: value,
       checked: this.checkboxIsChecked(value),
-      onChange: e => this.checkboxChange(e)
+      onChange: event => this.checkboxChange({
+        event,
+        row: value
+      })
     }));
 
     if (value === 'all') {
@@ -257,57 +262,87 @@ class DynamicDataTable extends Component {
     return React.createElement("td", null, checkbox);
   }
 
-  checkboxIsChecked(value) {
-    if (value === 'all') {
-      return this.state.checkedRowIds.length === this.props.rows.length;
+  checkboxIsChecked(row) {
+    const {
+      checkRows
+    } = this.state;
+    const {
+      rows
+    } = this.props;
+
+    if (row === 'all') {
+      return checkRows.length === rows.length;
     }
 
-    return this.state.checkedRowIds.indexOf(value) !== -1;
+    let index = -1;
+    const selected = JSON.stringify(row);
+
+    for (let i = 0; i < checkRows.length; i++) {
+      const current = JSON.stringify(checkRows[i]);
+
+      if (current === selected) {
+        index = i;
+        break;
+      }
+    }
+
+    return index !== -1;
   }
 
-  checkboxChange(e) {
-    const target = e.target;
-    const props = this.props;
-    const rows = props.rows;
+  checkboxChange({
+    event,
+    row
+  }) {
+    const {
+      rows
+    } = this.props;
+    const {
+      target
+    } = event;
 
-    if (target.value === 'all') {
+    if (row === 'all') {
       if (target.checked) {
-        const ids = [];
-
-        for (let i = 0; i < rows.length; i++) {
-          const row = rows[i];
-          ids.push(row.id);
-        }
-
+        const checkRows = [];
+        rows.forEach(row => checkRows.push(row));
         this.setState({
-          checkedRowIds: ids
+          checkRows
         });
       } else {
         this.setState({
-          checkedRowIds: []
+          checkRows: []
         });
       }
 
       return;
     }
 
-    const checkedRowIds = this.state.checkedRowIds;
-    const rowId = parseInt(target.value);
+    let index = -1;
+    const {
+      checkRows
+    } = this.state;
+    const selected = JSON.stringify(row);
+
+    for (let i = 0; i < checkRows.length; i++) {
+      const current = JSON.stringify(checkRows[i]);
+
+      if (current === selected) {
+        index = i;
+        break;
+      }
+    }
 
     if (target.checked) {
-      if (checkedRowIds.indexOf(rowId) === -1) {
-        checkedRowIds.push(rowId);
+      if (index === -1) {
+        checkRows.push(row);
       }
     } else {
-      const index = checkedRowIds.indexOf(rowId);
-
       if (index !== -1) {
-        checkedRowIds.splice(index, 1);
+        checkRows.splice(index, 1);
       }
     }
 
     this.setState({
-      checkedRowIds
+      checkRows
     });
   }
 

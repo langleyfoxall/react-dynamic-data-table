@@ -16,15 +16,17 @@ class DataRow extends Component {
 
         return (
             <tr onClick={() => this.handleOnClick(row)}>
-                { this.renderCheckboxCell(row.id) }
+                { this.renderCheckboxCell() }
                 { fields.map(field => this.renderCell(field, row)) }
                 { this.renderButtons(row) }
             </tr>
         );
     }
 
-    renderCheckboxCell(value) {
-        if (!this.props.renderCheckboxes) {
+    renderCheckboxCell() {
+        const { row, renderCheckboxes } = this.props;
+
+        if (!renderCheckboxes) {
             return;
         }
 
@@ -32,18 +34,12 @@ class DataRow extends Component {
             <div className="form-check">
                 <input
                     type="checkbox"
-                    value={value}
-                    checked={this.props.checkboxIsChecked(value)}
-                    onChange={e => this.props.checkboxChange(e)}
+                    checked={this.props.checkboxIsChecked(row)}
+                    onChange={event => this.props.checkboxChange({ event, row })}
+                    onClick={e => e.stopPropagation()}
                 />
             </div>
         );
-
-        if (value === 'all') {
-            return (
-                <th>{ checkbox }</th>
-            );
-        }
 
         return (
             <td>{ checkbox }</td>

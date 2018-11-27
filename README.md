@@ -294,7 +294,7 @@ and `callback`.
 The `name` is string, such as 'Delete user(s)', 'Duplicate user(s)' etc.
 
 The `callback` is a callable with a single argument. The argument will
-contain an array of `id` properties, from all selected rows. 
+contain an array of the selected rows. 
 
 An example of show to use bulk actions is shown below.
 
@@ -305,7 +305,7 @@ An example of show to use bulk actions is shown below.
     actions={[
         {
             name: 'Delete user(s)',
-            callback: (ids) => { 
+            callback: (rows) => { 
                 // Delete users...
             },
         },
