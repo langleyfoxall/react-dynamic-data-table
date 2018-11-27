@@ -319,16 +319,24 @@ By default, the React Dynamic Data Table will not show indication that it is
 loading. On slow connections, this may make the table appear unresponsive or 
 sluggish when initialing loading, changing pages, re-ordering, and so on.
 
-You can specify a `loadingIndicator` prop. This will be displayed within the table
-when data is being loaded, if there is a `loadingMessage` passed then the indicator
-appears above the message.
+To show a loading message, you can set the `loading` prop to `true`. This will 
+display a default loading message, which can be changed by altering passing
+a string into the optional `loadingMessage` prop. If you wish, you can also 
+pass a React component into the `loadingIndicator` prop, which will be displayed
+above the textual loading message.
 
-If you wish to replace the entire table while data is being loaded in then you
-can use the `loadingComponent` prop to pass a valid react element to be displayed
-instead of the default loading message.
+```JSX
+<DynamicDataTable
+    loading={true}
+    loadingMessage={'User data is now loading...'}
+    loadingComponent={(
+        <img src="/loading-animation.gif">
+    )}
+/>
+```
 
-To display either of these options `loading` must be set to `true`. Note that the
-AJAX Dynamic Data Table handles the loading prop internally but can be overwritten.
+Alternatively, if you wish to replace the entire table while data is being loaded, 
+you can pass a React component into the `loadingComponent` prop.
 
 ```JSX
 <DynamicDataTable
@@ -338,6 +346,9 @@ AJAX Dynamic Data Table handles the loading prop internally but can be overwritt
     )}
 />
 ```
+
+To display either of these options `loading` must be set to `true`. Note that the
+AJAX Dynamic Data Table handles the loading prop internally but can be overriden.
 
 ### Error message
 
