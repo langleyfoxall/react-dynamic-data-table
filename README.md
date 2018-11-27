@@ -329,7 +329,7 @@ above the textual loading message.
 <DynamicDataTable
     loading={true}
     loadingMessage="User data is now loading..."
-    loadingComponent={(
+    loadingIndicator={(
         <img src="/loading-animation.gif">
     )}
 />
