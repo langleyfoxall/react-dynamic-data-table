@@ -20,6 +20,7 @@ class DynamicDataTable extends Component {
   static rowRenderer({
     row,
     onClick,
+    onContextMenu,
     buttons,
     fields,
     renderCheckboxes,
@@ -31,6 +32,7 @@ class DynamicDataTable extends Component {
       key: row.id,
       row: row,
       onClick: onClick,
+      onContextMenu: onContextMenu,
       buttons: buttons,
       fields: fields,
       renderCheckboxes: renderCheckboxes,
@@ -154,6 +156,7 @@ class DynamicDataTable extends Component {
   renderRow(row) {
     const {
       onClick,
+      onContextMenu,
       buttons,
       renderCheckboxes,
       dataItemManipulator,
@@ -162,6 +165,7 @@ class DynamicDataTable extends Component {
     return rowRenderer({
       row,
       onClick,
+      onContextMenu,
       buttons,
       renderCheckboxes,
       key: row.id,
