@@ -19,11 +19,16 @@ class DataRow extends Component {
     } = this.props;
     return React.createElement("tr", {
       onClick: () => this.handleOnClick(row)
-    }, this.renderCheckboxCell(row.id), fields.map(field => this.renderCell(field, row)), this.renderButtons(row));
+    }, this.renderCheckboxCell(), fields.map(field => this.renderCell(field, row)), this.renderButtons(row));
   }
 
-  renderCheckboxCell(value) {
-    if (!this.props.renderCheckboxes) {
+  renderCheckboxCell() {
+    const {
+      row,
+      renderCheckboxes
+    } = this.props;
+
+    if (!renderCheckboxes) {
       return;
     }
 
@@ -31,15 +36,13 @@ class DataRow extends Component {
       className: "form-check"
     }, React.createElement("input", {
       type: "checkbox",
-      value: value,
-      checked: this.props.checkboxIsChecked(value),
-      onChange: e => this.props.checkboxChange(e)
+      checked: this.props.checkboxIsChecked(row),
+      onChange: event => this.props.checkboxChange({
+        event,
+        row
+      }),
+      onClick: e => e.stopPropagation()
     }));
-
-    if (value === 'all') {
-      return React.createElement("th", null, checkbox);
-    }
-
     return React.createElement("td", null, checkbox);
   }
 
