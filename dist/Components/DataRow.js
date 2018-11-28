@@ -81,7 +81,8 @@ class DataRow extends Component {
     return React.createElement("td", {
       className: "rddt-action-cell"
     }, React.createElement("div", {
-      className: "btn-group"
+      className: "btn-group",
+      onClick: e => e.stopPropagation()
     }, React.createElement("button", {
       type: "button",
       className: "btn btn-primary",
