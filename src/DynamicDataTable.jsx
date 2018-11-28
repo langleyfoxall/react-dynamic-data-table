@@ -16,6 +16,10 @@ class DynamicDataTable extends Component {
         this.className = this.className.bind(this);
     }
 
+    static noop() {
+        return null;
+    }
+
     static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
         return (
             <DataRow
@@ -41,11 +45,16 @@ class DynamicDataTable extends Component {
     }
 
     className() {
-        const { onClick } = this.props;
+        const { onClick, onContextMenu, hoverable } = this.props;
 
         return classNames([
             'table', 'table-striped',
-            { 'table-hover': !!onClick }
+            {
+                'table-hover': 
+                    onClick !== DynamicDataTable.noop 
+                    || onContextMenu !== DynamicDataTable.noop
+                    || hoverable
+            }
         ]);
     }
 
@@ -452,6 +461,9 @@ DynamicDataTable.propTypes = {
     dataItemManipulator: PropTypes.func,
     buttons: PropTypes.array,
     rowRenderer: PropTypes.func,
+    onClick: PropTypes.func,
+    onContextMenu: PropTypes.func,
+    hoverable: PropTypes.bool,
 };
 
 DynamicDataTable.defaultProps = {
@@ -481,6 +493,9 @@ DynamicDataTable.defaultProps = {
         },
     ],
     rowRenderer: DynamicDataTable.rowRenderer,
+    onClick: DynamicDataTable.noop,
+    onContextMenu: DynamicDataTable.noop,
+    hoverable: false,
 };
 
 export default DynamicDataTable;
