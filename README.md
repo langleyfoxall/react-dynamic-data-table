@@ -282,11 +282,23 @@ In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`]
 ```JSX
 <DynamicDataTable
     rows={this.state.users}
-    rowRenderer={({ row, onContextMenu }) => (
+    rowRenderer={({ row }) => (
         <tr onContextMenu={() => onContextMenu(row)}>
             <td/>
         </tr>
     )}
+/>
+```
+
+### Hoverable table rows
+
+To enable a hover effect on rows even if `onClick` is not passed into the table you can use the prop `hoverable`.
+This will add a background color on each row when hovered.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    hoverable
 />
 ```
 

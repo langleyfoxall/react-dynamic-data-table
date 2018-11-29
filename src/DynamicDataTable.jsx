@@ -20,13 +20,12 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, onContextMenu, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
+    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
         return (
             <DataRow
                 key={row.id}
                 row={row}
                 onClick={onClick}
-                onContextMenu={onContextMenu}
                 buttons={buttons}
                 fields={fields}
                 renderCheckboxes={renderCheckboxes}
@@ -46,14 +45,13 @@ class DynamicDataTable extends Component {
     }
 
     className() {
-        const { onClick, onContextMenu, hoverable } = this.props;
+        const { onClick, hoverable } = this.props;
 
         return classNames([
             'table', 'table-striped',
             {
                 'table-hover': 
                     onClick !== DynamicDataTable.noop 
-                    || onContextMenu !== DynamicDataTable.noop
                     || hoverable
             }
         ]);
@@ -168,12 +166,11 @@ class DynamicDataTable extends Component {
     }
 
     renderRow(row) {
-        const { onClick, onContextMenu, buttons, renderCheckboxes, dataItemManipulator, rowRenderer } = this.props;
+        const { onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer } = this.props;
 
         return rowRenderer({
             row,
             onClick,
-            onContextMenu,
             buttons,
             renderCheckboxes,
             key: row.id,
@@ -464,7 +461,6 @@ DynamicDataTable.propTypes = {
     buttons: PropTypes.array,
     rowRenderer: PropTypes.func,
     onClick: PropTypes.func,
-    onContextMenu: PropTypes.func,
     hoverable: PropTypes.bool,
 };
 
@@ -496,7 +492,6 @@ DynamicDataTable.defaultProps = {
     ],
     rowRenderer: DynamicDataTable.rowRenderer,
     onClick: DynamicDataTable.noop,
-    onContextMenu: DynamicDataTable.noop,
     hoverable: false,
 };
 

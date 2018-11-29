@@ -20,7 +20,6 @@ class DynamicDataTable extends Component {
   static rowRenderer({
     row,
     onClick,
-    onContextMenu,
     buttons,
     fields,
     renderCheckboxes,
@@ -32,7 +31,6 @@ class DynamicDataTable extends Component {
       key: row.id,
       row: row,
       onClick: onClick,
-      onContextMenu: onContextMenu,
       buttons: buttons,
       fields: fields,
       renderCheckboxes: renderCheckboxes,
@@ -53,11 +51,10 @@ class DynamicDataTable extends Component {
   className() {
     const {
       onClick,
-      onContextMenu,
       hoverable
     } = this.props;
     return classNames(['table', 'table-striped', {
-      'table-hover': onClick !== DynamicDataTable.noop || onContextMenu !== DynamicDataTable.noop || hoverable
+      'table-hover': onClick !== DynamicDataTable.noop || hoverable
     }]);
   }
 
@@ -156,7 +153,6 @@ class DynamicDataTable extends Component {
   renderRow(row) {
     const {
       onClick,
-      onContextMenu,
       buttons,
       renderCheckboxes,
       dataItemManipulator,
@@ -165,7 +161,6 @@ class DynamicDataTable extends Component {
     return rowRenderer({
       row,
       onClick,
-      onContextMenu,
       buttons,
       renderCheckboxes,
       key: row.id,
@@ -437,7 +432,6 @@ DynamicDataTable.propTypes = {
   buttons: PropTypes.array,
   rowRenderer: PropTypes.func,
   onClick: PropTypes.func,
-  onContextMenu: PropTypes.func,
   hoverable: PropTypes.bool
 };
 DynamicDataTable.defaultProps = {
@@ -468,7 +462,6 @@ DynamicDataTable.defaultProps = {
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
   onClick: DynamicDataTable.noop,
-  onContextMenu: DynamicDataTable.noop,
   hoverable: false
 };
 export default DynamicDataTable;
