@@ -215,18 +215,6 @@ An example of setting custom row buttons is shown below.
     />
 ```
 
-### Clickable rows
-
-Clickable rows allows an `onClick` prop to be passed which will return an instance of
-the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
-
-```JSX
-<DynamicDataTable
-    rows={this.state.users}
-    onClick={row => console.warn(row.name)}
-/>
-```
-
 ### Rendering custom rows
 
 If you come across a situation where the automatically generated rows are not suitable for your project
@@ -249,6 +237,70 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
 ```
 
 For implementation details regarding these properties, see the other relevant areas of the documentatio.
+
+### Clickable rows
+
+Clickable rows allows an `onClick` prop to be passed which will return an instance of
+the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    onClick={row => console.warn(row.name)}
+/>
+```
+
+The ability to right click rows can be enabled by using `onContextMenu` and `rowRenderer`.
+In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`](https://github.com/langleyfoxall/react-dynamic-context-menu):
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    rowRenderer={options => (
+        <DynamicContextMenu
+            key={options.key}
+            data={options.row}
+            menuItems={[
+                {
+                    label: 'Update',
+                    onClick: this.handleUpdate,
+                },
+                {
+                    label: 'Delete',
+                    onClick: this.handleDelete,
+                },
+            ]}
+        >
+            {DynamicDataTable.rowRenderer(options)}
+        </DynamicContextMenu>
+    )}
+/>
+```
+
+`DynamicContextMenu` clones the child and adds `onContextMenu` as a prop. This can also be achieved manually.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    rowRenderer={({ row }) => (
+        <tr onContextMenu={() => this.onContextMenu(row)}>
+            <td/>
+        </tr>
+    )}
+/>
+```
+
+### Hoverable table rows
+
+To enable a hover effect on rows even if `onClick` is not passed into the table you can use the prop `hoverable`.
+This will add a background color on each row when hovered.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    hoverable
+/>
+```
 
 ### Render no data component
 

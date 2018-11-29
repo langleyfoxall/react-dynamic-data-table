@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 
 class DataRow extends Component {
 
-    handleOnClick(row) {
-        const { onClick } = this.props;
-
-        if (!!onClick) {
-            return onClick(row);
-        }
+    static noop() {
+        return null;
     }
 
     render() {
-        const { row, fields } = this.props;
+        const { row, fields, onClick, onContextMenu } = this.props;
 
         return (
-            <tr onClick={() => this.handleOnClick(row)}>
+            <tr
+                onClick={() => onClick(row)}
+                onContextMenu={e => onContextMenu(e, row)}
+            >
                 { this.renderCheckboxCell() }
                 { fields.map(field => this.renderCell(field, row)) }
                 { this.renderButtons(row) }
@@ -119,6 +118,11 @@ class DataRow extends Component {
 
 }
 
+DataRow.defaultProps = {
+    onClick: DataRow.noop,
+    onContextMenu: DataRow.noop,
+};
+
 DataRow.propTypes = {
     row: PropTypes.object,
     buttons: PropTypes.array,
@@ -126,7 +130,8 @@ DataRow.propTypes = {
     checkboxChange: PropTypes.func,
     dataItemManipulator: PropTypes.func,
     renderCheckboxes: PropTypes.bool,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    onContextMenu: PropTypes.func,
 };
 
 export default DataRow;

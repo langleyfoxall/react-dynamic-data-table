@@ -13,6 +13,10 @@ class DynamicDataTable extends Component {
     this.className = this.className.bind(this);
   }
 
+  static noop() {
+    return null;
+  }
+
   static rowRenderer({
     row,
     onClick,
@@ -46,10 +50,11 @@ class DynamicDataTable extends Component {
 
   className() {
     const {
-      onClick
+      onClick,
+      hoverable
     } = this.props;
     return classNames(['table', 'table-striped', {
-      'table-hover': !!onClick
+      'table-hover': onClick !== DynamicDataTable.noop || hoverable
     }]);
   }
 
@@ -425,7 +430,9 @@ DynamicDataTable.propTypes = {
   noDataComponent: PropTypes.element,
   dataItemManipulator: PropTypes.func,
   buttons: PropTypes.array,
-  rowRenderer: PropTypes.func
+  rowRenderer: PropTypes.func,
+  onClick: PropTypes.func,
+  hoverable: PropTypes.bool
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -453,6 +460,8 @@ DynamicDataTable.defaultProps = {
       window.location = `${location.href}/${row.id}`;
     }
   }],
-  rowRenderer: DynamicDataTable.rowRenderer
+  rowRenderer: DynamicDataTable.rowRenderer,
+  onClick: DynamicDataTable.noop,
+  hoverable: false
 };
 export default DynamicDataTable;
