@@ -283,7 +283,7 @@ In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`]
 <DynamicDataTable
     rows={this.state.users}
     rowRenderer={({ row }) => (
-        <tr onContextMenu={() => onContextMenu(row)}>
+        <tr onContextMenu={() => this.onContextMenu(row)}>
             <td/>
         </tr>
     )}
