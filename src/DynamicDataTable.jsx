@@ -59,7 +59,7 @@ class DynamicDataTable extends Component {
 
     getFields() {
         const { rows } = this.props;
-        let { fieldsToExclude, fieldMap } = this.props;
+        let { fieldsToExclude, fieldMap, fieldOrder } = this.props;
 
         const fields = [];
 
@@ -139,6 +139,50 @@ class DynamicDataTable extends Component {
             if (fieldMap.hasOwnProperty(field.name)) {
                 fields[i].label = fieldMap[field.name];
             }
+        }
+
+        if (fieldOrder.length) {
+            const orderedFields = Array(fieldOrder.length);
+
+            for (let i = 0; i < fields.length; i++) {
+                const field = fields[i];
+                const j = fieldOrder.findIndex(query => {
+                    if (query.constructor) {
+                        switch(query.constructor) {
+                            case RegExp:
+                                return query.test(field.name);
+                            default:
+                                return query === field.name;
+                        }
+                    }
+
+                    return false;
+                });
+
+                if (j !== -1) {
+                    const entry = orderedFields[j];
+
+                    if (!entry) {
+                        orderedFields.splice(j, 1, field);
+                    } else if (Array.isArray(entry)) {
+                        orderedFields[j].push(field);
+                    } else {
+                        orderedFields[j] = [entry, field];
+                    }
+
+                    continue;
+                }
+
+                orderedFields.push(field);
+            }
+
+            const flatten = arr => (
+                arr.reduce((flat, toFlatten) => (
+                    flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
+                ), [])
+            )
+
+            return flatten(orderedFields);
         }
 
         return fields;
@@ -460,6 +504,7 @@ DynamicDataTable.propTypes = {
     rows: PropTypes.array,
     fieldsToExclude: PropTypes.array,
     fieldMap: PropTypes.object,
+    fieldOrder: PropTypes.array,
     currentPage: PropTypes.number,
     totalPages: PropTypes.number,
     orderByField: PropTypes.string,
@@ -484,6 +529,7 @@ DynamicDataTable.defaultProps = {
     rows: [],
     fieldsToExclude: [],
     fieldMap: {},
+    fieldOrder: [],
     currentPage: 1,
     totalPages: 1,
     orderByField: null,
