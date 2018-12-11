@@ -58,10 +58,10 @@ class DynamicDataTable extends Component {
     }
 
     getFields() {
-        const rows = this.props.rows;
+        const { rows } = this.props;
+        let { fieldsToExclude, fieldMap } = this.props;
+
         const fields = [];
-        let fieldsToExclude = this.props.fieldsToExclude;
-        let fieldMap = this.props.fieldMap;
 
         if (!fieldsToExclude) {
             fieldsToExclude = [];
@@ -109,7 +109,9 @@ class DynamicDataTable extends Component {
             }
         }
 
-        for (let i = 0; i < fields.length; i++) {
+        const regExp = fieldsToExclude.filter(field => field.constructor && field.constructor === RegExp);
+
+        main: for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
 
             // Field exclusion
@@ -117,6 +119,17 @@ class DynamicDataTable extends Component {
                 fields.splice(i, 1);
                 i--;
                 continue;
+            }
+
+            for (let j = 0; j < regExp.length; j++) {
+                const expression = regExp[j];
+
+                if (expression.test(field.name)) {
+                    fields.splice(i, 1);
+                    i--;
+
+                    continue main;
+                }
             }
 
             // Field mapping

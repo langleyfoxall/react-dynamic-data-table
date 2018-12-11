@@ -57,7 +57,16 @@ In the example below, the `email` field will be excluded.
     />
 ```
 
-The `excludeFields` prop expects an array of strings that represent the fields to exclude.
+In the example below, all ID fields will be excluded.
+
+```JSX
+<DynamicDataTable 
+    rows={this.state.users}
+    excludeFields={[/_?id/]}
+    />
+```
+
+The `excludeFields` prop expects an array of strings or regex expressions that represent the fields to exclude.
 
 ### Mapping fields
 
