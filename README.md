@@ -144,6 +144,41 @@ and `direction` parameters respectively.
 2. Change / re-retrieve the `rows` prop, such that it is sorted based on the passed 
 `field` and `direction` parameters.
 
+### Ordering fields
+
+By default fields will be ordered as they are passed into the table on each row.
+To force a specific ordering of columns an array of strings or regex can be passed
+with the `fieldOrder` prop. Anything that is not included within `fieldOrder` will
+be pushed to the end of the ordered fields.
+
+```JSX
+<DynamicDataTable
+    rows={[
+        { id: 1, email: 'info@langleyfoxall.co.uk', name: 'Langley Foxall' }
+    ]}
+    fieldOrder={[
+        'id', 'name'
+    ]}
+/>
+
+// Output: id, name, email
+```
+
+Mixing strings and regex is also supported.
+
+```JSX
+<DynamicDataTable
+    rows={[
+        { id: 1, email: 'info@langleyfoxall.co.uk', first_name: 'Langley', last_name: 'Foxall' }
+    ]}
+    fieldOrder={[
+        'id', /_name/
+    ]}
+/>
+
+// Output: id, first_name, last_name, email
+```
+
 ### Pagination
 
 Making pagination work with React Dynamic Data Table requires three extra
