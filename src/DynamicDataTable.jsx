@@ -113,24 +113,22 @@ class DynamicDataTable extends Component {
 
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
-            let excluded = false;
+            let shouldExclude = false;
 
             // Field exclusion
             if (fieldsToExclude.indexOf(field.name) !== -1) {
-                excluded = true;
+                shouldExclude = true;
             } else {
                 for (let j = 0; j < regExpsToExclude.length; j++) {
-                    const expression = regExpsToExclude[j];
+                    if (regExpsToExclude[j].test(field.name)) {
+                        shouldExclude = true;
     
-                    if (expression.test(field.name)) {
-                        excluded = true;
-    
-                        continue;
+                        break;
                     }
                 }
             }
 
-            if (excluded) {
+            if (shouldExclude) {
                 fields.splice(i, 1);
                 i--;
 
