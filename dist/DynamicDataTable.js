@@ -19,11 +19,9 @@ require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es6.array.map");
 
-require("core-js/modules/es6.array.find-index");
-
 require("core-js/modules/es6.array.is-array");
 
-require("core-js/modules/es6.array.reduce");
+require("core-js/modules/es6.array.find-index");
 
 require("core-js/modules/es6.array.index-of");
 
@@ -237,12 +235,6 @@ function (_Component) {
 
           if (_ret === "continue") continue;
         }
-
-        var flatten = function flatten(arr) {
-          return arr.reduce(function (flat, toFlatten) {
-            return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
-          }, []);
-        };
 
         return orderedFields.flat();
       }

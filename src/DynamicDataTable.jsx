@@ -176,12 +176,6 @@ class DynamicDataTable extends Component {
                 orderedFields.push(field);
             }
 
-            const flatten = arr => (
-                arr.reduce((flat, toFlatten) => (
-                    flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
-                ), [])
-            )
-
             return orderedFields.flat();
         }
 
