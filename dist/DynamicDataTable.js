@@ -109,7 +109,7 @@ class DynamicDataTable extends Component {
       }
     }
 
-    const regExpsToExclude = fieldsToExclude.filter(field => field.constructor && field.constructor === regExpsToExclude);
+    const regExpsToExclude = fieldsToExclude.filter(field => field.constructor && field.constructor === RegExp);
 
     for (let i = 0; i < fields.length; i++) {
       const field = fields[i];
