@@ -182,7 +182,7 @@ class DynamicDataTable extends Component {
                 ), [])
             )
 
-            return flatten(orderedFields);
+            return orderedFields.flat();
         }
 
         return fields;
