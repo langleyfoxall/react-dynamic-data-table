@@ -151,7 +151,7 @@ function (_Component) {
         orderByField: field,
         orderByDirection: direction
       }, function () {
-        _this3.loadPage(_this3.state.changePage);
+        _this3.loadPage(1);
       });
     }
   }]);
