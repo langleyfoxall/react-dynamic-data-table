@@ -46,14 +46,14 @@ The `rows` prop expects an array of objects, such as the following.
 ### Excluding fields
 
 By default, React Dynamic Data Table will render a table containing all fields present
-in the `rows` prop. To exclude specific fields, you can use the `excludeFields` props.
+in the `rows` prop. To exclude specific fields, you can use the `fieldsToExclude` props.
 
 In the example below, the `email` field will be excluded.
 
 ```JSX
 <DynamicDataTable 
     rows={this.state.users}
-    excludeFields={['email']}
+    fieldsToExclude={['email']}
     />
 ```
 
@@ -62,11 +62,11 @@ In the example below, all ID fields will be excluded.
 ```JSX
 <DynamicDataTable 
     rows={this.state.users}
-    excludeFields={[/_?id/]}
+    fieldsToExclude={[/_?id/]}
     />
 ```
 
-The `excludeFields` prop expects an array of strings or regex expressions that represent the fields to exclude.
+The `fieldsToExclude` prop expects an array of strings or regex expressions that represent the fields to exclude.
 
 ### Mapping fields
 
@@ -124,7 +124,6 @@ headings, you can use the `changeOrder` prop. This is shown in the example below
     orderByField={this.state.orderByField}
     orderByDirection={this.state.orderByDirection}
     changeOrder={(field, direction) => this.changeOrder(field, direction)}
-    }}
     />
 ```
 
@@ -280,7 +279,7 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
 }
 ```
 
-For implementation details regarding these properties, see the other relevant areas of the documentatio.
+For implementation details regarding these properties, see the other relevant areas of the documentation.
 
 ### Clickable rows
 
