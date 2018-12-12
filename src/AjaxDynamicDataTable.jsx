@@ -24,10 +24,8 @@ class AjaxDynamicDataTable extends Component {
         this.loadPage(1);
     }
 
-    componentDidUpdate({ params: prevParams }) {
-        const { params: currentParams } = this.props;
-
-        if (JSON.stringify(prevParams) !== JSON.stringify(currentParams)) {
+    componentDidUpdate(prevProps) {
+        if (JSON.stringify(prevProps.params) !== JSON.stringify(this.props.params)) {
             this.loadPage(1);
         }
     }

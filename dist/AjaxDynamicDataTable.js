@@ -94,11 +94,8 @@ function (_Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(_ref) {
-      var prevParams = _ref.params;
-      var currentParams = this.props.params;
-
-      if (JSON.stringify(prevParams) !== JSON.stringify(currentParams)) {
+    value: function componentDidUpdate(prevProps) {
+      if (JSON.stringify(prevProps.params) !== JSON.stringify(this.props.params)) {
         this.loadPage(1);
       }
     }
