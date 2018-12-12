@@ -75,7 +75,7 @@ class AjaxDynamicDataTable extends Component {
     changeOrder(field, direction) {
         this.setState({ orderByField: field, orderByDirection: direction }, () => {
 
-            this.loadPage(this.state.changePage);
+            this.loadPage(1);
 
         });
     }
