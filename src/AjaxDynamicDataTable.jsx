@@ -24,6 +24,12 @@ class AjaxDynamicDataTable extends Component {
         this.loadPage(1);
     }
 
+    componentDidUpdate(prevProps) {
+        if (JSON.stringify(prevProps.params) !== JSON.stringify(this.props.params)) {
+            this.loadPage(1);
+        }
+    }
+
     render() {
 
         const {rows, currentPage, totalPages, orderByField, orderByDirection, loading} = this.state;
@@ -47,14 +53,14 @@ class AjaxDynamicDataTable extends Component {
 
         const axios = require('axios');
         const {orderByField, orderByDirection} = this.state;
-        const {onLoad} = this.props;
+        const {onLoad, params} = this.props;
 
         this.setState(
             { loading: true },
             () => {
                 axios.get(this.props.apiUrl, {
 
-                    params: { page, orderByField, orderByDirection }
+                    params: { ...params, page, orderByField, orderByDirection }
         
                 }).then((response) => {
         
@@ -84,11 +90,13 @@ class AjaxDynamicDataTable extends Component {
 
 AjaxDynamicDataTable.defaultProps = {
     onLoad: () => null,
+    params: {},
 };
 
 AjaxDynamicDataTable.propTypes = {
     apiUrl: PropTypes.string,
     onLoad: PropTypes.func,
+    params: PropTypes.object,
 };
 
 export default AjaxDynamicDataTable;
