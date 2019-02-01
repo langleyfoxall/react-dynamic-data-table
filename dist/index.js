@@ -29,12 +29,6 @@ Object.defineProperty(exports, "Pagination", {
     return _Pagination.default;
   }
 });
-Object.defineProperty(exports, "withFilter", {
-  enumerable: true,
-  get: function get() {
-    return _withFilter.default;
-  }
-});
 exports.default = void 0;
 
 var _DynamicDataTable = _interopRequireDefault(require("./DynamicDataTable"));
@@ -44,8 +38,6 @@ var _AjaxDynamicDataTable = _interopRequireDefault(require("./AjaxDynamicDataTab
 var _DataRow = _interopRequireDefault(require("./Components/DataRow"));
 
 var _Pagination = _interopRequireDefault(require("./Components/Pagination"));
-
-var _withFilter = _interopRequireDefault(require("./Wrappers/withFilter"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
