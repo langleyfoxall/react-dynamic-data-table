@@ -9,7 +9,7 @@
     "pagination",
     "bulk actions"
   ],
-  "main": "dist/DynamicDataTable.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"No tests.\" && exit 0",
     "build": "node ./node_modules/@babel/cli/bin/babel src/ --out-dir dist/",
