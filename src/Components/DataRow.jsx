@@ -70,13 +70,12 @@ class DataRow extends Component {
             return ( <td></td> );
         }
 
+        const button = buttons[0];
+
         if (buttons.length===1) {
             return (
                 <td className="rddt-action-cell">
-                    <button type="button" className="btn btn-primary"
-                            onClick={() => { buttons[0].callback(row) }}>
-                        { buttons[0].name }
-                    </button>
+                    {this.renderFirstButton(button, row)}
                 </td>
             )
         }
@@ -87,10 +86,7 @@ class DataRow extends Component {
                     className="btn-group"
                     onClick={e => e.stopPropagation()}
                 >
-                    <button type="button" className="btn btn-primary"
-                            onClick={() => { buttons[0].callback(row) }}>
-                        { buttons[0].name }
-                    </button>
+                    {this.renderFirstButton(button, row)}
                     <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span className="sr-only">Toggle Dropdown</span>
@@ -103,10 +99,35 @@ class DataRow extends Component {
         );
     }
 
+    renderFirstButton(button, row) {
+        if (typeof button.render === 'function') {
+            return button.render(row)
+        }
+
+       return (
+            <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => { button.callback(row) }}
+            >
+                {button.name}
+            </button>
+       )
+    }
+
     renderButton(button, index, row) {
 
         if (index===0) {
             return;
+        }
+
+        if (typeof button.render === 'function') {
+            <div
+                style={{cursor: 'pointer'}}
+                key={`button_${button.name}`}
+                className="dropdown-item">
+                {button.render(row)}
+            </div>
         }
 
         return (
@@ -115,7 +136,7 @@ class DataRow extends Component {
                 key={`button_${button.name}`}
                 className="dropdown-item"
                 onClick={() => { button.callback(row) }}>
-                { button.name }
+                {button.name}
             </div>
         )
     }
