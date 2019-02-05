@@ -537,7 +537,7 @@ DynamicDataTable.defaultProps = {
     errorMessage: '',
     noDataMessage: 'No data.',
     noDataComponent: null,
-    dataItemManipulator: (field, value) => { return value; },
+    dataItemManipulator: (field, value) => value === null ? '' : value,
     buttons: [
         {
             name: 'View',
