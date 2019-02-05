@@ -60,7 +60,11 @@ class DataRow extends Component {
     }
 
     renderButtons(row) {
-        const buttons = this.props.buttons;
+        const { buttons } = this.props;
+
+        if (typeof buttons === 'function') {
+            return buttons(row);
+        }
 
         if (!buttons.length) {
             return ( <td></td> );

@@ -513,7 +513,9 @@ DynamicDataTable.propTypes = {
     noDataMessage: PropTypes.string,
     noDataComponent: PropTypes.element,
     dataItemManipulator: PropTypes.func,
-    buttons: PropTypes.array,
+    buttons: PropTypes.oneOfType([
+        PropTypes.array, PropTypes.func,
+    ]),
     rowRenderer: PropTypes.func,
     onClick: PropTypes.func,
     hoverable: PropTypes.bool,

@@ -129,6 +129,10 @@ function (_Component) {
 
       var buttons = this.props.buttons;
 
+      if (typeof buttons === 'function') {
+        return buttons(row);
+      }
+
       if (!buttons.length) {
         return _react.default.createElement("td", null);
       }
