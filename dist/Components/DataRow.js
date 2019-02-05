@@ -129,20 +129,20 @@ function (_Component) {
 
       var buttons = this.props.buttons;
 
+      if (typeof buttons === 'function') {
+        return buttons(row);
+      }
+
       if (!buttons.length) {
         return _react.default.createElement("td", null);
       }
 
+      var button = buttons[0];
+
       if (buttons.length === 1) {
         return _react.default.createElement("td", {
           className: "rddt-action-cell"
-        }, _react.default.createElement("button", {
-          type: "button",
-          className: "btn btn-primary",
-          onClick: function onClick() {
-            buttons[0].callback(row);
-          }
-        }, buttons[0].name));
+        }, this.renderFirstButton(button, row));
       }
 
       return _react.default.createElement("td", {
@@ -152,13 +152,7 @@ function (_Component) {
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, _react.default.createElement("button", {
-        type: "button",
-        className: "btn btn-primary",
-        onClick: function onClick() {
-          buttons[0].callback(row);
-        }
-      }, buttons[0].name), _react.default.createElement("button", {
+      }, this.renderFirstButton(button, row), _react.default.createElement("button", {
         type: "button",
         className: "btn btn-primary dropdown-toggle dropdown-toggle-split",
         "data-toggle": "dropdown",
@@ -174,10 +168,35 @@ function (_Component) {
       }))));
     }
   }, {
+    key: "renderFirstButton",
+    value: function renderFirstButton(button, row) {
+      if (typeof button.render === 'function') {
+        return button.render(row);
+      }
+
+      return _react.default.createElement("button", {
+        type: "button",
+        className: "btn btn-primary",
+        onClick: function onClick() {
+          button.callback(row);
+        }
+      }, button.name);
+    }
+  }, {
     key: "renderButton",
     value: function renderButton(button, index, row) {
       if (index === 0) {
         return;
+      }
+
+      if (typeof button.render === 'function') {
+        _react.default.createElement("div", {
+          style: {
+            cursor: 'pointer'
+          },
+          key: "button_".concat(button.name),
+          className: "dropdown-item"
+        }, button.render(row));
       }
 
       return _react.default.createElement("div", {

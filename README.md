@@ -258,6 +258,43 @@ An example of setting custom row buttons is shown below.
     />
 ```
 
+`buttons` can also be given a custom render at the top level, or for multiple array elements.
+It's worth noting that multiple array elements still respect the dropdown menu.
+
+```jsx
+// Top level example
+<DynamicDataTable
+  buttons={row => (
+    <a>
+      <i className="fas fa-fw fa-eye" />
+      <span>Totally custom button</span>
+    </a>
+  )}
+/>
+
+// Low level example
+<DynamicDataTable
+  buttons={[
+    {
+      render: row => (
+        <a>
+          <i className="fas fa-fw fa-eye" />
+          <span>Totally custom button 1</span>
+        </a>
+      )
+    },
+    {
+      render: row => (
+        <a>
+          <i className="fas fa-fw fa-tick" />
+          <span>Totally custom button 2</span>
+        </a>
+      )
+    }
+  ]}
+/>
+```
+
 ### Rendering custom rows
 
 If you come across a situation where the automatically generated rows are not suitable for your project

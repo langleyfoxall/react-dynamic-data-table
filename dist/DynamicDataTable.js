@@ -612,7 +612,7 @@ DynamicDataTable.propTypes = {
   noDataMessage: _propTypes.default.string,
   noDataComponent: _propTypes.default.element,
   dataItemManipulator: _propTypes.default.func,
-  buttons: _propTypes.default.array,
+  buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
   rowRenderer: _propTypes.default.func,
   onClick: _propTypes.default.func,
   hoverable: _propTypes.default.bool
