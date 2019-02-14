@@ -4,15 +4,16 @@ import DynamicDataTable from "./DynamicDataTable";
 
 class AjaxDynamicDataTable extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const { defaultOrderByField, defaultOrderByDirection } = props;
 
         this.state = {
             rows: [],
             currentPage: 1,
             totalPages: 1,
-            orderByField: null,
-            orderByDirection: null,
+            orderByField: defaultOrderByField,
+            orderByDirection: defaultOrderByDirection,
             loading: false,
         };
 
@@ -91,12 +92,16 @@ class AjaxDynamicDataTable extends Component {
 AjaxDynamicDataTable.defaultProps = {
     onLoad: () => null,
     params: {},
+    defaultOrderByField: null,
+    defaultOrderByDirection: null,
 };
 
 AjaxDynamicDataTable.propTypes = {
     apiUrl: PropTypes.string,
     onLoad: PropTypes.func,
     params: PropTypes.object,
+    defaultOrderByField: PropTypes.string,
+    defaultOrderByDirection: PropTypes.string,
 };
 
 export default AjaxDynamicDataTable;
