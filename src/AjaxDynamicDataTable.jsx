@@ -6,13 +6,14 @@ class AjaxDynamicDataTable extends Component {
 
     constructor(props) {
         super(props);
+        const { defaultOrderByField, defaultOrderByDirection } = props;
 
         this.state = {
             rows: [],
             currentPage: 1,
             totalPages: 1,
-            orderByField: props.defaultOrderByField,
-            orderByDirection: props.defaultOrderByDirection,
+            orderByField: defaultOrderByField,
+            orderByDirection: defaultOrderByDirection,
             loading: false,
         };
 

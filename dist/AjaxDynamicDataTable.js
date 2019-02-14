@@ -74,12 +74,14 @@ function (_Component) {
     _classCallCheck(this, AjaxDynamicDataTable);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AjaxDynamicDataTable).call(this, props));
+    var defaultOrderByField = props.defaultOrderByField,
+        defaultOrderByDirection = props.defaultOrderByDirection;
     _this.state = {
       rows: [],
       currentPage: 1,
       totalPages: 1,
-      orderByField: _this.props.defaultOrderByField,
-      orderByDirection: _this.props.defaultOrderByDirection,
+      orderByField: defaultOrderByField,
+      orderByDirection: defaultOrderByDirection,
       loading: false
     };
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
