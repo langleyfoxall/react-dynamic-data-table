@@ -11,7 +11,7 @@ class AjaxDynamicDataTable extends Component {
             rows: [],
             currentPage: 1,
             totalPages: 1,
-            orderByField: this.props.defaultOrderByField,
+            orderByField: props.defaultOrderByField,
             orderByDirection: this.props.defaultOrderByDirection,
             loading: false,
         };
