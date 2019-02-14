@@ -68,18 +68,20 @@ var AjaxDynamicDataTable =
 function (_Component) {
   _inherits(AjaxDynamicDataTable, _Component);
 
-  function AjaxDynamicDataTable() {
+  function AjaxDynamicDataTable(props) {
     var _this;
 
     _classCallCheck(this, AjaxDynamicDataTable);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(AjaxDynamicDataTable).call(this));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AjaxDynamicDataTable).call(this, props));
+    var defaultOrderByField = props.defaultOrderByField,
+        defaultOrderByDirection = props.defaultOrderByDirection;
     _this.state = {
       rows: [],
       currentPage: 1,
       totalPages: 1,
-      orderByField: null,
-      orderByDirection: null,
+      orderByField: defaultOrderByField,
+      orderByDirection: defaultOrderByDirection,
       loading: false
     };
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -186,12 +188,16 @@ AjaxDynamicDataTable.defaultProps = {
   onLoad: function onLoad() {
     return null;
   },
-  params: {}
+  params: {},
+  defaultOrderByField: null,
+  defaultOrderByDirection: null
 };
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes.default.string,
   onLoad: _propTypes.default.func,
-  params: _propTypes.default.object
+  params: _propTypes.default.object,
+  defaultOrderByField: _propTypes.default.string,
+  defaultOrderByDirection: _propTypes.default.string
 };
 var _default = AjaxDynamicDataTable;
 exports.default = _default;
