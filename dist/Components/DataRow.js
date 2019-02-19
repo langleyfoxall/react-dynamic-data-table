@@ -226,7 +226,7 @@ DataRow.defaultProps = {
 };
 DataRow.propTypes = {
   row: _propTypes.default.object,
-  buttons: _propTypes.default.array,
+  buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
   checkboxIsChecked: _propTypes.default.func,
   checkboxChange: _propTypes.default.func,
   dataItemManipulator: _propTypes.default.func,

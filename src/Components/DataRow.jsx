@@ -150,7 +150,9 @@ DataRow.defaultProps = {
 
 DataRow.propTypes = {
     row: PropTypes.object,
-    buttons: PropTypes.array,
+    buttons: PropTypes.oneOfType([
+        PropTypes.array, PropTypes.func,
+    ]),
     checkboxIsChecked: PropTypes.func,
     checkboxChange: PropTypes.func,
     dataItemManipulator: PropTypes.func,
