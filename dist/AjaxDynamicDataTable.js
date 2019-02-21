@@ -84,6 +84,7 @@ function (_Component) {
       orderByDirection: defaultOrderByDirection,
       loading: false
     };
+    _this.reload = _this.reload.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -121,6 +122,12 @@ function (_Component) {
         changePage: this.changePage,
         changeOrder: this.changeOrder
       }, this.props));
+    }
+  }, {
+    key: "reload",
+    value: function reload() {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.loadPage(page);
     }
   }, {
     key: "loadPage",
