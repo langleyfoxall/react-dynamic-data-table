@@ -17,6 +17,7 @@ class AjaxDynamicDataTable extends Component {
             loading: false,
         };
 
+        this.reload = this.reload.bind(this);
         this.changePage = this.changePage.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
     }
@@ -48,6 +49,10 @@ class AjaxDynamicDataTable extends Component {
                 {...this.props}
             />
         );
+    }
+
+    reload(page = 1) {
+        this.loadPage(page);
     }
 
     loadPage(page) {
