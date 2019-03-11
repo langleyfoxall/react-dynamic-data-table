@@ -73,11 +73,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var DynamicDataTable =
 /*#__PURE__*/
@@ -93,7 +93,7 @@ function (_Component) {
     _this.state = {
       checkedRows: []
     };
-    _this.className = _this.className.bind(_assertThisInitialized(_this));
+    _this.className = _this.className.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -319,7 +319,7 @@ function (_Component) {
         orderByIcon = props.orderByDirection === 'asc' ? '↓' : '↑';
       }
 
-      var canOrderBy = props.orderByWhitelist.length === 0 || props.orderByWhitelist.includes(field.name);
+      var canOrderBy = props.allowOrderingBy.length === 0 || props.allowOrderingBy.includes(field.name);
       var onClickHandler = canOrderBy ? function () {
         return _this4.changeOrder(field);
       } : function () {};
@@ -623,7 +623,7 @@ DynamicDataTable.propTypes = {
   rowRenderer: _propTypes.default.func,
   onClick: _propTypes.default.func,
   hoverable: _propTypes.default.bool,
-  orderByWhitelist: _propTypes.default.array
+  allowOrderingBy: _propTypes.default.array
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -655,7 +655,7 @@ DynamicDataTable.defaultProps = {
   rowRenderer: DynamicDataTable.rowRenderer,
   onClick: DynamicDataTable.noop,
   hoverable: false,
-  orderByWhitelist: []
+  allowOrderingBy: []
 };
 var _default = DynamicDataTable;
 exports.default = _default;
