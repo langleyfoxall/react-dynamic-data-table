@@ -143,6 +143,19 @@ and `direction` parameters respectively.
 2. Change / re-retrieve the `rows` prop, such that it is sorted based on the passed 
 `field` and `direction` parameters.
 
+Ordering data is enabled for all fields by default. However, if you wish to restrict 
+which fields the ordering is enabled for, pass an array of the field names into the 
+`allowOrderingBy` prop. An example of this is shown below.
+
+```JSX
+<AjaxDynamicDataTable
+    rows={this.state.users}
+    allowOrderingBy={[
+        'name', 'email'
+    ]}
+/>
+```
+
 ### Ordering fields
 
 By default fields will be ordered as they are passed into the table on each row.
