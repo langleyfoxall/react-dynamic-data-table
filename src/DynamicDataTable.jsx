@@ -242,9 +242,17 @@ class DynamicDataTable extends Component {
         if (props.orderByField === field.name) {
             orderByIcon = (props.orderByDirection === 'asc') ? '↓' : '↑';
         }
+        
+        const canOrderBy = props.orderByWhitelist.length === 0 || props.orderByWhitelist.includes(field.name);
 
+        const onClickHandler = canOrderBy
+            ? () => this.changeOrder(field)
+            : () => {};
+        
+        const cursor = props.changeOrder && canOrderBy ? 'pointer' : 'default';
+        
         return (
-            <th style={{ cursor: (props.changeOrder ? 'pointer' : 'default') }} key={field.name} onClick={() => this.changeOrder(field)}>
+            <th style={{ cursor }} key={field.name} onClick={onClickHandler}>
                 { field.label }
                 &nbsp;
                 { orderByIcon }
@@ -519,6 +527,7 @@ DynamicDataTable.propTypes = {
     rowRenderer: PropTypes.func,
     onClick: PropTypes.func,
     hoverable: PropTypes.bool,
+    orderByWhitelist: PropTypes.array,
 };
 
 DynamicDataTable.defaultProps = {
@@ -551,6 +560,7 @@ DynamicDataTable.defaultProps = {
     rowRenderer: DynamicDataTable.rowRenderer,
     onClick: DynamicDataTable.noop,
     hoverable: false,
+    orderByWhitelist: [],
 };
 
 export default DynamicDataTable;
