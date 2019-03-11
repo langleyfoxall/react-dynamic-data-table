@@ -243,7 +243,7 @@ class DynamicDataTable extends Component {
             orderByIcon = (props.orderByDirection === 'asc') ? '↓' : '↑';
         }
         
-        const canOrderBy = props.orderByWhitelist.length === 0 || props.orderByWhitelist.includes(field.name);
+        const canOrderBy = props.allowOrderingBy.length === 0 || props.allowOrderingBy.includes(field.name);
 
         const onClickHandler = canOrderBy
             ? () => this.changeOrder(field)
@@ -527,7 +527,7 @@ DynamicDataTable.propTypes = {
     rowRenderer: PropTypes.func,
     onClick: PropTypes.func,
     hoverable: PropTypes.bool,
-    orderByWhitelist: PropTypes.array,
+    allowOrderingBy: PropTypes.array,
 };
 
 DynamicDataTable.defaultProps = {
@@ -560,7 +560,7 @@ DynamicDataTable.defaultProps = {
     rowRenderer: DynamicDataTable.rowRenderer,
     onClick: DynamicDataTable.noop,
     hoverable: false,
-    orderByWhitelist: [],
+    allowOrderingBy: [],
 };
 
 export default DynamicDataTable;
