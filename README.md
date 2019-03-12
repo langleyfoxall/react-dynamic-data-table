@@ -167,6 +167,8 @@ To have the opposite effect simply use `excludeOrderingBy`:
 />
 ```
 
+Typically, the `allowOrderingBy` and `excludedOrderingBy` props should not be used simultaneously, as this could cause unexpected behaviour.
+
 ### Ordering fields
 
 By default fields will be ordered as they are passed into the table on each row.
