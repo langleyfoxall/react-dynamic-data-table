@@ -156,6 +156,19 @@ which fields the ordering is enabled for, pass an array of the field names into 
 />
 ```
 
+To have the opposite effect simply use `disallowOrderingBy`:
+
+```JSX
+<AjaxDynamicDataTable
+    rows={this.state.users}
+    disallowOrderingBy={[
+        'dob'
+    ]}
+/>
+```
+
+Typically, the `allowOrderingBy` and `disallowdOrderingBy` props should not be used simultaneously, as this could cause unexpected behaviour.
+
 ### Ordering fields
 
 By default fields will be ordered as they are passed into the table on each row.

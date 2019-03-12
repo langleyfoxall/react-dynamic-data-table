@@ -312,18 +312,23 @@ function (_Component) {
     value: function renderHeader(field) {
       var _this4 = this;
 
-      var props = this.props;
+      var _this$props5 = this.props,
+          orderByField = _this$props5.orderByField,
+          orderByDirection = _this$props5.orderByDirection,
+          allowOrderingBy = _this$props5.allowOrderingBy,
+          disallowOrderingBy = _this$props5.disallowOrderingBy,
+          changeOrder = _this$props5.changeOrder;
       var orderByIcon = '';
 
-      if (props.orderByField === field.name) {
-        orderByIcon = props.orderByDirection === 'asc' ? '↓' : '↑';
+      if (orderByField === field.name) {
+        orderByIcon = orderByDirection === 'asc' ? '↓' : '↑';
       }
 
-      var canOrderBy = props.allowOrderingBy.length === 0 || props.allowOrderingBy.includes(field.name);
+      var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
       var onClickHandler = canOrderBy ? function () {
         return _this4.changeOrder(field);
       } : function () {};
-      var cursor = props.changeOrder && canOrderBy ? 'pointer' : 'default';
+      var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
       return _react.default.createElement("th", {
         style: {
           cursor: cursor
@@ -506,10 +511,10 @@ function (_Component) {
   }, {
     key: "renderLoadingTable",
     value: function renderLoadingTable() {
-      var _this$props5 = this.props,
-          loadingIndicator = _this$props5.loadingIndicator,
-          loadingMessage = _this$props5.loadingMessage,
-          loadingComponent = _this$props5.loadingComponent;
+      var _this$props6 = this.props,
+          loadingIndicator = _this$props6.loadingIndicator,
+          loadingMessage = _this$props6.loadingMessage,
+          loadingComponent = _this$props6.loadingComponent;
 
       if (loadingComponent) {
         return loadingComponent;
@@ -537,9 +542,9 @@ function (_Component) {
   }, {
     key: "renderEmptyTable",
     value: function renderEmptyTable() {
-      var _this$props6 = this.props,
-          noDataMessage = _this$props6.noDataMessage,
-          noDataComponent = _this$props6.noDataComponent;
+      var _this$props7 = this.props,
+          noDataMessage = _this$props7.noDataMessage,
+          noDataComponent = _this$props7.noDataComponent;
 
       if (_react.default.isValidElement(noDataComponent)) {
         return noDataComponent;
@@ -623,7 +628,8 @@ DynamicDataTable.propTypes = {
   rowRenderer: _propTypes.default.func,
   onClick: _propTypes.default.func,
   hoverable: _propTypes.default.bool,
-  allowOrderingBy: _propTypes.default.array
+  allowOrderingBy: _propTypes.default.array,
+  disallowOrderingBy: _propTypes.default.array
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -655,7 +661,8 @@ DynamicDataTable.defaultProps = {
   rowRenderer: DynamicDataTable.rowRenderer,
   onClick: DynamicDataTable.noop,
   hoverable: false,
-  allowOrderingBy: []
+  allowOrderingBy: [],
+  disallowOrderingBy: []
 };
 var _default = DynamicDataTable;
 exports.default = _default;
