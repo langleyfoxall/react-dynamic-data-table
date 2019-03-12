@@ -156,18 +156,18 @@ which fields the ordering is enabled for, pass an array of the field names into 
 />
 ```
 
-To have the opposite effect simply use `excludeOrderingBy`:
+To have the opposite effect simply use `disallowOrderingBy`:
 
 ```JSX
 <AjaxDynamicDataTable
     rows={this.state.users}
-    excludeOrderingBy={[
+    disallowOrderingBy={[
         'dob'
     ]}
 />
 ```
 
-Typically, the `allowOrderingBy` and `excludedOrderingBy` props should not be used simultaneously, as this could cause unexpected behaviour.
+Typically, the `allowOrderingBy` and `disallowdOrderingBy` props should not be used simultaneously, as this could cause unexpected behaviour.
 
 ### Ordering fields
 

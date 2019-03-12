@@ -316,7 +316,7 @@ function (_Component) {
           orderByField = _this$props5.orderByField,
           orderByDirection = _this$props5.orderByDirection,
           allowOrderingBy = _this$props5.allowOrderingBy,
-          excludeOrderingBy = _this$props5.excludeOrderingBy,
+          disallowOrderingBy = _this$props5.disallowOrderingBy,
           changeOrder = _this$props5.changeOrder;
       var orderByIcon = '';
 
@@ -324,7 +324,7 @@ function (_Component) {
         orderByIcon = orderByDirection === 'asc' ? '↓' : '↑';
       }
 
-      var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !excludeOrderingBy.includes(field.name);
+      var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
       var onClickHandler = canOrderBy ? function () {
         return _this4.changeOrder(field);
       } : function () {};
@@ -629,7 +629,7 @@ DynamicDataTable.propTypes = {
   onClick: _propTypes.default.func,
   hoverable: _propTypes.default.bool,
   allowOrderingBy: _propTypes.default.array,
-  excludeOrderingBy: _propTypes.default.array
+  disallowOrderingBy: _propTypes.default.array
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -662,7 +662,7 @@ DynamicDataTable.defaultProps = {
   onClick: DynamicDataTable.noop,
   hoverable: false,
   allowOrderingBy: [],
-  excludeOrderingBy: []
+  disallowOrderingBy: []
 };
 var _default = DynamicDataTable;
 exports.default = _default;

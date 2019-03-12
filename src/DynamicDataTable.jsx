@@ -236,7 +236,7 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, allowOrderingBy, excludeOrderingBy, changeOrder } = this.props;
+        const { orderByField, orderByDirection, allowOrderingBy, disallowOrderingBy, changeOrder } = this.props;
         let orderByIcon = '';
 
         if (orderByField === field.name) {
@@ -245,7 +245,7 @@ class DynamicDataTable extends Component {
         
         const canOrderBy = (
             (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name))
-            && !excludeOrderingBy.includes(field.name)
+            && !disallowOrderingBy.includes(field.name)
         );
 
         const onClickHandler = (
@@ -537,7 +537,7 @@ DynamicDataTable.propTypes = {
     onClick: PropTypes.func,
     hoverable: PropTypes.bool,
     allowOrderingBy: PropTypes.array,
-    excludeOrderingBy: PropTypes.array,
+    disallowOrderingBy: PropTypes.array,
 };
 
 DynamicDataTable.defaultProps = {
@@ -571,7 +571,7 @@ DynamicDataTable.defaultProps = {
     onClick: DynamicDataTable.noop,
     hoverable: false,
     allowOrderingBy: [],
-    excludeOrderingBy: [],
+    disallowOrderingBy: [],
 };
 
 export default DynamicDataTable;
