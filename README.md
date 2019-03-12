@@ -156,6 +156,17 @@ which fields the ordering is enabled for, pass an array of the field names into 
 />
 ```
 
+To have the opposite effect simply use `excludeOrderingBy`:
+
+```JSX
+<AjaxDynamicDataTable
+    rows={this.state.users}
+    excludeOrderingBy={[
+        'dob'
+    ]}
+/>
+```
+
 ### Ordering fields
 
 By default fields will be ordered as they are passed into the table on each row.

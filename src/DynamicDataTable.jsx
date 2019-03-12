@@ -236,20 +236,29 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const props = this.props;
+        const { orderByField, orderByDirection, allowOrderingBy, excludeOrderingBy, changeOrder } = this.props;
         let orderByIcon = '';
 
-        if (props.orderByField === field.name) {
-            orderByIcon = (props.orderByDirection === 'asc') ? '↓' : '↑';
+        if (orderByField === field.name) {
+            orderByIcon = (orderByDirection === 'asc') ? '↓' : '↑';
         }
         
-        const canOrderBy = props.allowOrderingBy.length === 0 || props.allowOrderingBy.includes(field.name);
+        const canOrderBy = (
+            (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name))
+            && !excludeOrderingBy.includes(field.name)
+        );
 
-        const onClickHandler = canOrderBy
-            ? () => this.changeOrder(field)
-            : () => {};
+        const onClickHandler = (
+            canOrderBy
+                ? () => this.changeOrder(field)
+                : () => {}
+        );
         
-        const cursor = props.changeOrder && canOrderBy ? 'pointer' : 'default';
+        const cursor = (
+            changeOrder && canOrderBy
+                ? 'pointer'
+                : 'default'
+        );
         
         return (
             <th style={{ cursor }} key={field.name} onClick={onClickHandler}>
@@ -528,6 +537,7 @@ DynamicDataTable.propTypes = {
     onClick: PropTypes.func,
     hoverable: PropTypes.bool,
     allowOrderingBy: PropTypes.array,
+    excludeOrderingBy: PropTypes.array,
 };
 
 DynamicDataTable.defaultProps = {
@@ -561,6 +571,7 @@ DynamicDataTable.defaultProps = {
     onClick: DynamicDataTable.noop,
     hoverable: false,
     allowOrderingBy: [],
+    excludeOrderingBy: [],
 };
 
 export default DynamicDataTable;
