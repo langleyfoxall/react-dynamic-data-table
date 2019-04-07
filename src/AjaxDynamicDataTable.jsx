@@ -15,6 +15,7 @@ class AjaxDynamicDataTable extends Component {
             orderByField: defaultOrderByField,
             orderByDirection: defaultOrderByDirection,
             loading: false,
+            initialLoad: true,
         };
 
         this.reload = this.reload.bind(this);
@@ -58,11 +59,11 @@ class AjaxDynamicDataTable extends Component {
     loadPage(page) {
 
         const axios = require('axios');
-        const {orderByField, orderByDirection} = this.state;
-        const {onLoad, params} = this.props;
+        const {orderByField, orderByDirection, initialLoad} = this.state;
+        const {onLoad, params, showLoadingAfterInitialLoad} = this.props;
 
         this.setState(
-            { loading: true },
+            { loading: !(!initialLoad && !showLoadingAfterInitialLoad) },
             () => {
                 axios.get(this.props.apiUrl, {
 
@@ -71,7 +72,7 @@ class AjaxDynamicDataTable extends Component {
                 }).then((response) => {
         
                     const { data: rows, current_page, last_page } = response.data.data;
-                    const newState = { rows, currentPage: current_page, totalPages: last_page, loading: false };
+                    const newState = { rows, currentPage: current_page, totalPages: last_page, loading: false, initialLoad: false };
         
                     this.setState(newState);
                     onLoad(newState);
@@ -99,6 +100,7 @@ AjaxDynamicDataTable.defaultProps = {
     params: {},
     defaultOrderByField: null,
     defaultOrderByDirection: null,
+    showLoadingAfterInitialLoad: true,
 };
 
 AjaxDynamicDataTable.propTypes = {
@@ -107,6 +109,7 @@ AjaxDynamicDataTable.propTypes = {
     params: PropTypes.object,
     defaultOrderByField: PropTypes.string,
     defaultOrderByDirection: PropTypes.string,
+    showLoadingAfterInitialLoad: PropTypes.bool,
 };
 
 export default AjaxDynamicDataTable;
