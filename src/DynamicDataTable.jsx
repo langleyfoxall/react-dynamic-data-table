@@ -199,7 +199,7 @@ class DynamicDataTable extends Component {
         }
 
         return (
-            <div>
+            <React.Fragment>
                 <div className="table-responsive">
                     <table className={this.className()}>
                         <thead>
@@ -215,7 +215,7 @@ class DynamicDataTable extends Component {
                     </table>
                 </div>
                 { this.renderPagination() }
-            </div>
+            </React.Fragment>
         );
     }
 

@@ -75,16 +75,20 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AjaxDynamicDataTable).call(this, props));
     var defaultOrderByField = props.defaultOrderByField,
-        defaultOrderByDirection = props.defaultOrderByDirection;
+        defaultOrderByDirection = props.defaultOrderByDirection,
+        defaultPageLimit = props.defaultPageLimit;
     _this.state = {
       rows: [],
       currentPage: 1,
       totalPages: 1,
       orderByField: defaultOrderByField,
       orderByDirection: defaultOrderByDirection,
+      pageLimit: defaultPageLimit,
       loading: false
     };
     _this.reload = _this.reload.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.resetPageLimit = _this.resetPageLimit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.setPageLimit = _this.setPageLimit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -112,7 +116,7 @@ function (_Component) {
           orderByField = _this$state.orderByField,
           orderByDirection = _this$state.orderByDirection,
           loading = _this$state.loading;
-      return _react.default.createElement(_DynamicDataTable.default, _extends({
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_DynamicDataTable.default, _extends({
         rows: rows,
         currentPage: currentPage,
         totalPages: totalPages,
@@ -121,7 +125,33 @@ function (_Component) {
         loading: loading,
         changePage: this.changePage,
         changeOrder: this.changeOrder
-      }, this.props));
+      }, this.props)), this.renderPageLimit());
+    }
+  }, {
+    key: "renderPageLimit",
+    value: function renderPageLimit() {
+      var _this$state2 = this.state,
+          pageLimit = _this$state2.pageLimit,
+          loading = _this$state2.loading;
+      var pageLimitRenderer = this.props.pageLimitRenderer;
+
+      if (!pageLimitRenderer || loading) {
+        return null;
+      }
+
+      var props = {
+        onChange: this.setPageLimit,
+        value: pageLimit
+      };
+
+      if (typeof pageLimitRenderer === 'function') {
+        return pageLimitRenderer(_objectSpread({
+          setPageLimit: this.setPageLimit,
+          resetPageLimit: this.resetPageLimit
+        }, props));
+      }
+
+      return _react.default.cloneElement(pageLimitRenderer, props);
     }
   }, {
     key: "reload",
@@ -136,9 +166,10 @@ function (_Component) {
 
       var axios = require('axios');
 
-      var _this$state2 = this.state,
-          orderByField = _this$state2.orderByField,
-          orderByDirection = _this$state2.orderByDirection;
+      var _this$state3 = this.state,
+          orderByField = _this$state3.orderByField,
+          orderByDirection = _this$state3.orderByDirection,
+          pageLimit = _this$state3.pageLimit;
       var _this$props = this.props,
           onLoad = _this$props.onLoad,
           params = _this$props.params;
@@ -149,7 +180,8 @@ function (_Component) {
           params: _objectSpread({}, params, {
             page: page,
             orderByField: orderByField,
-            orderByDirection: orderByDirection
+            orderByDirection: orderByDirection,
+            pageLimit: pageLimit
           })
         }).then(function (response) {
           var _response$data$data = response.data.data,
@@ -170,6 +202,35 @@ function (_Component) {
       });
     }
   }, {
+    key: "setPageLimit",
+    value: function setPageLimit(pageLimit) {
+      var _this3 = this;
+
+      var event = _typeof(pageLimit) === 'object' && pageLimit.nativeEvent;
+
+      if (event) {
+        pageLimit = event.target.value;
+      }
+
+      this.setState({
+        pageLimit: pageLimit
+      }, function () {
+        return _this3.reload();
+      });
+    }
+  }, {
+    key: "resetPageLimit",
+    value: function resetPageLimit() {
+      var _this4 = this;
+
+      var defaultPageLimit = this.props.defaultPageLimit;
+      this.setState({
+        pageLimit: defaultPageLimit
+      }, function () {
+        return _this4.reload();
+      });
+    }
+  }, {
     key: "changePage",
     value: function changePage(page) {
       this.loadPage(page);
@@ -177,13 +238,13 @@ function (_Component) {
   }, {
     key: "changeOrder",
     value: function changeOrder(field, direction) {
-      var _this3 = this;
+      var _this5 = this;
 
       this.setState({
         orderByField: field,
         orderByDirection: direction
       }, function () {
-        _this3.loadPage(1);
+        _this5.loadPage(1);
       });
     }
   }]);
@@ -197,14 +258,18 @@ AjaxDynamicDataTable.defaultProps = {
   },
   params: {},
   defaultOrderByField: null,
-  defaultOrderByDirection: null
+  defaultOrderByDirection: null,
+  defaultPageLimit: null,
+  pageLimitRenderer: null
 };
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes.default.string,
   onLoad: _propTypes.default.func,
   params: _propTypes.default.object,
   defaultOrderByField: _propTypes.default.string,
-  defaultOrderByDirection: _propTypes.default.string
+  defaultOrderByDirection: _propTypes.default.string,
+  defaultPageLimit: _propTypes.default.number,
+  pageLimitRenderer: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.node])
 };
 var _default = AjaxDynamicDataTable;
 exports.default = _default;

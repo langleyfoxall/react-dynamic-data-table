@@ -268,7 +268,7 @@ function (_Component) {
         return this.renderEmptyTable();
       }
 
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("div", {
         className: "table-responsive"
       }, _react.default.createElement("table", {
         className: this.className()
