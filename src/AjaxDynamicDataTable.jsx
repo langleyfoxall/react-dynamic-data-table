@@ -63,7 +63,7 @@ class AjaxDynamicDataTable extends Component {
         const {onLoad, params, onlyShowLoadingOnce} = this.props;
 
         this.setState(
-            { loading: !(!initialLoad && !onlyShowLoadingOnce) },
+            { loading: initialLoad || !onlyShowLoadingOnce },
             () => {
                 axios.get(this.props.apiUrl, {
 

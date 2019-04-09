@@ -146,7 +146,7 @@ function (_Component) {
           params = _this$props.params,
           onlyShowLoadingOnce = _this$props.onlyShowLoadingOnce;
       this.setState({
-        loading: !(!initialLoad && !onlyShowLoadingOnce)
+        loading: initialLoad || !onlyShowLoadingOnce
       }, function () {
         axios.get(_this2.props.apiUrl, {
           params: _objectSpread({}, params, {
