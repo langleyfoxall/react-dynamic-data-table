@@ -100,7 +100,7 @@ AjaxDynamicDataTable.defaultProps = {
     params: {},
     defaultOrderByField: null,
     defaultOrderByDirection: null,
-    onlyShowLoadingOnce: true,
+    onlyShowLoadingOnce: false,
 };
 
 AjaxDynamicDataTable.propTypes = {
