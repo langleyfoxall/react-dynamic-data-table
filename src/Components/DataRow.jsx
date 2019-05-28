@@ -48,7 +48,7 @@ class DataRow extends Component {
     renderCell(field, row) {
         let value = row[field.name];
 
-        value = this.props.dataItemManipulator(field.name, value);
+        value = this.props.dataItemManipulator(field.name, value, row);
 
         if (typeof value === 'object' || typeof value === 'array') {
             value = JSON.stringify(value);

@@ -31,7 +31,7 @@ class DynamicDataTable extends Component {
                 renderCheckboxes={renderCheckboxes}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
-                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+                dataItemManipulator={(field, value, row) => dataItemManipulator(field, value, row)}
             />
         );
     }
@@ -229,7 +229,7 @@ class DynamicDataTable extends Component {
             renderCheckboxes,
             key: row.id,
             fields: this.getFields(),
-            dataItemManipulator: (field, value) => dataItemManipulator(field, value),
+            dataItemManipulator: (field, value, row) => dataItemManipulator(field, value, row),
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
             onCheckboxChange: (e) => this.checkboxChange(e),
         });
