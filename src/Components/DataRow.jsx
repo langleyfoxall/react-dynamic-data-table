@@ -7,6 +7,12 @@ class DataRow extends Component {
         return null;
     }
 
+    shouldDangerouslyRenderField(field) {
+        const { dangerouslyRenderFields } = this.props;
+        
+        return dangerouslyRenderFields.includes(field);
+    }
+    
     render() {
         const { row, fields, onClick, onContextMenu } = this.props;
 
@@ -50,12 +56,26 @@ class DataRow extends Component {
 
         value = this.props.dataItemManipulator(field.name, value);
 
+        const key = `${row.id}_${field.name}`;
+
+        if (React.isValidElement(value)) {
+            return (
+                <td key={key}>{value}</td>
+            );
+        }
+
+        if (this.shouldDangerouslyRenderField(field.name)) {
+            return (
+                <td key={key} dangerouslySetInnerHTML={{__html: value}}/>
+            );
+        }
+
         if (typeof value === 'object' || typeof value === 'array') {
             value = JSON.stringify(value);
         }
 
         return (
-            <td key={`${row.id}_${field.name}`}>{ value }</td>
+            <td key={key}>{ value }</td>
         );
     }
 
@@ -146,6 +166,7 @@ class DataRow extends Component {
 DataRow.defaultProps = {
     onClick: DataRow.noop,
     onContextMenu: DataRow.noop,
+    dangerouslyRenderFields: [],
 };
 
 DataRow.propTypes = {
@@ -159,6 +180,7 @@ DataRow.propTypes = {
     renderCheckboxes: PropTypes.bool,
     onClick: PropTypes.func,
     onContextMenu: PropTypes.func,
+    dangerouslyRenderFields: PropTypes.array
 };
 
 export default DataRow;
