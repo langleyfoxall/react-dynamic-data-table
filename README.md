@@ -471,6 +471,60 @@ An example of show to use bulk actions is shown below.
 />
 ```
 
+### Data Item Manipulation
+
+If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the 
+`DynamicDataTable`. This prop expects a `function` which will be passed two parameters, the `field`, and the `value`. 
+This function will be called once for every cell that is to be rendered.
+
+```JSX
+<DynamicDataTable
+    dataItemManipulator={(field, value) => {
+        switch(field) {
+            case 'id':
+                return 'ID:' + value;
+            case 'reference':
+                return value.toUpperCase();
+        }
+        
+        return value;
+    }}
+/>
+```
+
+It is also possible to render React components directly, by returning them from this function.
+
+```JSX
+<DynamicDataTable
+    dataItemManipulator={(field, value) => {
+        switch(field) {
+            case 'reference':
+                return <ExampleComponent exampleProp={value} />;
+        }
+        
+        return value;
+    }}
+/>
+```
+
+If you wish, you can dangerously render HTML directly by returning a string from the `dataItemManipulator`, you will 
+however need to explicitly specify which fields this should be enabled for. This is done by using the 
+`dangerouslyRenderFields` prop.
+
+ ```JSX
+ <DynamicDataTable
+     dangerouslyRenderFields={['check']}
+     dataItemManipulator={(field, value) => {
+         switch(field) {
+             case 'check':
+                 return "<i class='fa fa-check'></i>";
+         }
+         
+         return value;
+     }}
+ />
+ ```
+
 ### Loading message & indicator
 
 By default, the React Dynamic Data Table will not show indication that it is
