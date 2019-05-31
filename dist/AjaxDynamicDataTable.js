@@ -3,21 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
 
 require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es6.array.filter");
 
-require("core-js/modules/es6.symbol");
-
 require("core-js/modules/web.dom.iterable");
 
 require("core-js/modules/es6.array.iterator");
-
-require("core-js/modules/es6.object.to-string");
 
 require("core-js/modules/es6.object.keys");
 
@@ -37,9 +35,9 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _DynamicDataTable = _interopRequireDefault(require("./DynamicDataTable"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -59,11 +57,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var AjaxDynamicDataTable =
 /*#__PURE__*/
@@ -86,9 +84,9 @@ function (_Component) {
       orderByDirection: defaultOrderByDirection,
       loading: false
     };
-    _this.reload = _this.reload.bind(_assertThisInitialized(_this));
-    _this.changePage = _this.changePage.bind(_assertThisInitialized(_this));
-    _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_this));
+    _this.reload = _this.reload.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.changePage = _this.changePage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -114,7 +112,7 @@ function (_Component) {
           orderByField = _this$state.orderByField,
           orderByDirection = _this$state.orderByDirection,
           loading = _this$state.loading;
-      return _react["default"].createElement(_DynamicDataTable["default"], _extends({
+      return _react.default.createElement(_DynamicDataTable.default, _extends({
         rows: rows,
         currentPage: currentPage,
         totalPages: totalPages,
@@ -202,11 +200,11 @@ AjaxDynamicDataTable.defaultProps = {
   defaultOrderByDirection: null
 };
 AjaxDynamicDataTable.propTypes = {
-  apiUrl: _propTypes["default"].string,
-  onLoad: _propTypes["default"].func,
-  params: _propTypes["default"].object,
-  defaultOrderByField: _propTypes["default"].string,
-  defaultOrderByDirection: _propTypes["default"].string
+  apiUrl: _propTypes.default.string,
+  onLoad: _propTypes.default.func,
+  params: _propTypes.default.object,
+  defaultOrderByField: _propTypes.default.string,
+  defaultOrderByDirection: _propTypes.default.string
 };
 var _default = AjaxDynamicDataTable;
-exports["default"] = _default;
+exports.default = _default;
