@@ -136,14 +136,13 @@ function (_Component) {
     value: function loadPage(page) {
       var _this2 = this;
 
-      var axios = require('axios');
-
       var _this$state2 = this.state,
           orderByField = _this$state2.orderByField,
           orderByDirection = _this$state2.orderByDirection;
       var _this$props = this.props,
           onLoad = _this$props.onLoad,
-          params = _this$props.params;
+          params = _this$props.params,
+          axios = _this$props.axios;
       this.setState({
         loading: true
       }, function () {
@@ -199,14 +198,16 @@ AjaxDynamicDataTable.defaultProps = {
   },
   params: {},
   defaultOrderByField: null,
-  defaultOrderByDirection: null
+  defaultOrderByDirection: null,
+  axios: window.axios || require('axios')
 };
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes["default"].string,
   onLoad: _propTypes["default"].func,
   params: _propTypes["default"].object,
   defaultOrderByField: _propTypes["default"].string,
-  defaultOrderByDirection: _propTypes["default"].string
+  defaultOrderByDirection: _propTypes["default"].string,
+  axios: _propTypes["default"].any
 };
 var _default = AjaxDynamicDataTable;
 exports["default"] = _default;
