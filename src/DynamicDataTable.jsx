@@ -510,6 +510,7 @@ class DynamicDataTable extends Component {
                 currentPage={props.currentPage}
                 totalPages={props.totalPages}
                 changePage={(page) => props.changePage(page)}
+                paginationDelta={props.paginationDelta}
             />
         );
     }
@@ -543,6 +544,7 @@ DynamicDataTable.propTypes = {
     allowOrderingBy: PropTypes.array,
     disallowOrderingBy: PropTypes.array,
     dangerouslyRenderFields: PropTypes.array,
+    paginationDelta: PropTypes.number,
 };
 
 DynamicDataTable.defaultProps = {
@@ -578,6 +580,7 @@ DynamicDataTable.defaultProps = {
     allowOrderingBy: [],
     disallowOrderingBy: [],
     dangerouslyRenderFields: [],
+    paginationDelta: 4,
 };
 
 export default DynamicDataTable;

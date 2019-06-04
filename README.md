@@ -246,6 +246,19 @@ changePage(page) {
 }
 ```
 
+Pagination is dynamic, showing only a select subset of the available pages as actual buttons.
+Whether or not an individual button to a page is shown depends on if it is the first or last page (these are always shown), and whether it is within a predefined offset from the current page (a pagination delta). 
+This delta can be changed by passing a `paginationDelta` prop into `DynamicDataTable` as shown below:
+
+```JSX
+<DynamicDataTable
+        rows={this.state.users}
+        currentPage={this.state.currentPage}
+        totalPages={this.state.totalPages}
+        paginationDelta={6}
+    />
+```
+
 ### Row buttons
 
 Row buttons appear on the right hand side of every row in the React Dynamic Data 
