@@ -358,7 +358,7 @@ For implementation details regarding these properties, see the other relevant ar
 
 ### Clickable rows
 
-Clickable rows allows an `onClick` prop to be passed which will return an event object along with
+Clickable rows allows an `onClick` prop to be passed. This should be a callable, that will be passed an event object along with
 an instance of the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
 
 ```JSX
