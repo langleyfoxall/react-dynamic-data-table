@@ -77,8 +77,8 @@ function (_Component) {
           _onClick = _this$props.onClick,
           _onContextMenu = _this$props.onContextMenu;
       return _react["default"].createElement("tr", {
-        onClick: function onClick() {
-          return _onClick(row);
+        onClick: function onClick(e) {
+          return _onClick(e, row);
         },
         onContextMenu: function onContextMenu(e) {
           return _onContextMenu(e, row);
@@ -105,11 +105,8 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
-        onChange: function onChange(event) {
-          return _this2.props.checkboxChange({
-            event: event,
-            row: row
-          });
+        onChange: function onChange(e) {
+          return _this2.props.checkboxChange(e, row);
         },
         onClick: function onClick(e) {
           return e.stopPropagation();
@@ -203,8 +200,8 @@ function (_Component) {
       return _react["default"].createElement("button", {
         type: "button",
         className: "btn btn-primary",
-        onClick: function onClick() {
-          button.callback(row);
+        onClick: function onClick(e) {
+          return button.callback(e, row);
         }
       }, button.name);
     }
@@ -231,8 +228,8 @@ function (_Component) {
         },
         key: "button_".concat(button.name),
         className: "dropdown-item",
-        onClick: function onClick() {
-          button.callback(row);
+        onClick: function onClick(e) {
+          return button.callback(e, row);
         }
       }, button.name);
     }

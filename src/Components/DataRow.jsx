@@ -18,7 +18,7 @@ class DataRow extends Component {
 
         return (
             <tr
-                onClick={() => onClick(row)}
+                onClick={e => onClick(e, row)}
                 onContextMenu={e => onContextMenu(e, row)}
             >
                 { this.renderCheckboxCell() }
@@ -40,7 +40,7 @@ class DataRow extends Component {
                 <input
                     type="checkbox"
                     checked={this.props.checkboxIsChecked(row)}
-                    onChange={event => this.props.checkboxChange({ event, row })}
+                    onChange={e => this.props.checkboxChange(e, row)}
                     onClick={e => e.stopPropagation()}
                 />
             </div>
@@ -128,7 +128,7 @@ class DataRow extends Component {
             <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => { button.callback(row) }}
+                onClick={e => button.callback(e, row)}
             >
                 {button.name}
             </button>
@@ -155,7 +155,7 @@ class DataRow extends Component {
                 style={{cursor: 'pointer'}}
                 key={`button_${button.name}`}
                 className="dropdown-item"
-                onClick={() => { button.callback(row) }}>
+                onClick={e => button.callback(e, row)}>
                 {button.name}
             </div>
         )
