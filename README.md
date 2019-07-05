@@ -364,7 +364,7 @@ an instance of the row that is clicked. It also adds the bootstrap `table-hover`
 ```JSX
 <DynamicDataTable
     rows={this.state.users}
-    onClick={row => console.warn(event, row.name)}
+    onClick={(event, row) => console.warn(event, row.name)}
 />
 ```
 
