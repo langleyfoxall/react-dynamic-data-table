@@ -271,9 +271,8 @@ and `callback`.
 
 The `name` is string, such as 'View', 'Edit', 'Delete', etc.
 
-The `callback` is a callable with a single argument. The argument will
-contain an object representing the data of the row on which the button is 
-situated. 
+The `callback` is a callable with a two arguments. The first is the event object
+for the button clicked and the second is an object representing the current row.
 
 An example of setting custom row buttons is shown below.
 
@@ -283,13 +282,13 @@ An example of setting custom row buttons is shown below.
     buttons={[
         {
             name: 'Edit',
-            callback: (user) => {
+            callback: (event, user) => {
                 // Show edit user view...
             }
         },
         {
             name: 'Delete',
-            callback: (user) => {
+            callback: (event, user) => {
                 // Delete user...
             }
         }
@@ -359,13 +358,13 @@ For implementation details regarding these properties, see the other relevant ar
 
 ### Clickable rows
 
-Clickable rows allows an `onClick` prop to be passed which will return an instance of
-the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
+Clickable rows allows an `onClick` prop to be passed which will return an event object along with
+an instance of the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
 
 ```JSX
 <DynamicDataTable
     rows={this.state.users}
-    onClick={row => console.warn(row.name)}
+    onClick={row => console.warn(event, row.name)}
 />
 ```
 
