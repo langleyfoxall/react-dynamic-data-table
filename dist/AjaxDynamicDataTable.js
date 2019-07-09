@@ -7,6 +7,10 @@ exports["default"] = void 0;
 
 require("core-js/modules/es7.symbol.async-iterator");
 
+require("core-js/modules/es7.object.get-own-property-descriptors");
+
+require("core-js/modules/es6.object.define-properties");
+
 require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es6.array.filter");
@@ -43,7 +47,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } else { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -84,7 +88,8 @@ function (_Component) {
       totalPages: 1,
       orderByField: defaultOrderByField,
       orderByDirection: defaultOrderByDirection,
-      loading: false
+      loading: false,
+      initialLoad: true
     };
     _this.reload = _this.reload.bind(_assertThisInitialized(_this));
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_this));
@@ -138,13 +143,15 @@ function (_Component) {
 
       var _this$state2 = this.state,
           orderByField = _this$state2.orderByField,
-          orderByDirection = _this$state2.orderByDirection;
+          orderByDirection = _this$state2.orderByDirection,
+          initialLoad = _this$state2.initialLoad;
       var _this$props = this.props,
+          axios = _this$props.axios,
           onLoad = _this$props.onLoad,
           params = _this$props.params,
-          axios = _this$props.axios;
+          onlyShowLoadingOnce = _this$props.onlyShowLoadingOnce;
       this.setState({
-        loading: true
+        loading: initialLoad || !onlyShowLoadingOnce
       }, function () {
         axios.get(_this2.props.apiUrl, {
           params: _objectSpread({}, params, {
@@ -161,7 +168,8 @@ function (_Component) {
             rows: rows,
             currentPage: current_page,
             totalPages: last_page,
-            loading: false
+            loading: false,
+            initialLoad: false
           };
 
           _this2.setState(newState);
@@ -199,6 +207,7 @@ AjaxDynamicDataTable.defaultProps = {
   params: {},
   defaultOrderByField: null,
   defaultOrderByDirection: null,
+  onlyShowLoadingOnce: false,
   axios: window.axios || require('axios')
 };
 AjaxDynamicDataTable.propTypes = {
@@ -207,6 +216,7 @@ AjaxDynamicDataTable.propTypes = {
   params: _propTypes["default"].object,
   defaultOrderByField: _propTypes["default"].string,
   defaultOrderByDirection: _propTypes["default"].string,
+  onlyShowLoadingOnce: _propTypes["default"].bool,
   axios: _propTypes["default"].any
 };
 var _default = AjaxDynamicDataTable;
