@@ -7,11 +7,19 @@ exports["default"] = void 0;
 
 require("core-js/modules/es7.symbol.async-iterator");
 
+require("core-js/modules/es7.object.get-own-property-descriptors");
+
+require("core-js/modules/es6.object.define-properties");
+
 require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es6.array.filter");
 
+require("core-js/modules/es6.object.assign");
+
 require("core-js/modules/es6.symbol");
+
+require("core-js/modules/es6.array.index-of");
 
 require("core-js/modules/web.dom.iterable");
 
@@ -20,8 +28,6 @@ require("core-js/modules/es6.array.iterator");
 require("core-js/modules/es6.object.to-string");
 
 require("core-js/modules/es6.object.keys");
-
-require("core-js/modules/es6.object.assign");
 
 require("core-js/modules/es6.object.define-property");
 
@@ -43,11 +49,15 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } else { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -84,6 +94,7 @@ function (_Component) {
       totalPages: 1,
       orderByField: defaultOrderByField,
       orderByDirection: defaultOrderByDirection,
+      disableOrderingBy: {},
       loading: false
     };
     _this.reload = _this.reload.bind(_assertThisInitialized(_this));
@@ -114,6 +125,11 @@ function (_Component) {
           orderByField = _this$state.orderByField,
           orderByDirection = _this$state.orderByDirection,
           loading = _this$state.loading;
+
+      var _this$props = this.props,
+          disableOrderingBy = _this$props.disableOrderingBy,
+          props = _objectWithoutProperties(_this$props, ["disableOrderingBy"]);
+
       return _react["default"].createElement(_DynamicDataTable["default"], _extends({
         rows: rows,
         currentPage: currentPage,
@@ -122,8 +138,9 @@ function (_Component) {
         orderByDirection: orderByDirection,
         loading: loading,
         changePage: this.changePage,
-        changeOrder: this.changeOrder
-      }, this.props));
+        changeOrder: this.changeOrder,
+        disableOrderingBy: this.disableOrderingBy
+      }, props));
     }
   }, {
     key: "reload",
@@ -139,10 +156,10 @@ function (_Component) {
       var _this$state2 = this.state,
           orderByField = _this$state2.orderByField,
           orderByDirection = _this$state2.orderByDirection;
-      var _this$props = this.props,
-          onLoad = _this$props.onLoad,
-          params = _this$props.params,
-          axios = _this$props.axios;
+      var _this$props2 = this.props,
+          onLoad = _this$props2.onLoad,
+          params = _this$props2.params,
+          axios = _this$props2.axios;
       this.setState({
         loading: true
       }, function () {
@@ -152,12 +169,15 @@ function (_Component) {
             orderByField: orderByField,
             orderByDirection: orderByDirection
           })
-        }).then(function (response) {
-          var _response$data$data = response.data.data,
-              rows = _response$data$data.data,
-              current_page = _response$data$data.current_page,
-              last_page = _response$data$data.last_page;
+        }).then(function (_ref) {
+          var response = _ref.data;
+          var disable_ordering_by = response.meta.disable_ordering_by;
+          var _response$data = response.data,
+              rows = _response$data.data,
+              current_page = _response$data.current_page,
+              last_page = _response$data.last_page;
           var newState = {
+            disableOrderingBy: disable_ordering_by,
             rows: rows,
             currentPage: current_page,
             totalPages: last_page,
@@ -187,6 +207,13 @@ function (_Component) {
         _this3.loadPage(1);
       });
     }
+  }, {
+    key: "disableOrderingBy",
+    get: function get() {
+      var state = this.state.disableOrderingBy;
+      var prop = this.props.disableOrderingBy;
+      return _objectSpread({}, state, {}, prop);
+    }
   }]);
 
   return AjaxDynamicDataTable;
@@ -199,7 +226,8 @@ AjaxDynamicDataTable.defaultProps = {
   params: {},
   defaultOrderByField: null,
   defaultOrderByDirection: null,
-  axios: window.axios || require('axios')
+  axios: window.axios || require('axios'),
+  disableOrderingBy: {}
 };
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes["default"].string,
@@ -207,7 +235,8 @@ AjaxDynamicDataTable.propTypes = {
   params: _propTypes["default"].object,
   defaultOrderByField: _propTypes["default"].string,
   defaultOrderByDirection: _propTypes["default"].string,
-  axios: _propTypes["default"].any
+  axios: _propTypes["default"].any,
+  disableOrderingBy: _propTypes["default"].object
 };
 var _default = AjaxDynamicDataTable;
 exports["default"] = _default;
