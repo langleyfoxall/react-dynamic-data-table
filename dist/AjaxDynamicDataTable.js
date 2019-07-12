@@ -5,7 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.array.from");
+
+require("core-js/modules/es6.regexp.to-string");
+
+require("core-js/modules/es6.date.to-string");
+
 require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.array.is-array");
 
 require("core-js/modules/es7.object.get-own-property-descriptors");
 
@@ -48,6 +58,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } else { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } } return target; }
 
@@ -94,7 +112,7 @@ function (_Component) {
       totalPages: 1,
       orderByField: defaultOrderByField,
       orderByDirection: defaultOrderByDirection,
-      disableOrderingBy: {},
+      disallowOrderingBy: [],
       loading: false
     };
     _this.reload = _this.reload.bind(_assertThisInitialized(_this));
@@ -127,8 +145,8 @@ function (_Component) {
           loading = _this$state.loading;
 
       var _this$props = this.props,
-          disableOrderingBy = _this$props.disableOrderingBy,
-          props = _objectWithoutProperties(_this$props, ["disableOrderingBy"]);
+          disallowOrderingBy = _this$props.disallowOrderingBy,
+          props = _objectWithoutProperties(_this$props, ["disallowOrderingBy"]);
 
       return _react["default"].createElement(_DynamicDataTable["default"], _extends({
         rows: rows,
@@ -139,7 +157,7 @@ function (_Component) {
         loading: loading,
         changePage: this.changePage,
         changeOrder: this.changeOrder,
-        disableOrderingBy: this.disableOrderingBy
+        disallowOrderingBy: this.disallowOrderingBy
       }, props));
     }
   }, {
@@ -171,13 +189,13 @@ function (_Component) {
           })
         }).then(function (_ref) {
           var response = _ref.data;
-          var disable_ordering_by = response.meta.disable_ordering_by;
+          var disallow_ordering_by = response.meta.disallow_ordering_by;
           var _response$data = response.data,
               rows = _response$data.data,
               current_page = _response$data.current_page,
               last_page = _response$data.last_page;
           var newState = {
-            disableOrderingBy: disable_ordering_by,
+            disallowOrderingBy: disallow_ordering_by,
             rows: rows,
             currentPage: current_page,
             totalPages: last_page,
@@ -208,11 +226,11 @@ function (_Component) {
       });
     }
   }, {
-    key: "disableOrderingBy",
+    key: "disallowOrderingBy",
     get: function get() {
-      var state = this.state.disableOrderingBy;
-      var prop = this.props.disableOrderingBy;
-      return _objectSpread({}, state, {}, prop);
+      var state = this.state.disallowOrderingBy;
+      var prop = this.props.disallowOrderingBy;
+      return [].concat(_toConsumableArray(state), _toConsumableArray(prop));
     }
   }]);
 
@@ -227,7 +245,7 @@ AjaxDynamicDataTable.defaultProps = {
   defaultOrderByField: null,
   defaultOrderByDirection: null,
   axios: window.axios || require('axios'),
-  disableOrderingBy: {}
+  disallowOrderingBy: []
 };
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes["default"].string,
@@ -236,7 +254,7 @@ AjaxDynamicDataTable.propTypes = {
   defaultOrderByField: _propTypes["default"].string,
   defaultOrderByDirection: _propTypes["default"].string,
   axios: _propTypes["default"].any,
-  disableOrderingBy: _propTypes["default"].object
+  disallowOrderingBy: _propTypes["default"].arrayOf(_propTypes["default"].string)
 };
 var _default = AjaxDynamicDataTable;
 exports["default"] = _default;
