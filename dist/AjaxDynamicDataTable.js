@@ -239,12 +239,6 @@ function (_Component) {
   return AjaxDynamicDataTable;
 }(_react.Component);
 
-var axios;
-
-if (typeof window !== 'undefined') {
-  axios = window.axios;
-}
-
 AjaxDynamicDataTable.defaultProps = {
   onLoad: function onLoad() {
     return null;
@@ -252,7 +246,7 @@ AjaxDynamicDataTable.defaultProps = {
   params: {},
   defaultOrderByField: null,
   defaultOrderByDirection: null,
-  axios: axios || require('axios'),
+  axios: window && window.axios ? window.axios : require('axios'),
   disallowOrderingBy: []
 };
 AjaxDynamicDataTable.propTypes = {

@@ -113,18 +113,12 @@ class AjaxDynamicDataTable extends Component {
 
 }
 
-let axios;
-
-if (typeof window !== 'undefined') {
-    axios = window.axios
-}
-
 AjaxDynamicDataTable.defaultProps = {
     onLoad: () => null,
     params: {},
     defaultOrderByField: null,
     defaultOrderByDirection: null,
-    axios: axios || require('axios'),
+    axios: (window && window.axios) ? window.axios : require('axios'),
     disallowOrderingBy: [],
 };
 
