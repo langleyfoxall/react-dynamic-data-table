@@ -118,7 +118,8 @@ AjaxDynamicDataTable.defaultProps = {
     params: {},
     defaultOrderByField: null,
     defaultOrderByDirection: null,
-    axios: window.axios || require('axios'),
+    axios: typeof window !== 'undefined' && window.axios 
+        ? window.axios : require('axios'),
     disallowOrderingBy: [],
 };
 
