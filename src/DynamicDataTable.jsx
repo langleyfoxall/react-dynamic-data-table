@@ -22,7 +22,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator }) {
+    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields }) {
         return (
             <DataRow
                 key={row.id}
@@ -34,6 +34,7 @@ class DynamicDataTable extends Component {
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
                 dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+                dangerouslyRenderFields={dangerouslyRenderFields}
             />
         );
     }
@@ -222,7 +223,9 @@ class DynamicDataTable extends Component {
     }
 
     renderRow(row) {
-        const { onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer } = this.props;
+        const {
+            onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields
+        } = this.props;
 
         return rowRenderer({
             row,
@@ -234,6 +237,7 @@ class DynamicDataTable extends Component {
             dataItemManipulator: (field, value) => dataItemManipulator(field, value),
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
             onCheckboxChange: (e) => this.checkboxChange(e),
+            dangerouslyRenderFields,
         });
     }
 
@@ -508,6 +512,7 @@ class DynamicDataTable extends Component {
                 currentPage={props.currentPage}
                 totalPages={props.totalPages}
                 changePage={(page) => props.changePage(page)}
+                paginationDelta={props.paginationDelta}
             />
         );
     }
@@ -540,6 +545,8 @@ DynamicDataTable.propTypes = {
     hoverable: PropTypes.bool,
     allowOrderingBy: PropTypes.array,
     disallowOrderingBy: PropTypes.array,
+    dangerouslyRenderFields: PropTypes.array,
+    paginationDelta: PropTypes.number,
 };
 
 DynamicDataTable.defaultProps = {
@@ -574,6 +581,8 @@ DynamicDataTable.defaultProps = {
     hoverable: false,
     allowOrderingBy: [],
     disallowOrderingBy: [],
+    dangerouslyRenderFields: [],
+    paginationDelta: 4,
 };
 
 export default DynamicDataTable;

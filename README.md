@@ -246,6 +246,19 @@ changePage(page) {
 }
 ```
 
+Pagination is dynamic, showing only a select subset of the available pages as actual buttons.
+Whether or not an individual button to a page is shown depends on if it is the first or last page (these are always shown), and whether it is within a predefined offset from the current page (a pagination delta). 
+This delta can be changed by passing a `paginationDelta` prop into `DynamicDataTable` as shown below:
+
+```JSX
+<DynamicDataTable
+        rows={this.state.users}
+        currentPage={this.state.currentPage}
+        totalPages={this.state.totalPages}
+        paginationDelta={6}
+    />
+```
+
 ### Row buttons
 
 Row buttons appear on the right hand side of every row in the React Dynamic Data 
@@ -258,9 +271,8 @@ and `callback`.
 
 The `name` is string, such as 'View', 'Edit', 'Delete', etc.
 
-The `callback` is a callable with a single argument. The argument will
-contain an object representing the data of the row on which the button is 
-situated. 
+The `callback` is a callable with a two arguments. The first is the event object
+for the button clicked and the second is an object representing the current row.
 
 An example of setting custom row buttons is shown below.
 
@@ -270,13 +282,13 @@ An example of setting custom row buttons is shown below.
     buttons={[
         {
             name: 'Edit',
-            callback: (user) => {
+            callback: (event, user) => {
                 // Show edit user view...
             }
         },
         {
             name: 'Delete',
-            callback: (user) => {
+            callback: (event, user) => {
                 // Delete user...
             }
         }
@@ -346,13 +358,13 @@ For implementation details regarding these properties, see the other relevant ar
 
 ### Clickable rows
 
-Clickable rows allows an `onClick` prop to be passed which will return an instance of
-the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
+Clickable rows allows an `onClick` prop to be passed. This should be a callable, that will be passed an event object along with
+an instance of the row that is clicked. It also adds the bootstrap `table-hover` class onto the table.
 
 ```JSX
 <DynamicDataTable
     rows={this.state.users}
-    onClick={row => console.warn(row.name)}
+    onClick={(event, row) => console.warn(event, row.name)}
 />
 ```
 
@@ -470,6 +482,60 @@ An example of show to use bulk actions is shown below.
     ]}
 />
 ```
+
+### Data Item Manipulation
+
+If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the 
+`DynamicDataTable`. This prop expects a `function` which will be passed two parameters, the `field`, and the `value`. 
+This function will be called once for every cell that is to be rendered.
+
+```JSX
+<DynamicDataTable
+    dataItemManipulator={(field, value) => {
+        switch(field) {
+            case 'id':
+                return 'ID:' + value;
+            case 'reference':
+                return value.toUpperCase();
+        }
+        
+        return value;
+    }}
+/>
+```
+
+It is also possible to render React components directly, by returning them from this function.
+
+```JSX
+<DynamicDataTable
+    dataItemManipulator={(field, value) => {
+        switch(field) {
+            case 'reference':
+                return <ExampleComponent exampleProp={value} />;
+        }
+        
+        return value;
+    }}
+/>
+```
+
+If you wish, you can dangerously render HTML directly by returning a string from the `dataItemManipulator`, you will 
+however need to explicitly specify which fields this should be enabled for. This is done by using the 
+`dangerouslyRenderFields` prop.
+
+ ```JSX
+ <DynamicDataTable
+     dangerouslyRenderFields={['check']}
+     dataItemManipulator={(field, value) => {
+         switch(field) {
+             case 'check':
+                 return "<i class='fa fa-check'></i>";
+         }
+         
+         return value;
+     }}
+ />
+ ```
 
 ### Loading message & indicator
 

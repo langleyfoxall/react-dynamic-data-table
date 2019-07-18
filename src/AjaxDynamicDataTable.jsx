@@ -14,6 +14,7 @@ class AjaxDynamicDataTable extends Component {
             totalPages: 1,
             orderByField: defaultOrderByField,
             orderByDirection: defaultOrderByDirection,
+            disallowOrderingBy: [],
             loading: false,
         };
 
@@ -32,9 +33,20 @@ class AjaxDynamicDataTable extends Component {
         }
     }
 
+    get disallowOrderingBy() {
+        const { disallowOrderingBy: state } = this.state;
+        const { disallowOrderingBy: prop } = this.props;
+
+        return [
+            ...state,
+            ...prop
+        ]
+    }
+
     render() {
 
-        const {rows, currentPage, totalPages, orderByField, orderByDirection, loading} = this.state;
+        const { rows, currentPage, totalPages, orderByField, orderByDirection, loading } = this.state;
+        const { disallowOrderingBy, ...props } = this.props;
 
         return (
             <DynamicDataTable
@@ -46,7 +58,8 @@ class AjaxDynamicDataTable extends Component {
                 loading={loading}
                 changePage={this.changePage}
                 changeOrder={this.changeOrder}
-                {...this.props}
+                disallowOrderingBy={this.disallowOrderingBy}
+                {...props}
             />
         );
     }
@@ -56,10 +69,8 @@ class AjaxDynamicDataTable extends Component {
     }
 
     loadPage(page) {
-
-        const axios = require('axios');
         const {orderByField, orderByDirection} = this.state;
-        const {onLoad, params} = this.props;
+        const {onLoad, params, axios} = this.props;
 
         this.setState(
             { loading: true },
@@ -67,12 +78,20 @@ class AjaxDynamicDataTable extends Component {
                 axios.get(this.props.apiUrl, {
 
                     params: { ...params, page, orderByField, orderByDirection }
-        
-                }).then((response) => {
-        
-                    const { data: rows, current_page, last_page } = response.data.data;
-                    const newState = { rows, currentPage: current_page, totalPages: last_page, loading: false };
-        
+
+                }).then(({ data: response }) => {
+
+                    const { disallow_ordering_by } = response.meta;
+                    const { data: rows, current_page, last_page } = response.data;
+
+                    const newState = {
+                        disallowOrderingBy: disallow_ordering_by,
+                        rows,
+                        currentPage: current_page,
+                        totalPages:last_page,
+                        loading: false
+                    };
+
                     this.setState(newState);
                     onLoad(newState);
                 });
@@ -99,6 +118,9 @@ AjaxDynamicDataTable.defaultProps = {
     params: {},
     defaultOrderByField: null,
     defaultOrderByDirection: null,
+    axios: typeof window !== 'undefined' && window.axios 
+        ? window.axios : require('axios'),
+    disallowOrderingBy: [],
 };
 
 AjaxDynamicDataTable.propTypes = {
@@ -107,6 +129,8 @@ AjaxDynamicDataTable.propTypes = {
     params: PropTypes.object,
     defaultOrderByField: PropTypes.string,
     defaultOrderByDirection: PropTypes.string,
+    axios: PropTypes.any,
+    disallowOrderingBy: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AjaxDynamicDataTable;
