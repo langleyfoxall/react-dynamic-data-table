@@ -1,6 +1,6 @@
 {
   "name": "@langleyfoxall/react-dynamic-data-table",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Re-usable data table for React with sortable columns, pagination and more.",
   "keywords": [
     "react",
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/langleyfoxall/react-dynamic-data-table#readme",
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0"
