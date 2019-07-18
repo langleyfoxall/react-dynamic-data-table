@@ -81,7 +81,7 @@ class AjaxDynamicDataTable extends Component {
 
                 }).then(({ data: response }) => {
 
-                    const { disallow_ordering_by } = response.meta;
+                    const { disallow_ordering_by } = response.meta || {};
                     const { data: rows, current_page, last_page } = response.data;
 
                     const newState = {
