@@ -346,6 +346,7 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
   row,                // Instance of data row
   onClick,            // Row on click handler
   buttons,            // Array of buttons
+  actions,            // Array of header actions
   fields,             // Visible fields
   renderCheckboxes,   // Boolean indicating whether to render checkboxes
   checkboxIsChecked,  // Boolean indicating if checkbox is checked
