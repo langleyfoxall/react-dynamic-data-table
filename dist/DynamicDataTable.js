@@ -348,10 +348,14 @@ function (_Component) {
     value: function renderActionsCell() {
       var _this5 = this;
 
-      var props = this.props;
+      var _this$props6 = this.props,
+          actions = _this$props6.actions,
+          buttons = _this$props6.buttons;
       var state = this.state;
 
-      if (!props.renderCheckboxes || !this.props.actions.length) {
+      if (!buttons.length && !actions.length) {
+        return null;
+      } else if (!actions.length) {
         return _react["default"].createElement("th", null);
       }
 
@@ -517,10 +521,10 @@ function (_Component) {
   }, {
     key: "renderLoadingTable",
     value: function renderLoadingTable() {
-      var _this$props6 = this.props,
-          loadingIndicator = _this$props6.loadingIndicator,
-          loadingMessage = _this$props6.loadingMessage,
-          loadingComponent = _this$props6.loadingComponent;
+      var _this$props7 = this.props,
+          loadingIndicator = _this$props7.loadingIndicator,
+          loadingMessage = _this$props7.loadingMessage,
+          loadingComponent = _this$props7.loadingComponent;
 
       if (loadingComponent) {
         return loadingComponent;
@@ -548,9 +552,9 @@ function (_Component) {
   }, {
     key: "renderEmptyTable",
     value: function renderEmptyTable() {
-      var _this$props7 = this.props,
-          noDataMessage = _this$props7.noDataMessage,
-          noDataComponent = _this$props7.noDataComponent;
+      var _this$props8 = this.props,
+          noDataMessage = _this$props8.noDataMessage,
+          noDataComponent = _this$props8.noDataComponent;
 
       if (_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;

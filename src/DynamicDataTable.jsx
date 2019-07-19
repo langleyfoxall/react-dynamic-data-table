@@ -276,13 +276,13 @@ class DynamicDataTable extends Component {
     }
 
     renderActionsCell() {
-        const props = this.props;
+        const { actions, buttons } = this.props;
         const state = this.state;
 
-        if (!props.renderCheckboxes || !this.props.actions.length) {
-            return (
-                <th/>
-            );
+        if (!buttons.length && !actions.length) {
+            return null;
+        } else if (!actions.length) {
+            return <th />;
         }
 
         return (
