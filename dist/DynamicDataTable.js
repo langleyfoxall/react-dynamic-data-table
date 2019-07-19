@@ -291,7 +291,8 @@ function (_Component) {
           renderCheckboxes = _this$props4.renderCheckboxes,
           _dataItemManipulator = _this$props4.dataItemManipulator,
           rowRenderer = _this$props4.rowRenderer,
-          dangerouslyRenderFields = _this$props4.dangerouslyRenderFields;
+          dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
+          actions = _this$props4.actions;
       return rowRenderer({
         row: row,
         onClick: onClick,
@@ -308,7 +309,8 @@ function (_Component) {
         onCheckboxChange: function onCheckboxChange(e) {
           return _this3.checkboxChange(e);
         },
-        dangerouslyRenderFields: dangerouslyRenderFields
+        dangerouslyRenderFields: dangerouslyRenderFields,
+        actions: actions
       });
     }
   }, {
@@ -591,13 +593,15 @@ function (_Component) {
           checkboxIsChecked = _ref2.checkboxIsChecked,
           onCheckboxChange = _ref2.onCheckboxChange,
           _dataItemManipulator2 = _ref2.dataItemManipulator,
-          dangerouslyRenderFields = _ref2.dangerouslyRenderFields;
+          dangerouslyRenderFields = _ref2.dangerouslyRenderFields,
+          actions = _ref2.actions;
       return _react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
         onClick: onClick,
         buttons: buttons,
         fields: fields,
+        actions: actions,
         renderCheckboxes: renderCheckboxes,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
