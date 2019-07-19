@@ -457,7 +457,7 @@ Actions, when combined with bulk select checkboxes allow you perform
 actions of multiple rows at once. When in use, a menu will be rendered
 in the top right of the table allowing your users to choose a bulk action
 that will be applied to the selected rows.
-
+Actions can also be used without bulk select checkboxes. This could allow for creation of action buttons that are not dependant on existing data, such as a 'Create User' button.
 To use actions in your React Dynamic Data Table, you must specify the
 `actions` props. This prop expects an array of objects, each containing a `name` 
 and `callback`.
