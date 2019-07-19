@@ -80,7 +80,7 @@ class DataRow extends Component {
     }
 
     renderButtons(row) {
-        const { buttons } = this.props;
+        const { buttons, actions } = this.props;
 
         if (typeof buttons === 'function') {
             return buttons(row);
@@ -88,7 +88,7 @@ class DataRow extends Component {
 
         if (!buttons.length && !actions.length) {
             return null;
-        } else if (!buttons.legth) {
+        } else if (!buttons.length) {
             return <td />;
         }
 

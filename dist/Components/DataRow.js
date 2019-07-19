@@ -150,7 +150,9 @@ function (_Component) {
     value: function renderButtons(row) {
       var _this3 = this;
 
-      var buttons = this.props.buttons;
+      var _this$props3 = this.props,
+          buttons = _this$props3.buttons,
+          actions = _this$props3.actions;
 
       if (typeof buttons === 'function') {
         return buttons(row);
@@ -158,7 +160,7 @@ function (_Component) {
 
       if (!buttons.length && !actions.length) {
         return null;
-      } else if (!buttons.legth) {
+      } else if (!buttons.length) {
         return _react["default"].createElement("td", null);
       }
 
