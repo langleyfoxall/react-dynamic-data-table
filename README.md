@@ -450,14 +450,14 @@ checkboxes against each row, on the left side of the table.
 Bulk select checkboxes are usually combined with bulk actions to perform
 actions on one or more rows at once.
 
-### Bulk actions
+### Actions
 
-Bulk actions, when combined with bulk select checkboxes allow you perform
+Actions, when combined with bulk select checkboxes allow you perform
 actions of multiple rows at once. When in use, a menu will be rendered
 in the top right of the table allowing your users to choose a bulk action
 that will be applied to the selected rows.
 
-To use bulk actions in your React Dynamic Data Table, you must specify the
+To use actions in your React Dynamic Data Table, you must specify the
 `actions` props. This prop expects an array of objects, each containing a `name` 
 and `callback`.
 
@@ -466,7 +466,7 @@ The `name` is string, such as 'Delete user(s)', 'Duplicate user(s)' etc.
 The `callback` is a callable with a single argument. The argument will
 contain an array of the selected rows. 
 
-An example of show to use bulk actions is shown below.
+Examples of how to use actions is shown below.
 
 ```JSX
 <DynamicDataTable
@@ -477,6 +477,20 @@ An example of show to use bulk actions is shown below.
             name: 'Delete user(s)',
             callback: (rows) => { 
                 // Delete users...
+            },
+        },
+    ]}
+/>
+```
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    actions={[
+        {
+            name: 'Create user',
+            callback: () => { 
+                // Toggle create user modal...
             },
         },
     ]}
