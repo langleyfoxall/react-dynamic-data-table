@@ -321,7 +321,8 @@ function (_Component) {
           orderByDirection = _this$props5.orderByDirection,
           allowOrderingBy = _this$props5.allowOrderingBy,
           disallowOrderingBy = _this$props5.disallowOrderingBy,
-          changeOrder = _this$props5.changeOrder;
+          changeOrder = _this$props5.changeOrder,
+          columnWidths = _this$props5.columnWidths;
       var orderByIcon = '';
 
       if (orderByField === field.name) {
@@ -334,11 +335,12 @@ function (_Component) {
       } : function () {};
       var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
       return _react["default"].createElement("th", {
+        key: field.name,
+        width: columnWidths[field.name],
+        onClick: onClickHandler,
         style: {
           cursor: cursor
-        },
-        key: field.name,
-        onClick: onClickHandler
+        }
       }, field.label, "\xA0", orderByIcon);
     }
   }, {
@@ -638,7 +640,8 @@ DynamicDataTable.propTypes = {
   allowOrderingBy: _propTypes["default"].array,
   disallowOrderingBy: _propTypes["default"].array,
   dangerouslyRenderFields: _propTypes["default"].array,
-  paginationDelta: _propTypes["default"].number
+  paginationDelta: _propTypes["default"].number,
+  columnWidths: _propTypes["default"].object
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -673,7 +676,8 @@ DynamicDataTable.defaultProps = {
   allowOrderingBy: [],
   disallowOrderingBy: [],
   dangerouslyRenderFields: [],
-  paginationDelta: 4
+  paginationDelta: 4,
+  columnWidths: {}
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;
