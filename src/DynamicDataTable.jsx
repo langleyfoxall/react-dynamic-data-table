@@ -263,11 +263,17 @@ class DynamicDataTable extends Component {
                 ? 'pointer'
                 : 'default'
         );
+
+        let width = columnWidths[field.name]
+
+        if (typeof width === 'number') {
+            width = `${width}%`
+        }
         
         return (
             <th
                 key={field.name}
-                width={columnWidths[field.name]}
+                width={width}
                 onClick={onClickHandler}
                 style={{ cursor }}
             >

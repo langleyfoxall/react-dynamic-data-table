@@ -334,9 +334,15 @@ function (_Component) {
         return _this4.changeOrder(field);
       } : function () {};
       var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
+      var width = columnWidths[field.name];
+
+      if (typeof width === 'number') {
+        width = "".concat(width, "%");
+      }
+
       return _react["default"].createElement("th", {
         key: field.name,
-        width: columnWidths[field.name],
+        width: width,
         onClick: onClickHandler,
         style: {
           cursor: cursor
