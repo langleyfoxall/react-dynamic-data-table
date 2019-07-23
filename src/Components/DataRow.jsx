@@ -80,14 +80,16 @@ class DataRow extends Component {
     }
 
     renderButtons(row) {
-        const { buttons } = this.props;
+        const { buttons, actions } = this.props;
 
         if (typeof buttons === 'function') {
             return buttons(row);
         }
 
-        if (!buttons.length) {
-            return ( <td></td> );
+        if (!buttons.length && !actions.length) {
+            return null;
+        } else if (!buttons.length) {
+            return <td />;
         }
 
         const button = buttons[0];
@@ -167,6 +169,7 @@ DataRow.defaultProps = {
     onClick: DataRow.noop,
     onContextMenu: DataRow.noop,
     dangerouslyRenderFields: [],
+    actions: [],
 };
 
 DataRow.propTypes = {
@@ -174,6 +177,7 @@ DataRow.propTypes = {
     buttons: PropTypes.oneOfType([
         PropTypes.array, PropTypes.func,
     ]),
+    actions: PropTypes.array,
     checkboxIsChecked: PropTypes.func,
     checkboxChange: PropTypes.func,
     dataItemManipulator: PropTypes.func,

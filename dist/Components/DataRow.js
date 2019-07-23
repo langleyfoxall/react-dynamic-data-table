@@ -150,13 +150,17 @@ function (_Component) {
     value: function renderButtons(row) {
       var _this3 = this;
 
-      var buttons = this.props.buttons;
+      var _this$props3 = this.props,
+          buttons = _this$props3.buttons,
+          actions = _this$props3.actions;
 
       if (typeof buttons === 'function') {
         return buttons(row);
       }
 
-      if (!buttons.length) {
+      if (!buttons.length && !actions.length) {
+        return null;
+      } else if (!buttons.length) {
         return _react["default"].createElement("td", null);
       }
 
@@ -246,11 +250,13 @@ function (_Component) {
 DataRow.defaultProps = {
   onClick: DataRow.noop,
   onContextMenu: DataRow.noop,
-  dangerouslyRenderFields: []
+  dangerouslyRenderFields: [],
+  actions: []
 };
 DataRow.propTypes = {
   row: _propTypes["default"].object,
   buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
+  actions: _propTypes["default"].array,
   checkboxIsChecked: _propTypes["default"].func,
   checkboxChange: _propTypes["default"].func,
   dataItemManipulator: _propTypes["default"].func,

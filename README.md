@@ -346,6 +346,7 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
   row,                // Instance of data row
   onClick,            // Row on click handler
   buttons,            // Array of buttons
+  actions,            // Array of header actions
   fields,             // Visible fields
   renderCheckboxes,   // Boolean indicating whether to render checkboxes
   checkboxIsChecked,  // Boolean indicating if checkbox is checked
@@ -450,14 +451,16 @@ checkboxes against each row, on the left side of the table.
 Bulk select checkboxes are usually combined with bulk actions to perform
 actions on one or more rows at once.
 
-### Bulk actions
+### Actions
 
-Bulk actions, when combined with bulk select checkboxes allow you perform
+Actions, when combined with bulk select checkboxes allow you perform
 actions of multiple rows at once. When in use, a menu will be rendered
 in the top right of the table allowing your users to choose a bulk action
 that will be applied to the selected rows.
 
-To use bulk actions in your React Dynamic Data Table, you must specify the
+Actions can also be used without bulk select checkboxes. This could allow for creation of action buttons that are not dependant on existing data, such as a 'Create User' button.
+
+To use actions in your React Dynamic Data Table, you must specify the
 `actions` props. This prop expects an array of objects, each containing a `name` 
 and `callback`.
 
@@ -466,7 +469,7 @@ The `name` is string, such as 'Delete user(s)', 'Duplicate user(s)' etc.
 The `callback` is a callable with a single argument. The argument will
 contain an array of the selected rows. 
 
-An example of show to use bulk actions is shown below.
+Examples of how to use actions is shown below.
 
 ```JSX
 <DynamicDataTable
@@ -477,6 +480,20 @@ An example of show to use bulk actions is shown below.
             name: 'Delete user(s)',
             callback: (rows) => { 
                 // Delete users...
+            },
+        },
+    ]}
+/>
+```
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    actions={[
+        {
+            name: 'Create user',
+            callback: () => { 
+                // Toggle create user modal...
             },
         },
     ]}
