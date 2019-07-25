@@ -22,7 +22,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields }) {
+    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions }) {
         return (
             <DataRow
                 key={row.id}
@@ -30,6 +30,7 @@ class DynamicDataTable extends Component {
                 onClick={onClick}
                 buttons={buttons}
                 fields={fields}
+                actions={actions}
                 renderCheckboxes={renderCheckboxes}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
@@ -224,7 +225,7 @@ class DynamicDataTable extends Component {
 
     renderRow(row) {
         const {
-            onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields
+            onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions
         } = this.props;
 
         return rowRenderer({
@@ -238,6 +239,7 @@ class DynamicDataTable extends Component {
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
             onCheckboxChange: (e) => this.checkboxChange(e),
             dangerouslyRenderFields,
+            actions
         });
     }
 
@@ -276,13 +278,13 @@ class DynamicDataTable extends Component {
     }
 
     renderActionsCell() {
-        const props = this.props;
+        const { actions, buttons } = this.props;
         const state = this.state;
 
-        if (!props.renderCheckboxes || !this.props.actions.length) {
-            return (
-                <th/>
-            );
+        if (!buttons.length && !actions.length) {
+            return null;
+        } else if (!actions.length) {
+            return <th />;
         }
 
         return (

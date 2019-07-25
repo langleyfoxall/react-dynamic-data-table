@@ -191,11 +191,16 @@ function (_Component) {
           })
         }).then(function (_ref) {
           var response = _ref.data;
-          var disallow_ordering_by = response.meta.disallow_ordering_by;
           var _response$data = response.data,
               rows = _response$data.data,
               current_page = _response$data.current_page,
               last_page = _response$data.last_page;
+          var disallow_ordering_by = [];
+
+          if (response.meta) {
+            disallow_ordering_by = response.meta.disallow_ordering_by;
+          }
+
           var newState = {
             disallowOrderingBy: disallow_ordering_by,
             rows: rows,

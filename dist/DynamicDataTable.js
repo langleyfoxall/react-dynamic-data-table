@@ -293,7 +293,8 @@ function (_Component) {
           renderCheckboxes = _this$props4.renderCheckboxes,
           _dataItemManipulator = _this$props4.dataItemManipulator,
           rowRenderer = _this$props4.rowRenderer,
-          dangerouslyRenderFields = _this$props4.dangerouslyRenderFields;
+          dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
+          actions = _this$props4.actions;
       return rowRenderer({
         row: row,
         onClick: onClick,
@@ -310,7 +311,8 @@ function (_Component) {
         onCheckboxChange: function onCheckboxChange(e) {
           return _this3.checkboxChange(e);
         },
-        dangerouslyRenderFields: dangerouslyRenderFields
+        dangerouslyRenderFields: dangerouslyRenderFields,
+        actions: actions
       });
     }
   }, {
@@ -348,10 +350,14 @@ function (_Component) {
     value: function renderActionsCell() {
       var _this5 = this;
 
-      var props = this.props;
+      var _this$props6 = this.props,
+          actions = _this$props6.actions,
+          buttons = _this$props6.buttons;
       var state = this.state;
 
-      if (!props.renderCheckboxes || !this.props.actions.length) {
+      if (!buttons.length && !actions.length) {
+        return null;
+      } else if (!actions.length) {
         return _react["default"].createElement("th", null);
       }
 
@@ -517,10 +523,10 @@ function (_Component) {
   }, {
     key: "renderLoadingTable",
     value: function renderLoadingTable() {
-      var _this$props6 = this.props,
-          loadingIndicator = _this$props6.loadingIndicator,
-          loadingMessage = _this$props6.loadingMessage,
-          loadingComponent = _this$props6.loadingComponent;
+      var _this$props7 = this.props,
+          loadingIndicator = _this$props7.loadingIndicator,
+          loadingMessage = _this$props7.loadingMessage,
+          loadingComponent = _this$props7.loadingComponent;
 
       if (loadingComponent) {
         return loadingComponent;
@@ -548,9 +554,9 @@ function (_Component) {
   }, {
     key: "renderEmptyTable",
     value: function renderEmptyTable() {
-      var _this$props7 = this.props,
-          noDataMessage = _this$props7.noDataMessage,
-          noDataComponent = _this$props7.noDataComponent;
+      var _this$props8 = this.props,
+          noDataMessage = _this$props8.noDataMessage,
+          noDataComponent = _this$props8.noDataComponent;
 
       if (_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;
@@ -593,13 +599,15 @@ function (_Component) {
           checkboxIsChecked = _ref2.checkboxIsChecked,
           onCheckboxChange = _ref2.onCheckboxChange,
           _dataItemManipulator2 = _ref2.dataItemManipulator,
-          dangerouslyRenderFields = _ref2.dangerouslyRenderFields;
+          dangerouslyRenderFields = _ref2.dangerouslyRenderFields,
+          actions = _ref2.actions;
       return _react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
         onClick: onClick,
         buttons: buttons,
         fields: fields,
+        actions: actions,
         renderCheckboxes: renderCheckboxes,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
