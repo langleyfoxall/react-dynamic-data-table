@@ -59,6 +59,8 @@ var _DataRow = _interopRequireDefault(require("./Components/DataRow"));
 
 var _Pagination = _interopRequireDefault(require("./Components/Pagination"));
 
+var _flatten = _interopRequireDefault(require("core-js/fn/array/flatten"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -242,7 +244,7 @@ function (_Component) {
           if (_ret === "continue") continue;
         }
 
-        return orderedFields.flat();
+        return (0, _flatten["default"])(orderedFields);
       }
 
       return fields;

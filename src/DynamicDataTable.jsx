@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import DataRow from "./Components/DataRow";
 import Pagination from "./Components/Pagination";
 
+import flatten from "core-js/fn/array/flatten";
+
 class DynamicDataTable extends Component {
     constructor(props) {
         super(props);
@@ -178,7 +180,7 @@ class DynamicDataTable extends Component {
                 orderedFields.push(field);
             }
 
-            return orderedFields.flat();
+            return flatten(orderedFields);
         }
 
         return fields;
