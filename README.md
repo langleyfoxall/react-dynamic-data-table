@@ -209,7 +209,7 @@ Mixing strings and regex is also supported.
 In some cases there may be a need to make some columns be different widths
 by defining a width, rather than the table changing based off of content.
 
-The `columnWidths` prop excepts an object with either a string or number as the values.
+The `columnWidths` prop expects an object with column names as the keys and either a string or number as the values.
 
 When a number is passed the width will become a percentage. If a string is passed then
 it respects whatever unit is set.
