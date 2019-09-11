@@ -601,3 +601,15 @@ In order to display an error message, you just need to set the optional
 `errorMessage` prop. This prop expects a string such as `An error has occurred
 while loading user data.`. If the error is resolved, this prop must be reset 
 to an empty string in order to ensure the data table is displayed.
+
+### Editable Columns
+
+Using the `editableColumns` prop you can choose to replace the contents of a column with an input with the given value.
+By default this input is an un-managed component which means that the value of the input is managed by the DOM.
+However if you wish to manage this input yourself you can set the `managedInputs` prop to true which will mean
+that you will have to update the data given to the table outside of the component.
+
+In order to receive the users input you can give a method that will be called when the input is changed to the
+`onInputChange` prop. This method will be called with the following parameters in the given order:
+`The event from the input`, `The column`, `The row index`.
+
