@@ -128,10 +128,28 @@ function (_Component) {
           editableColumns = _this$props3.editableColumns,
           managedInputs = _this$props3.managedInputs,
           onInputChange = _this$props3.onInputChange,
-          index = _this$props3.index;
+          index = _this$props3.index,
+          selectColumns = _this$props3.selectColumns,
+          optionsForColumn = _this$props3.optionsForColumn;
       var value = row[field.name];
       value = this.props.dataItemManipulator(field.name, value);
       var key = "".concat(row.id, "_").concat(field.name);
+
+      if (selectColumns.includes(field.name)) {
+        return _react.default.createElement("td", {
+          key: key
+        }, _react.default.createElement("select", {
+          defaultValue: value,
+          value: managedInputs ? value : undefined,
+          onChange: function onChange(event) {
+            return onInputChange(event, field.name, row, index);
+          }
+        }, optionsForColumn(field.name, row).map(function (option) {
+          return _react.default.createElement("option", {
+            value: option.value
+          }, option.label);
+        })));
+      }
 
       if (editableColumns.includes(field.name)) {
         return _react.default.createElement("td", {
@@ -277,7 +295,9 @@ DataRow.defaultProps = {
   actions: [],
   editableColumns: [],
   managedInputs: false,
-  onInputChange: DataRow.noop
+  onInputChange: DataRow.noop,
+  selectColumns: [],
+  optionsForColumn: DataRow.noop
 };
 DataRow.propTypes = {
   row: _propTypes.default.object,
@@ -293,7 +313,9 @@ DataRow.propTypes = {
   onContextMenu: _propTypes.default.func,
   dangerouslyRenderFields: _propTypes.default.array,
   onInputChange: _propTypes.default.func,
-  index: _propTypes.default.number.required
+  index: _propTypes.default.number.required,
+  selectColumns: _propTypes.default.array,
+  optionsForColumn: _propTypes.default.func
 };
 var _default = DataRow;
 exports.default = _default;

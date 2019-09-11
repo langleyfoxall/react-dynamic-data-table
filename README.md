@@ -604,12 +604,34 @@ to an empty string in order to ensure the data table is displayed.
 
 ### Editable Columns
 
+#### Text Inputs
+
 Using the `editableColumns` prop you can choose to replace the contents of a column with an input with the given value.
 By default this input is an un-managed component which means that the value of the input is managed by the DOM.
 However if you wish to manage this input yourself you can set the `managedInputs` prop to true which will mean
 that you will have to update the data given to the table outside of the component.
 
+
+#### Selects
+
+If you wish to use a select instead of an input you can specify the column in the `selectColumns` prop.
+In order to provide the options for the select pass a method into the `optionsForColumn` prop. This method will be
+called with the following parameters in the given order: `The column name`, `The row data`. This method should return
+the options for the given parameters in the form:
+```js
+[
+    {
+        label: 'Example one',
+        value: 1
+    },
+    {
+        label: 'Example two',
+        value: 2
+    }
+]
+```
+
+#### Receiving input
 In order to receive the users input you can give a method that will be called when the input is changed to the
 `onInputChange` prop. This method will be called with the following parameters in the given order:
 `The event from the input`, `The column name`, `The row data`, `The row index`.
-

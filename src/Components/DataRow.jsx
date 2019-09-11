@@ -52,13 +52,30 @@ class DataRow extends Component {
     }
 
     renderCell(field, row) {
-        const { editableColumns, managedInputs, onInputChange, index } = this.props;
+        const { editableColumns, managedInputs, onInputChange, index, selectColumns, optionsForColumn} = this.props;
 
         let value = row[field.name];
 
         value = this.props.dataItemManipulator(field.name, value);
 
         const key = `${row.id}_${field.name}`;
+
+        if(selectColumns.includes(field.name)) {
+            return (
+                <td key={key}>
+                    <select
+                        defaultValue={value}
+                        value={managedInputs ? value : undefined}
+                        onChange={event => onInputChange(event, field.name, row, index)}>
+                        {optionsForColumn(field.name, row).map(option => (
+                            <option value={option.value}>{option.label}</option>
+                        ))
+
+                        }
+                    </select>
+                </td>
+            )
+        }
 
         if(editableColumns.includes(field.name)) {
             return (
@@ -185,6 +202,8 @@ DataRow.defaultProps = {
     editableColumns: [],
     managedInputs: false,
     onInputChange: DataRow.noop,
+    selectColumns: [],
+    optionsForColumn: DataRow.noop
 };
 
 DataRow.propTypes = {
@@ -203,7 +222,9 @@ DataRow.propTypes = {
     onContextMenu: PropTypes.func,
     dangerouslyRenderFields: PropTypes.array,
     onInputChange: PropTypes.func,
-    index: PropTypes.number.required
+    index: PropTypes.number.required,
+    selectColumns: PropTypes.array,
+    optionsForColumn: PropTypes.func
 };
 
 export default DataRow;

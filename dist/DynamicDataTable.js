@@ -285,7 +285,9 @@ function (_Component) {
           actions = _this$props4.actions,
           editableColumns = _this$props4.editableColumns,
           managedInputs = _this$props4.managedInputs,
-          onInputChange = _this$props4.onInputChange;
+          onInputChange = _this$props4.onInputChange,
+          selectColumns = _this$props4.selectColumns,
+          optionsForColumn = _this$props4.optionsForColumn;
       return rowRenderer({
         row: row,
         onClick: onClick,
@@ -307,7 +309,9 @@ function (_Component) {
         editableColumns: editableColumns,
         managedInputs: managedInputs,
         onInputChange: onInputChange,
-        index: index
+        index: index,
+        selectColumns: selectColumns,
+        optionsForColumn: optionsForColumn
       });
     }
   }, {
@@ -599,7 +603,9 @@ function (_Component) {
           editableColumns = _ref2.editableColumns,
           managedInputs = _ref2.managedInputs,
           onInputChange = _ref2.onInputChange,
-          index = _ref2.index;
+          index = _ref2.index,
+          selectColumns = _ref2.selectColumns,
+          optionsForColumn = _ref2.optionsForColumn;
       return _react.default.createElement(_DataRow.default, {
         key: row.id,
         row: row,
@@ -617,7 +623,9 @@ function (_Component) {
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
         onInputChange: onInputChange,
-        index: index
+        index: index,
+        selectColumns: selectColumns,
+        optionsForColumn: optionsForColumn
       });
     }
   }]);
@@ -636,6 +644,7 @@ DynamicDataTable.propTypes = {
   orderByDirection: _propTypes.default.oneOf(['asc', 'desc']),
   renderCheckboxes: _propTypes.default.bool,
   editableColumns: _propTypes.default.array,
+  selectColumns: _propTypes.default.array,
   managedInputs: _propTypes.default.bool,
   actions: _propTypes.default.array,
   loading: _propTypes.default.bool,
@@ -654,7 +663,8 @@ DynamicDataTable.propTypes = {
   disallowOrderingBy: _propTypes.default.array,
   dangerouslyRenderFields: _propTypes.default.array,
   paginationDelta: _propTypes.default.number,
-  onInputChange: _propTypes.default.func
+  onInputChange: _propTypes.default.func,
+  optionsForColumn: _propTypes.default.func
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -667,6 +677,7 @@ DynamicDataTable.defaultProps = {
   orderByDirection: 'asc',
   renderCheckboxes: false,
   editableColumns: [],
+  selectColumns: [],
   managedInputs: false,
   actions: [],
   loading: false,
@@ -692,7 +703,10 @@ DynamicDataTable.defaultProps = {
   disallowOrderingBy: [],
   dangerouslyRenderFields: [],
   paginationDelta: 4,
-  onInputChange: DynamicDataTable.noop
+  onInputChange: DynamicDataTable.noop,
+  optionsForColumn: function optionsForColumn() {
+    return [];
+  }
 };
 var _default = DynamicDataTable;
 exports.default = _default;

@@ -22,7 +22,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, managedInputs, onInputChange, index }) {
+    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, managedInputs, onInputChange, index, selectColumns, optionsForColumn }) {
         return (
             <DataRow
                 key={row.id}
@@ -40,6 +40,8 @@ class DynamicDataTable extends Component {
                 dangerouslyRenderFields={dangerouslyRenderFields}
                 onInputChange={onInputChange}
                 index={index}
+                selectColumns={selectColumns}
+                optionsForColumn={optionsForColumn}
             />
         );
     }
@@ -238,7 +240,9 @@ class DynamicDataTable extends Component {
             actions,
             editableColumns,
             managedInputs,
-            onInputChange
+            onInputChange,
+            selectColumns,
+            optionsForColumn
         } = this.props;
 
         return rowRenderer({
@@ -256,7 +260,9 @@ class DynamicDataTable extends Component {
             editableColumns,
             managedInputs,
             onInputChange,
-            index
+            index,
+            selectColumns,
+            optionsForColumn
         });
     }
 
@@ -548,6 +554,7 @@ DynamicDataTable.propTypes = {
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
     renderCheckboxes: PropTypes.bool,
     editableColumns: PropTypes.array,
+    selectColumns: PropTypes.array,
     managedInputs: PropTypes.bool,
     actions: PropTypes.array,
     loading: PropTypes.bool,
@@ -568,7 +575,8 @@ DynamicDataTable.propTypes = {
     disallowOrderingBy: PropTypes.array,
     dangerouslyRenderFields: PropTypes.array,
     paginationDelta: PropTypes.number,
-    onInputChange: PropTypes.func
+    onInputChange: PropTypes.func,
+    optionsForColumn: PropTypes.func
 };
 
 DynamicDataTable.defaultProps = {
@@ -582,6 +590,7 @@ DynamicDataTable.defaultProps = {
     orderByDirection: 'asc',
     renderCheckboxes: false,
     editableColumns: [],
+    selectColumns: [],
     managedInputs: false,
     actions: [],
     loading: false,
@@ -607,7 +616,8 @@ DynamicDataTable.defaultProps = {
     disallowOrderingBy: [],
     dangerouslyRenderFields: [],
     paginationDelta: 4,
-    onInputChange: DynamicDataTable.noop
+    onInputChange: DynamicDataTable.noop,
+    optionsForColumn: () => []
 };
 
 export default DynamicDataTable;
