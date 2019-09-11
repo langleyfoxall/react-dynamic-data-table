@@ -283,11 +283,7 @@ function (_Component) {
           rowRenderer = _this$props4.rowRenderer,
           dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
           actions = _this$props4.actions,
-          editableColumns = _this$props4.editableColumns,
-          managedInputs = _this$props4.managedInputs,
-          onInputChange = _this$props4.onInputChange,
-          selectColumns = _this$props4.selectColumns,
-          optionsForColumn = _this$props4.optionsForColumn;
+          editableColumns = _this$props4.editableColumns;
       return rowRenderer({
         row: row,
         onClick: onClick,
@@ -307,11 +303,7 @@ function (_Component) {
         dangerouslyRenderFields: dangerouslyRenderFields,
         actions: actions,
         editableColumns: editableColumns,
-        managedInputs: managedInputs,
-        onInputChange: onInputChange,
-        index: index,
-        selectColumns: selectColumns,
-        optionsForColumn: optionsForColumn
+        index: index
       });
     }
   }, {
@@ -601,11 +593,7 @@ function (_Component) {
           dangerouslyRenderFields = _ref2.dangerouslyRenderFields,
           actions = _ref2.actions,
           editableColumns = _ref2.editableColumns,
-          managedInputs = _ref2.managedInputs,
-          onInputChange = _ref2.onInputChange,
-          index = _ref2.index,
-          selectColumns = _ref2.selectColumns,
-          optionsForColumn = _ref2.optionsForColumn;
+          index = _ref2.index;
       return _react.default.createElement(_DataRow.default, {
         key: row.id,
         row: row,
@@ -615,17 +603,13 @@ function (_Component) {
         actions: actions,
         renderCheckboxes: renderCheckboxes,
         editableColumns: editableColumns,
-        managedInputs: managedInputs,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
         dataItemManipulator: function dataItemManipulator(field, value) {
           return _dataItemManipulator2(field, value);
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
-        onInputChange: onInputChange,
-        index: index,
-        selectColumns: selectColumns,
-        optionsForColumn: optionsForColumn
+        index: index
       });
     }
   }]);
@@ -643,9 +627,13 @@ DynamicDataTable.propTypes = {
   orderByField: _propTypes.default.string,
   orderByDirection: _propTypes.default.oneOf(['asc', 'desc']),
   renderCheckboxes: _propTypes.default.bool,
-  editableColumns: _propTypes.default.array,
-  selectColumns: _propTypes.default.array,
-  managedInputs: _propTypes.default.bool,
+  editableColumns: _propTypes.default.arrayOf(_propTypes.default.shape({
+    name: _propTypes.default.string.isRequired,
+    controlled: _propTypes.default.bool.isRequired,
+    type: _propTypes.default.string.isRequired,
+    onChange: _propTypes.default.func.isRequired,
+    optionsForRow: _propTypes.default.func
+  })),
   actions: _propTypes.default.array,
   loading: _propTypes.default.bool,
   loadingMessage: _propTypes.default.string,
@@ -662,9 +650,7 @@ DynamicDataTable.propTypes = {
   allowOrderingBy: _propTypes.default.array,
   disallowOrderingBy: _propTypes.default.array,
   dangerouslyRenderFields: _propTypes.default.array,
-  paginationDelta: _propTypes.default.number,
-  onInputChange: _propTypes.default.func,
-  optionsForColumn: _propTypes.default.func
+  paginationDelta: _propTypes.default.number
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -677,8 +663,6 @@ DynamicDataTable.defaultProps = {
   orderByDirection: 'asc',
   renderCheckboxes: false,
   editableColumns: [],
-  selectColumns: [],
-  managedInputs: false,
   actions: [],
   loading: false,
   loadingMessage: 'Loading data...',
@@ -702,11 +686,7 @@ DynamicDataTable.defaultProps = {
   allowOrderingBy: [],
   disallowOrderingBy: [],
   dangerouslyRenderFields: [],
-  paginationDelta: 4,
-  onInputChange: DynamicDataTable.noop,
-  optionsForColumn: function optionsForColumn() {
-    return [];
-  }
+  paginationDelta: 4
 };
 var _default = DynamicDataTable;
 exports.default = _default;

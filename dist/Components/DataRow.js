@@ -21,6 +21,8 @@ require("core-js/modules/es6.symbol");
 
 require("core-js/modules/es6.object.set-prototype-of");
 
+require("core-js/modules/es6.array.find-index");
+
 require("core-js/modules/es6.function.name");
 
 require("core-js/modules/es7.array.includes");
@@ -126,39 +128,40 @@ function (_Component) {
     value: function renderCell(field, row) {
       var _this$props3 = this.props,
           editableColumns = _this$props3.editableColumns,
-          managedInputs = _this$props3.managedInputs,
-          onInputChange = _this$props3.onInputChange,
-          index = _this$props3.index,
-          selectColumns = _this$props3.selectColumns,
-          optionsForColumn = _this$props3.optionsForColumn;
+          index = _this$props3.index;
       var value = row[field.name];
       value = this.props.dataItemManipulator(field.name, value);
       var key = "".concat(row.id, "_").concat(field.name);
+      var columnIndex = editableColumns.findIndex(function (column) {
+        return column.name === field.name;
+      });
 
-      if (selectColumns.includes(field.name)) {
-        return _react.default.createElement("td", {
-          key: key
-        }, _react.default.createElement("select", {
-          defaultValue: value,
-          value: managedInputs ? value : undefined,
-          onChange: function onChange(event) {
-            return onInputChange(event, field.name, row, index);
-          }
-        }, optionsForColumn(field.name, row).map(function (option) {
-          return _react.default.createElement("option", {
-            value: option.value
-          }, option.label);
-        })));
-      }
+      if (columnIndex !== -1) {
+        var column = editableColumns[columnIndex];
 
-      if (editableColumns.includes(field.name)) {
+        if (column.type === 'select') {
+          return _react.default.createElement("td", {
+            key: key
+          }, _react.default.createElement("select", {
+            defaultValue: value,
+            value: column.controlled ? value : undefined,
+            onChange: function onChange(event) {
+              return column.onChange(event, field.name, row, index);
+            }
+          }, column.optionsForRow(row, field.name).map(function (option) {
+            return _react.default.createElement("option", {
+              value: option.value
+            }, option.label);
+          })));
+        }
+
         return _react.default.createElement("td", {
           key: key
         }, _react.default.createElement("input", {
           defaultValue: value,
-          value: managedInputs ? value : undefined,
+          value: column.controlled ? value : undefined,
           onChange: function onChange(event) {
-            return onInputChange(event, field.name, row, index);
+            return column.onChange(event, field.name, row, index);
           }
         }));
       }
@@ -293,11 +296,7 @@ DataRow.defaultProps = {
   onContextMenu: DataRow.noop,
   dangerouslyRenderFields: [],
   actions: [],
-  editableColumns: [],
-  managedInputs: false,
-  onInputChange: DataRow.noop,
-  selectColumns: [],
-  optionsForColumn: DataRow.noop
+  editableColumns: []
 };
 DataRow.propTypes = {
   row: _propTypes.default.object,
@@ -308,14 +307,10 @@ DataRow.propTypes = {
   dataItemManipulator: _propTypes.default.func,
   renderCheckboxes: _propTypes.default.bool,
   editableColumns: _propTypes.default.array,
-  managedInputs: _propTypes.default.bool,
   onClick: _propTypes.default.func,
   onContextMenu: _propTypes.default.func,
   dangerouslyRenderFields: _propTypes.default.array,
-  onInputChange: _propTypes.default.func,
-  index: _propTypes.default.number.required,
-  selectColumns: _propTypes.default.array,
-  optionsForColumn: _propTypes.default.func
+  index: _propTypes.default.number.required
 };
 var _default = DataRow;
 exports.default = _default;
