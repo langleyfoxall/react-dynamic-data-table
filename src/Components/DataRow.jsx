@@ -63,7 +63,7 @@ class DataRow extends Component {
         if(editableColumns.includes(field.name)) {
             return (
                 <td key={key}>
-                    <input defaultValue={value} value={managedInputs ? value : undefined} onChange={event => onInputChange(event, field.name, index)} />
+                    <input defaultValue={value} value={managedInputs ? value : undefined} onChange={event => onInputChange(event, field.name, row, index)} />
                 </td>
             )
         }

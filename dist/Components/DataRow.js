@@ -140,7 +140,7 @@ function (_Component) {
           defaultValue: value,
           value: managedInputs ? value : undefined,
           onChange: function onChange(event) {
-            return onInputChange(event, field.name, index);
+            return onInputChange(event, field.name, row, index);
           }
         }));
       }

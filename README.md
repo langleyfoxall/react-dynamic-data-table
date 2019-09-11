@@ -611,5 +611,5 @@ that you will have to update the data given to the table outside of the componen
 
 In order to receive the users input you can give a method that will be called when the input is changed to the
 `onInputChange` prop. This method will be called with the following parameters in the given order:
-`The event from the input`, `The column`, `The row index`.
+`The event from the input`, `The column name`, `The row data`, `The row index`.
 
