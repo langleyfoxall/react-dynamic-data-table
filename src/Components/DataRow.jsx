@@ -52,7 +52,7 @@ class DataRow extends Component {
     }
 
     renderCell(field, row) {
-        const { editableColumns, managedInputs, onInputChange, index, selectColumns, optionsForColumn} = this.props;
+        const { editableColumns, index } = this.props;
 
         let value = row[field.name];
 
@@ -60,27 +60,30 @@ class DataRow extends Component {
 
         const key = `${row.id}_${field.name}`;
 
-        if(selectColumns.includes(field.name)) {
+        let columnIndex = editableColumns.findIndex(column => column.name === field.name);
+        if (columnIndex !== -1) {
+            let column = editableColumns[columnIndex];
+
+            if(column.type === 'select') {
+                return (
+                    <td key={key}>
+                        <select
+                            defaultValue={value}
+                            value={column.controlled ? value : undefined}
+                            onChange={event => column.onChange(event, field.name, row, index)}>
+                            {column.optionsForRow(row, field.name).map(option => (
+                                <option value={option.value}>{option.label}</option>
+                            ))
+
+                            }
+                        </select>
+                    </td>
+                )
+            }
+
             return (
                 <td key={key}>
-                    <select
-                        defaultValue={value}
-                        value={managedInputs ? value : undefined}
-                        onChange={event => onInputChange(event, field.name, row, index)}>
-                        {optionsForColumn(field.name, row).map(option => (
-                            <option value={option.value}>{option.label}</option>
-                        ))
-
-                        }
-                    </select>
-                </td>
-            )
-        }
-
-        if(editableColumns.includes(field.name)) {
-            return (
-                <td key={key}>
-                    <input defaultValue={value} value={managedInputs ? value : undefined} onChange={event => onInputChange(event, field.name, row, index)} />
+                    <input defaultValue={value} value={column.controlled ? value : undefined} onChange={event => column.onChange(event, field.name, row, index)} />
                 </td>
             )
         }
@@ -200,10 +203,6 @@ DataRow.defaultProps = {
     dangerouslyRenderFields: [],
     actions: [],
     editableColumns: [],
-    managedInputs: false,
-    onInputChange: DataRow.noop,
-    selectColumns: [],
-    optionsForColumn: DataRow.noop
 };
 
 DataRow.propTypes = {
@@ -217,14 +216,10 @@ DataRow.propTypes = {
     dataItemManipulator: PropTypes.func,
     renderCheckboxes: PropTypes.bool,
     editableColumns: PropTypes.array,
-    managedInputs: PropTypes.bool,
     onClick: PropTypes.func,
     onContextMenu: PropTypes.func,
     dangerouslyRenderFields: PropTypes.array,
-    onInputChange: PropTypes.func,
     index: PropTypes.number.required,
-    selectColumns: PropTypes.array,
-    optionsForColumn: PropTypes.func
 };
 
 export default DataRow;
