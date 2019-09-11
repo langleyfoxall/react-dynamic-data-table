@@ -9,10 +9,10 @@ class DataRow extends Component {
 
     shouldDangerouslyRenderField(field) {
         const { dangerouslyRenderFields } = this.props;
-        
+
         return dangerouslyRenderFields.includes(field);
     }
-    
+
     render() {
         const { row, fields, onClick, onContextMenu } = this.props;
 
@@ -52,11 +52,21 @@ class DataRow extends Component {
     }
 
     renderCell(field, row) {
+        const { editableColumns, managedInputs, onInputChange, index } = this.props;
+
         let value = row[field.name];
 
         value = this.props.dataItemManipulator(field.name, value);
 
         const key = `${row.id}_${field.name}`;
+
+        if(editableColumns.includes(field.name)) {
+            return (
+                <td key={key}>
+                    <input defaultValue={value} value={managedInputs ? value : undefined} onChange={event => onInputChange(event, field.name, index)} />
+                </td>
+            )
+        }
 
         if (React.isValidElement(value)) {
             return (
@@ -144,12 +154,14 @@ class DataRow extends Component {
         }
 
         if (typeof button.render === 'function') {
-            <div
-                style={{cursor: 'pointer'}}
-                key={`button_${button.name}`}
-                className="dropdown-item">
-                {button.render(row)}
-            </div>
+            return (
+                <div
+                    style={{cursor: 'pointer'}}
+                    key={`button_${button.name}`}
+                    className="dropdown-item">
+                    {button.render(row)}
+                </div>
+            )
         }
 
         return (
@@ -170,6 +182,9 @@ DataRow.defaultProps = {
     onContextMenu: DataRow.noop,
     dangerouslyRenderFields: [],
     actions: [],
+    editableColumns: [],
+    managedInputs: false,
+    onInputChange: DataRow.noop,
 };
 
 DataRow.propTypes = {
@@ -182,9 +197,13 @@ DataRow.propTypes = {
     checkboxChange: PropTypes.func,
     dataItemManipulator: PropTypes.func,
     renderCheckboxes: PropTypes.bool,
+    editableColumns: PropTypes.array,
+    managedInputs: PropTypes.bool,
     onClick: PropTypes.func,
     onContextMenu: PropTypes.func,
-    dangerouslyRenderFields: PropTypes.array
+    dangerouslyRenderFields: PropTypes.array,
+    onInputChange: PropTypes.func,
+    index: PropTypes.number.required
 };
 
 export default DataRow;

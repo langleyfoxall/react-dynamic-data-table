@@ -22,7 +22,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions }) {
+    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, managedInputs, onInputChange, index }) {
         return (
             <DataRow
                 key={row.id}
@@ -32,10 +32,14 @@ class DynamicDataTable extends Component {
                 fields={fields}
                 actions={actions}
                 renderCheckboxes={renderCheckboxes}
+                editableColumns={editableColumns}
+                managedInputs={managedInputs}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
                 dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
                 dangerouslyRenderFields={dangerouslyRenderFields}
+                onInputChange={onInputChange}
+                index={index}
             />
         );
     }
@@ -54,8 +58,8 @@ class DynamicDataTable extends Component {
         return classNames([
             'table', 'table-striped',
             {
-                'table-hover': 
-                    onClick !== DynamicDataTable.noop 
+                'table-hover':
+                    onClick !== DynamicDataTable.noop
                     || hoverable
             }
         ]);
@@ -126,7 +130,7 @@ class DynamicDataTable extends Component {
                 for (let j = 0; j < regExpsToExclude.length; j++) {
                     if (regExpsToExclude[j].test(field.name)) {
                         shouldExclude = true;
-    
+
                         break;
                     }
                 }
@@ -214,7 +218,7 @@ class DynamicDataTable extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            { rows.map(row => this.renderRow(row)) }
+                            { rows.map((row, index) => this.renderRow(row, index)) }
                         </tbody>
                     </table>
                 </div>
@@ -223,9 +227,18 @@ class DynamicDataTable extends Component {
         );
     }
 
-    renderRow(row) {
+    renderRow(row, index) {
         const {
-            onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions
+            onClick,
+            buttons,
+            renderCheckboxes,
+            dataItemManipulator,
+            rowRenderer,
+            dangerouslyRenderFields,
+            actions,
+            editableColumns,
+            managedInputs,
+            onInputChange
         } = this.props;
 
         return rowRenderer({
@@ -239,7 +252,11 @@ class DynamicDataTable extends Component {
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
             onCheckboxChange: (e) => this.checkboxChange(e),
             dangerouslyRenderFields,
-            actions
+            actions,
+            editableColumns,
+            managedInputs,
+            onInputChange,
+            index
         });
     }
 
@@ -250,7 +267,7 @@ class DynamicDataTable extends Component {
         if (orderByField === field.name) {
             orderByIcon = (orderByDirection === 'asc') ? '↓' : '↑';
         }
-        
+
         const canOrderBy = (
             (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name))
             && !disallowOrderingBy.includes(field.name)
@@ -261,13 +278,13 @@ class DynamicDataTable extends Component {
                 ? () => this.changeOrder(field)
                 : () => {}
         );
-        
+
         const cursor = (
             changeOrder && canOrderBy
                 ? 'pointer'
                 : 'default'
         );
-        
+
         return (
             <th style={{ cursor }} key={field.name} onClick={onClickHandler}>
                 { field.label }
@@ -530,6 +547,8 @@ DynamicDataTable.propTypes = {
     orderByField: PropTypes.string,
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
     renderCheckboxes: PropTypes.bool,
+    editableColumns: PropTypes.array,
+    managedInputs: PropTypes.bool,
     actions: PropTypes.array,
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
@@ -549,6 +568,7 @@ DynamicDataTable.propTypes = {
     disallowOrderingBy: PropTypes.array,
     dangerouslyRenderFields: PropTypes.array,
     paginationDelta: PropTypes.number,
+    onInputChange: PropTypes.func
 };
 
 DynamicDataTable.defaultProps = {
@@ -561,6 +581,8 @@ DynamicDataTable.defaultProps = {
     orderByField: null,
     orderByDirection: 'asc',
     renderCheckboxes: false,
+    editableColumns: [],
+    managedInputs: false,
     actions: [],
     loading: false,
     loadingMessage: 'Loading data...',
@@ -585,6 +607,7 @@ DynamicDataTable.defaultProps = {
     disallowOrderingBy: [],
     dangerouslyRenderFields: [],
     paginationDelta: 4,
+    onInputChange: DynamicDataTable.noop
 };
 
 export default DynamicDataTable;
