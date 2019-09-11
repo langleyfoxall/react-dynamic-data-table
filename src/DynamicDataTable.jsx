@@ -541,12 +541,12 @@ DynamicDataTable.propTypes = {
     orderByField: PropTypes.string,
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
     renderCheckboxes: PropTypes.bool,
-    editableColumns: React.PropTypes.arrayOf(React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired,
-        controlled: React.PropTypes.bool.isRequired,
-        type: React.PropTypes.string.isRequired,
-        onChange: React.PropTypes.func.isRequired,
-        optionsForRow: React.PropTypes.func
+    editableColumns: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        controlled: PropTypes.bool.isRequired,
+        type: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
+        optionsForRow: PropTypes.func
     })),
     actions: PropTypes.array,
     loading: PropTypes.bool,
