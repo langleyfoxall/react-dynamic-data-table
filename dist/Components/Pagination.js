@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 require("core-js/modules/es7.symbol.async-iterator");
 
@@ -15,15 +15,17 @@ require("core-js/modules/es6.object.create");
 
 require("core-js/modules/es6.object.set-prototype-of");
 
+require("core-js/modules/web.dom.iterable");
+
 require("core-js/modules/es6.array.for-each");
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -69,10 +71,10 @@ function (_Component) {
       }
 
       this.getPagesToDisplay(currentPage, totalPages).forEach(function (page, index) {
-        pageLinks.push(_react["default"].createElement("li", {
+        pageLinks.push(_react.default.createElement("li", {
           key: "page_index_".concat(index),
           className: "page-item ".concat(currentPage === page ? 'active' : '')
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           type: "button",
           className: "page-link ".concat(!page ? 'disabled' : ''),
           onClick: function onClick() {
@@ -82,21 +84,21 @@ function (_Component) {
           }
         }, page || '...')));
       });
-      return _react["default"].createElement("nav", {
+      return _react.default.createElement("nav", {
         "aria-label": "Page navigation"
-      }, _react["default"].createElement("ul", {
+      }, _react.default.createElement("ul", {
         className: "pagination"
-      }, _react["default"].createElement("li", {
+      }, _react.default.createElement("li", {
         className: "page-item ".concat(currentPage <= 1 ? 'disabled' : '')
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         type: "button",
         className: "page-link",
         onClick: function onClick() {
           return _this.previousPage();
         }
-      }, "Previous")), pageLinks, _react["default"].createElement("li", {
+      }, "Previous")), pageLinks, _react.default.createElement("li", {
         className: "page-item ".concat(currentPage >= totalPages ? 'disabled' : '')
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         type: "button",
         className: "page-link",
         onClick: function onClick() {
@@ -155,10 +157,10 @@ Pagination.defaultProps = {
   paginationDelta: 4
 };
 Pagination.propTypes = {
-  currentPage: _propTypes["default"].number,
-  totalPages: _propTypes["default"].number,
-  changePage: _propTypes["default"].func,
-  paginationDelta: _propTypes["default"].number
+  currentPage: _propTypes.default.number,
+  totalPages: _propTypes.default.number,
+  changePage: _propTypes.default.func,
+  paginationDelta: _propTypes.default.number
 };
 var _default = Pagination;
-exports["default"] = _default;
+exports.default = _default;

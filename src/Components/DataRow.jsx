@@ -14,11 +14,13 @@ class DataRow extends Component {
     }
     
     render() {
-        const { row, fields, onClick, onContextMenu } = this.props;
+        const { row, fields, onClick, onMouseUp, onMouseDown, onContextMenu } = this.props;
 
         return (
             <tr
                 onClick={e => onClick(e, row)}
+                onMouseUp={e => onMouseUp(e, row)}
+                onMouseDown={e => onMouseDown(e, row)}
                 onContextMenu={e => onContextMenu(e, row)}
             >
                 { this.renderCheckboxCell() }
@@ -167,6 +169,8 @@ class DataRow extends Component {
 
 DataRow.defaultProps = {
     onClick: DataRow.noop,
+    onMouseUp: DataRow.noop,
+    onMouseDown: DataRow.noop,
     onContextMenu: DataRow.noop,
     dangerouslyRenderFields: [],
     actions: [],
@@ -183,6 +187,8 @@ DataRow.propTypes = {
     dataItemManipulator: PropTypes.func,
     renderCheckboxes: PropTypes.bool,
     onClick: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseDown: PropTypes.func,
     onContextMenu: PropTypes.func,
     dangerouslyRenderFields: PropTypes.array
 };

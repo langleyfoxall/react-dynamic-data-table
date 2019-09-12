@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 require("core-js/modules/es7.symbol.async-iterator");
 
@@ -27,9 +27,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -75,10 +75,18 @@ function (_Component) {
           row = _this$props.row,
           fields = _this$props.fields,
           _onClick = _this$props.onClick,
+          _onMouseUp = _this$props.onMouseUp,
+          _onMouseDown = _this$props.onMouseDown,
           _onContextMenu = _this$props.onContextMenu;
-      return _react["default"].createElement("tr", {
+      return _react.default.createElement("tr", {
         onClick: function onClick(e) {
           return _onClick(e, row);
+        },
+        onMouseUp: function onMouseUp(e) {
+          return _onMouseUp(e, row);
+        },
+        onMouseDown: function onMouseDown(e) {
+          return _onMouseDown(e, row);
         },
         onContextMenu: function onContextMenu(e) {
           return _onContextMenu(e, row);
@@ -100,9 +108,9 @@ function (_Component) {
         return;
       }
 
-      var checkbox = _react["default"].createElement("div", {
+      var checkbox = _react.default.createElement("div", {
         className: "form-check"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
         onChange: function onChange(e) {
@@ -113,7 +121,7 @@ function (_Component) {
         }
       }));
 
-      return _react["default"].createElement("td", null, checkbox);
+      return _react.default.createElement("td", null, checkbox);
     }
   }, {
     key: "renderCell",
@@ -122,14 +130,14 @@ function (_Component) {
       value = this.props.dataItemManipulator(field.name, value);
       var key = "".concat(row.id, "_").concat(field.name);
 
-      if (_react["default"].isValidElement(value)) {
-        return _react["default"].createElement("td", {
+      if (_react.default.isValidElement(value)) {
+        return _react.default.createElement("td", {
           key: key
         }, value);
       }
 
       if (this.shouldDangerouslyRenderField(field.name)) {
-        return _react["default"].createElement("td", {
+        return _react.default.createElement("td", {
           key: key,
           dangerouslySetInnerHTML: {
             __html: value
@@ -141,7 +149,7 @@ function (_Component) {
         value = JSON.stringify(value);
       }
 
-      return _react["default"].createElement("td", {
+      return _react.default.createElement("td", {
         key: key
       }, value);
     }
@@ -161,33 +169,33 @@ function (_Component) {
       if (!buttons.length && !actions.length) {
         return null;
       } else if (!buttons.length) {
-        return _react["default"].createElement("td", null);
+        return _react.default.createElement("td", null);
       }
 
       var button = buttons[0];
 
       if (buttons.length === 1) {
-        return _react["default"].createElement("td", {
+        return _react.default.createElement("td", {
           className: "rddt-action-cell"
         }, this.renderFirstButton(button, row));
       }
 
-      return _react["default"].createElement("td", {
+      return _react.default.createElement("td", {
         className: "rddt-action-cell"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "btn-group",
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, this.renderFirstButton(button, row), _react["default"].createElement("button", {
+      }, this.renderFirstButton(button, row), _react.default.createElement("button", {
         type: "button",
         className: "btn btn-primary dropdown-toggle dropdown-toggle-split",
         "data-toggle": "dropdown",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "sr-only"
-      }, "Toggle Dropdown")), _react["default"].createElement("div", {
+      }, "Toggle Dropdown")), _react.default.createElement("div", {
         className: "dropdown-menu",
         "aria-labelledby": "dropdownMenuButton"
       }, buttons.map(function (button, index) {
@@ -201,7 +209,7 @@ function (_Component) {
         return button.render(row);
       }
 
-      return _react["default"].createElement("button", {
+      return _react.default.createElement("button", {
         type: "button",
         className: "btn btn-primary",
         onClick: function onClick(e) {
@@ -217,7 +225,7 @@ function (_Component) {
       }
 
       if (typeof button.render === 'function') {
-        _react["default"].createElement("div", {
+        _react.default.createElement("div", {
           style: {
             cursor: 'pointer'
           },
@@ -226,7 +234,7 @@ function (_Component) {
         }, button.render(row));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         style: {
           cursor: 'pointer'
         },
@@ -249,21 +257,25 @@ function (_Component) {
 
 DataRow.defaultProps = {
   onClick: DataRow.noop,
+  onMouseUp: DataRow.noop,
+  onMouseDown: DataRow.noop,
   onContextMenu: DataRow.noop,
   dangerouslyRenderFields: [],
   actions: []
 };
 DataRow.propTypes = {
-  row: _propTypes["default"].object,
-  buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
-  actions: _propTypes["default"].array,
-  checkboxIsChecked: _propTypes["default"].func,
-  checkboxChange: _propTypes["default"].func,
-  dataItemManipulator: _propTypes["default"].func,
-  renderCheckboxes: _propTypes["default"].bool,
-  onClick: _propTypes["default"].func,
-  onContextMenu: _propTypes["default"].func,
-  dangerouslyRenderFields: _propTypes["default"].array
+  row: _propTypes.default.object,
+  buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
+  actions: _propTypes.default.array,
+  checkboxIsChecked: _propTypes.default.func,
+  checkboxChange: _propTypes.default.func,
+  dataItemManipulator: _propTypes.default.func,
+  renderCheckboxes: _propTypes.default.bool,
+  onClick: _propTypes.default.func,
+  onMouseUp: _propTypes.default.func,
+  onMouseDown: _propTypes.default.func,
+  onContextMenu: _propTypes.default.func,
+  dangerouslyRenderFields: _propTypes.default.array
 };
 var _default = DataRow;
-exports["default"] = _default;
+exports.default = _default;
