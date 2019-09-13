@@ -379,7 +379,7 @@ For more complex interactions, such as supporting the ability to Middle-click, y
 <DynamicDataTable
     rows={this.state.users}
     onMouseDown={this.handleMouseDown}
-    onMouseUp={(event, row) => console.log("Released button: " + event.button + " on row: " + row.id)}
+    onMouseUp={this.handleMouseUp}
 />
 ```
 
