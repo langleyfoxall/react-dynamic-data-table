@@ -345,6 +345,8 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
 {
   row,                // Instance of data row
   onClick,            // Row on click handler
+  onMouseUp,          // Row on MouseUp handler
+  onMouseDown,        // Row on MouseDown handler
   buttons,            // Array of buttons
   actions,            // Array of header actions
   fields,             // Visible fields
@@ -408,6 +410,17 @@ In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`]
     )}
 />
 ```
+
+For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    onMouseDown={(event, row) => console.log("Pressing button: " + event.button + " on row: " + row.id)}
+    onMouseUp={(event, row) => console.log("Released button: " + event.button + " on row: " + row.id)}
+/>
+```
+
 
 ### Hoverable table rows
 
