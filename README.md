@@ -373,7 +373,7 @@ an instance of the row that is clicked. It also adds the bootstrap `table-hover`
 
 #### Mouse Events
 
-For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table.
+For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table. Exposing the mouse event and current row object.
 
 ```JSX
 <DynamicDataTable
