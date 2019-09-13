@@ -1,5 +1,9 @@
 "use strict";
 
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.weak-map");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -63,7 +67,9 @@ var _flatten = _interopRequireDefault(require("core-js/fn/array/flatten"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -115,9 +121,11 @@ function (_Component) {
     value: function className() {
       var _this$props = this.props,
           onClick = _this$props.onClick,
+          onMouseUp = _this$props.onMouseUp,
+          onMouseDown = _this$props.onMouseDown,
           hoverable = _this$props.hoverable;
       return (0, _classnames["default"])(['table', 'table-striped', {
-        'table-hover': onClick !== DynamicDataTable.noop || hoverable
+        'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
       }]);
     }
   }, {
@@ -289,6 +297,8 @@ function (_Component) {
 
       var _this$props4 = this.props,
           onClick = _this$props4.onClick,
+          onMouseUp = _this$props4.onMouseUp,
+          onMouseDown = _this$props4.onMouseDown,
           buttons = _this$props4.buttons,
           renderCheckboxes = _this$props4.renderCheckboxes,
           _dataItemManipulator = _this$props4.dataItemManipulator,
@@ -298,6 +308,8 @@ function (_Component) {
       return rowRenderer({
         row: row,
         onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
         buttons: buttons,
         renderCheckboxes: renderCheckboxes,
         key: row.id,
@@ -593,6 +605,8 @@ function (_Component) {
     value: function rowRenderer(_ref2) {
       var row = _ref2.row,
           onClick = _ref2.onClick,
+          onMouseUp = _ref2.onMouseUp,
+          onMouseDown = _ref2.onMouseDown,
           buttons = _ref2.buttons,
           fields = _ref2.fields,
           renderCheckboxes = _ref2.renderCheckboxes,
@@ -605,6 +619,8 @@ function (_Component) {
         key: row.id,
         row: row,
         onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
         buttons: buttons,
         fields: fields,
         actions: actions,
@@ -644,6 +660,8 @@ DynamicDataTable.propTypes = {
   buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
   rowRenderer: _propTypes["default"].func,
   onClick: _propTypes["default"].func,
+  onMouseUp: _propTypes["default"].func,
+  onMouseDown: _propTypes["default"].func,
   hoverable: _propTypes["default"].bool,
   allowOrderingBy: _propTypes["default"].array,
   disallowOrderingBy: _propTypes["default"].array,
@@ -679,6 +697,8 @@ DynamicDataTable.defaultProps = {
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
   onClick: DynamicDataTable.noop,
+  onMouseUp: DynamicDataTable.noop,
+  onMouseDown: DynamicDataTable.noop,
   hoverable: false,
   allowOrderingBy: [],
   disallowOrderingBy: [],

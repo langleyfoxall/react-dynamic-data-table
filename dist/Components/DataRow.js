@@ -1,5 +1,15 @@
 "use strict";
 
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.iterator");
+
+require("core-js/modules/es6.object.to-string");
+
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.weak-map");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -29,7 +39,9 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -75,10 +87,18 @@ function (_Component) {
           row = _this$props.row,
           fields = _this$props.fields,
           _onClick = _this$props.onClick,
+          _onMouseUp = _this$props.onMouseUp,
+          _onMouseDown = _this$props.onMouseDown,
           _onContextMenu = _this$props.onContextMenu;
       return _react["default"].createElement("tr", {
         onClick: function onClick(e) {
           return _onClick(e, row);
+        },
+        onMouseUp: function onMouseUp(e) {
+          return _onMouseUp(e, row);
+        },
+        onMouseDown: function onMouseDown(e) {
+          return _onMouseDown(e, row);
         },
         onContextMenu: function onContextMenu(e) {
           return _onContextMenu(e, row);
@@ -249,6 +269,8 @@ function (_Component) {
 
 DataRow.defaultProps = {
   onClick: DataRow.noop,
+  onMouseUp: DataRow.noop,
+  onMouseDown: DataRow.noop,
   onContextMenu: DataRow.noop,
   dangerouslyRenderFields: [],
   actions: []
@@ -262,6 +284,8 @@ DataRow.propTypes = {
   dataItemManipulator: _propTypes["default"].func,
   renderCheckboxes: _propTypes["default"].bool,
   onClick: _propTypes["default"].func,
+  onMouseUp: _propTypes["default"].func,
+  onMouseDown: _propTypes["default"].func,
   onContextMenu: _propTypes["default"].func,
   dangerouslyRenderFields: _propTypes["default"].array
 };
