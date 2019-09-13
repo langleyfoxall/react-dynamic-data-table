@@ -371,6 +371,20 @@ an instance of the row that is clicked. It also adds the bootstrap `table-hover`
 />
 ```
 
+#### Mouse Events
+
+For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    onMouseDown={(event, row) => console.log("Pressing button: " + event.button + " on row: " + row.id)}
+    onMouseUp={(event, row) => console.log("Released button: " + event.button + " on row: " + row.id)}
+/>
+```
+
+#### Context Menus
+
 The ability to right click rows can be enabled by using `onContextMenu` and `rowRenderer`.
 In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`](https://github.com/langleyfoxall/react-dynamic-context-menu):
 
@@ -410,17 +424,6 @@ In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`]
     )}
 />
 ```
-
-For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table.
-
-```JSX
-<DynamicDataTable
-    rows={this.state.users}
-    onMouseDown={(event, row) => console.log("Pressing button: " + event.button + " on row: " + row.id)}
-    onMouseUp={(event, row) => console.log("Released button: " + event.button + " on row: " + row.id)}
-/>
-```
-
 
 ### Hoverable table rows
 
