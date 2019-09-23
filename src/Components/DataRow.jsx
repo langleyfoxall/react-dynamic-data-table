@@ -40,6 +40,7 @@ class DataRow extends Component {
         const checkbox = (
             <div className="form-check">
                 <input
+                    name={"bulk-select-" + row.id}
                     type="checkbox"
                     checked={this.props.checkboxIsChecked(row)}
                     onChange={e => this.props.checkboxChange(e, row)}
