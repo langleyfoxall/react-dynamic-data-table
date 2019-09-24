@@ -123,6 +123,7 @@ function (_Component) {
       var checkbox = _react["default"].createElement("div", {
         className: "form-check"
       }, _react["default"].createElement("input", {
+        name: "bulk-select-".concat(row.id),
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
         onChange: function onChange(e) {
