@@ -304,7 +304,7 @@ function (_Component) {
           return _this3.checkboxIsChecked(value);
         },
         onCheckboxChange: function onCheckboxChange(e) {
-          return _this3.checkboxChange(e);
+          return _this3.checkboxChange(e, row);
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
         actions: actions,
@@ -466,9 +466,7 @@ function (_Component) {
     }
   }, {
     key: "checkboxChange",
-    value: function checkboxChange(_ref) {
-      var event = _ref.event,
-          row = _ref.row;
+    value: function checkboxChange(event, row) {
       var rows = this.props.rows;
       var target = event.target;
 
@@ -587,22 +585,20 @@ function (_Component) {
     }
   }, {
     key: "rowRenderer",
-    value: function rowRenderer(_ref2) {
-      var row = _ref2.row,
-          onClick = _ref2.onClick,
-          buttons = _ref2.buttons,
-          fields = _ref2.fields,
-          onMouseUp = _ref2.onMouseUp,
-          onMouseDown = _ref2.onMouseDown,
-          renderCheckboxes = _ref2.renderCheckboxes,
-          checkboxIsChecked = _ref2.checkboxIsChecked,
-          onCheckboxChange = _ref2.onCheckboxChange,
-          _dataItemManipulator2 = _ref2.dataItemManipulator,
-          dangerouslyRenderFields = _ref2.dangerouslyRenderFields,
-          actions = _ref2.actions,
-          editableColumns = _ref2.editableColumns,
-          index = _ref2.index;
-      return _react.default.createElement(_DataRow.default, {
+    value: function rowRenderer(_ref) {
+      var row = _ref.row,
+          onClick = _ref.onClick,
+          onMouseUp = _ref.onMouseUp,
+          onMouseDown = _ref.onMouseDown,
+          buttons = _ref.buttons,
+          fields = _ref.fields,
+          renderCheckboxes = _ref.renderCheckboxes,
+          checkboxIsChecked = _ref.checkboxIsChecked,
+          onCheckboxChange = _ref.onCheckboxChange,
+          _dataItemManipulator2 = _ref.dataItemManipulator,
+          dangerouslyRenderFields = _ref.dangerouslyRenderFields,
+          actions = _ref.actions;
+      return _react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
         onClick: onClick,
