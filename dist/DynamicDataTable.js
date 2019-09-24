@@ -106,7 +106,7 @@ function (_Component) {
           onMouseUp = _this$props.onMouseUp,
           onMouseDown = _this$props.onMouseDown,
           hoverable = _this$props.hoverable;
-      return (0, _classnames["default"])(['table', 'table-striped', {
+      return (0, _classnames.default)(['table', 'table-striped', {
         'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
       }]);
     }
@@ -590,10 +590,10 @@ function (_Component) {
     value: function rowRenderer(_ref2) {
       var row = _ref2.row,
           onClick = _ref2.onClick,
-          onMouseUp = _ref2.onMouseUp,
-          onMouseDown = _ref2.onMouseDown,
           buttons = _ref2.buttons,
           fields = _ref2.fields,
+          onMouseUp = _ref2.onMouseUp,
+          onMouseDown = _ref2.onMouseDown,
           renderCheckboxes = _ref2.renderCheckboxes,
           checkboxIsChecked = _ref2.checkboxIsChecked,
           onCheckboxChange = _ref2.onCheckboxChange,
@@ -656,6 +656,8 @@ DynamicDataTable.propTypes = {
   buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
   rowRenderer: _propTypes.default.func,
   onClick: _propTypes.default.func,
+  onMouseUp: _propTypes.default.func,
+  onMouseDown: _propTypes.default.func,
   hoverable: _propTypes.default.bool,
   allowOrderingBy: _propTypes.default.array,
   disallowOrderingBy: _propTypes.default.array,

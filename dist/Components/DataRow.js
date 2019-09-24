@@ -309,18 +309,20 @@ DataRow.defaultProps = {
   editableColumns: []
 };
 DataRow.propTypes = {
-  row: _propTypes["default"].object,
-  buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
-  actions: _propTypes["default"].array,
-  checkboxIsChecked: _propTypes["default"].func,
-  checkboxChange: _propTypes["default"].func,
-  dataItemManipulator: _propTypes["default"].func,
-  renderCheckboxes: _propTypes["default"].bool,
-  onClick: _propTypes["default"].func,
-  onMouseUp: _propTypes["default"].func,
-  onMouseDown: _propTypes["default"].func,
-  onContextMenu: _propTypes["default"].func,
-  dangerouslyRenderFields: _propTypes["default"].array
+  row: _propTypes.default.object,
+  buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
+  actions: _propTypes.default.array,
+  checkboxIsChecked: _propTypes.default.func,
+  checkboxChange: _propTypes.default.func,
+  dataItemManipulator: _propTypes.default.func,
+  renderCheckboxes: _propTypes.default.bool,
+  editableColumns: _propTypes.default.array,
+  onClick: _propTypes.default.func,
+  onMouseUp: _propTypes.default.func,
+  onMouseDown: _propTypes.default.func,
+  onContextMenu: _propTypes.default.func,
+  dangerouslyRenderFields: _propTypes.default.array,
+  index: _propTypes.default.number.required
 };
 var _default = DataRow;
 exports.default = _default;
