@@ -154,7 +154,8 @@ function (_Component) {
             defaultValue: value,
             value: column.controlled ? value : undefined,
             onChange: function onChange(event) {
-              return column.onChange(event, field.name, row, index);
+              event.stopPropagation();
+              column.onChange(event, field.name, row, index);
             }
           }, column.optionsForRow(row, field.name).map(function (option) {
             return _react.default.createElement("option", {
@@ -169,7 +170,8 @@ function (_Component) {
           defaultValue: value,
           value: column.controlled ? value : undefined,
           onChange: function onChange(event) {
-            return column.onChange(event, field.name, row, index);
+            event.stopPropagation();
+            column.onChange(event, field.name, row, index);
           }
         }));
       }

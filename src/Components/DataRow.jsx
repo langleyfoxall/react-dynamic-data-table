@@ -72,7 +72,10 @@ class DataRow extends Component {
                         <select
                             defaultValue={value}
                             value={column.controlled ? value : undefined}
-                            onChange={event => column.onChange(event, field.name, row, index)}>
+                            onChange={event => {
+                                event.stopPropagation();
+                                column.onChange(event, field.name, row, index);
+                            }}>
                             {column.optionsForRow(row, field.name).map(option => (
                                 <option value={option.value}>{option.label}</option>
                             ))
@@ -85,7 +88,10 @@ class DataRow extends Component {
 
             return (
                 <td key={key}>
-                    <input defaultValue={value} value={column.controlled ? value : undefined} onChange={event => column.onChange(event, field.name, row, index)} />
+                    <input defaultValue={value} value={column.controlled ? value : undefined} onChange={event => {
+                        event.stopPropagation();
+                        column.onChange(event, field.name, row, index)
+                    }} />
                 </td>
             )
         }
