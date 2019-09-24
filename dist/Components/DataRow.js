@@ -83,10 +83,18 @@ function (_Component) {
           row = _this$props.row,
           fields = _this$props.fields,
           _onClick = _this$props.onClick,
+          _onMouseUp = _this$props.onMouseUp,
+          _onMouseDown = _this$props.onMouseDown,
           _onContextMenu = _this$props.onContextMenu;
       return _react.default.createElement("tr", {
         onClick: function onClick(e) {
           return _onClick(e, row);
+        },
+        onMouseUp: function onMouseUp(e) {
+          return _onMouseUp(e, row);
+        },
+        onMouseDown: function onMouseDown(e) {
+          return _onMouseDown(e, row);
         },
         onContextMenu: function onContextMenu(e) {
           return _onContextMenu(e, row);
@@ -293,24 +301,26 @@ function (_Component) {
 
 DataRow.defaultProps = {
   onClick: DataRow.noop,
+  onMouseUp: DataRow.noop,
+  onMouseDown: DataRow.noop,
   onContextMenu: DataRow.noop,
   dangerouslyRenderFields: [],
   actions: [],
   editableColumns: []
 };
 DataRow.propTypes = {
-  row: _propTypes.default.object,
-  buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
-  actions: _propTypes.default.array,
-  checkboxIsChecked: _propTypes.default.func,
-  checkboxChange: _propTypes.default.func,
-  dataItemManipulator: _propTypes.default.func,
-  renderCheckboxes: _propTypes.default.bool,
-  editableColumns: _propTypes.default.array,
-  onClick: _propTypes.default.func,
-  onContextMenu: _propTypes.default.func,
-  dangerouslyRenderFields: _propTypes.default.array,
-  index: _propTypes.default.number.required
+  row: _propTypes["default"].object,
+  buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
+  actions: _propTypes["default"].array,
+  checkboxIsChecked: _propTypes["default"].func,
+  checkboxChange: _propTypes["default"].func,
+  dataItemManipulator: _propTypes["default"].func,
+  renderCheckboxes: _propTypes["default"].bool,
+  onClick: _propTypes["default"].func,
+  onMouseUp: _propTypes["default"].func,
+  onMouseDown: _propTypes["default"].func,
+  onContextMenu: _propTypes["default"].func,
+  dangerouslyRenderFields: _propTypes["default"].array
 };
 var _default = DataRow;
 exports.default = _default;

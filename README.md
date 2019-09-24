@@ -345,6 +345,8 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
 {
   row,                // Instance of data row
   onClick,            // Row on click handler
+  onMouseUp,          // Row on MouseUp handler
+  onMouseDown,        // Row on MouseDown handler
   buttons,            // Array of buttons
   actions,            // Array of header actions
   fields,             // Visible fields
@@ -368,6 +370,20 @@ an instance of the row that is clicked. It also adds the bootstrap `table-hover`
     onClick={(event, row) => console.warn(event, row.name)}
 />
 ```
+
+#### Mouse Events
+
+For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table. The `onMouseDown` and `onMouseUp` props should be callables, that will be passed an event object along withan instance of the row that is clicked.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    onMouseDown={this.handleMouseDown}
+    onMouseUp={this.handleMouseUp}
+/>
+```
+
+#### Context Menus
 
 The ability to right click rows can be enabled by using `onContextMenu` and `rowRenderer`.
 In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`](https://github.com/langleyfoxall/react-dynamic-context-menu):

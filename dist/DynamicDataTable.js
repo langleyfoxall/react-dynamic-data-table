@@ -103,9 +103,11 @@ function (_Component) {
     value: function className() {
       var _this$props = this.props,
           onClick = _this$props.onClick,
+          onMouseUp = _this$props.onMouseUp,
+          onMouseDown = _this$props.onMouseDown,
           hoverable = _this$props.hoverable;
-      return (0, _classnames.default)(['table', 'table-striped', {
-        'table-hover': onClick !== DynamicDataTable.noop || hoverable
+      return (0, _classnames["default"])(['table', 'table-striped', {
+        'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
       }]);
     }
   }, {
@@ -277,6 +279,8 @@ function (_Component) {
 
       var _this$props4 = this.props,
           onClick = _this$props4.onClick,
+          onMouseUp = _this$props4.onMouseUp,
+          onMouseDown = _this$props4.onMouseDown,
           buttons = _this$props4.buttons,
           renderCheckboxes = _this$props4.renderCheckboxes,
           _dataItemManipulator = _this$props4.dataItemManipulator,
@@ -287,6 +291,8 @@ function (_Component) {
       return rowRenderer({
         row: row,
         onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
         buttons: buttons,
         renderCheckboxes: renderCheckboxes,
         key: row.id,
@@ -584,6 +590,8 @@ function (_Component) {
     value: function rowRenderer(_ref2) {
       var row = _ref2.row,
           onClick = _ref2.onClick,
+          onMouseUp = _ref2.onMouseUp,
+          onMouseDown = _ref2.onMouseDown,
           buttons = _ref2.buttons,
           fields = _ref2.fields,
           renderCheckboxes = _ref2.renderCheckboxes,
@@ -598,6 +606,8 @@ function (_Component) {
         key: row.id,
         row: row,
         onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
         buttons: buttons,
         fields: fields,
         actions: actions,
@@ -682,6 +692,8 @@ DynamicDataTable.defaultProps = {
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
   onClick: DynamicDataTable.noop,
+  onMouseUp: DynamicDataTable.noop,
+  onMouseDown: DynamicDataTable.noop,
   hoverable: false,
   allowOrderingBy: [],
   disallowOrderingBy: [],

@@ -28,6 +28,8 @@ class DynamicDataTable extends Component {
                 key={row.id}
                 row={row}
                 onClick={onClick}
+                onMouseUp={onMouseUp}
+                onMouseDown={onMouseDown}
                 buttons={buttons}
                 fields={fields}
                 actions={actions}
@@ -51,13 +53,15 @@ class DynamicDataTable extends Component {
     }
 
     className() {
-        const { onClick, hoverable } = this.props;
+        const { onClick, onMouseUp, onMouseDown, hoverable } = this.props;
 
         return classNames([
             'table', 'table-striped',
             {
-                'table-hover':
+                'table-hover': 
                     onClick !== DynamicDataTable.noop
+                    || onMouseUp !== DynamicDataTable.noop
+                    || onMouseDown !== DynamicDataTable.noop
                     || hoverable
             }
         ]);
@@ -227,19 +231,14 @@ class DynamicDataTable extends Component {
 
     renderRow(row, index) {
         const {
-            onClick,
-            buttons,
-            renderCheckboxes,
-            dataItemManipulator,
-            rowRenderer,
-            dangerouslyRenderFields,
-            actions,
-            editableColumns,
+            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
         } = this.props;
 
         return rowRenderer({
             row,
             onClick,
+            onMouseUp,
+            onMouseDown,
             buttons,
             renderCheckboxes,
             key: row.id,
@@ -562,6 +561,8 @@ DynamicDataTable.propTypes = {
     ]),
     rowRenderer: PropTypes.func,
     onClick: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseDown: PropTypes.func,
     hoverable: PropTypes.bool,
     allowOrderingBy: PropTypes.array,
     disallowOrderingBy: PropTypes.array,
@@ -599,6 +600,8 @@ DynamicDataTable.defaultProps = {
     ],
     rowRenderer: DynamicDataTable.rowRenderer,
     onClick: DynamicDataTable.noop,
+    onMouseUp: DynamicDataTable.noop,
+    onMouseDown: DynamicDataTable.noop,
     hoverable: false,
     allowOrderingBy: [],
     disallowOrderingBy: [],
