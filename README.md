@@ -688,5 +688,5 @@ after the default value has been set by React. You will only receive input from 
 to modify the displayed value.
 
 A controlled input will require you to store the value of the input in the state, the value of the input will be
-read from state meaning you will have to update state on user input to reflect it in component. I this case
+read from state meaning you will have to update state on user input to reflect it in component. In this case
 it will mean you will have to alter the data passed in as the `rows` prop.

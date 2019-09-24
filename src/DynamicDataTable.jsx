@@ -22,7 +22,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index}) {
+    static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index }) {
         return (
             <DataRow
                 key={row.id}
@@ -58,7 +58,7 @@ class DynamicDataTable extends Component {
         return classNames([
             'table', 'table-striped',
             {
-                'table-hover': 
+                'table-hover':
                     onClick !== DynamicDataTable.noop
                     || onMouseUp !== DynamicDataTable.noop
                     || onMouseDown !== DynamicDataTable.noop
@@ -158,7 +158,7 @@ class DynamicDataTable extends Component {
                 const field = fields[i];
                 const j = fieldOrder.findIndex(query => {
                     if (query.constructor) {
-                        switch(query.constructor) {
+                        switch (query.constructor) {
                             case RegExp:
                                 return query.test(field.name);
                             default:
@@ -213,18 +213,18 @@ class DynamicDataTable extends Component {
                 <div className="table-responsive">
                     <table className={this.className()}>
                         <thead>
-                            <tr>
-                                { this.renderCheckboxCell('all') }
-                                { fields.map(field => this.renderHeader(field)) }
-                                { this.renderActionsCell() }
-                            </tr>
+                        <tr>
+                            {this.renderCheckboxCell('all')}
+                            {fields.map(field => this.renderHeader(field))}
+                            {this.renderActionsCell()}
+                        </tr>
                         </thead>
                         <tbody>
-                            { rows.map((row, index) => this.renderRow(row, index)) }
+                        {rows.map((row, index) => this.renderRow(row, index))}
                         </tbody>
                     </table>
                 </div>
-                { this.renderPagination() }
+                {this.renderPagination()}
             </div>
         );
     }
@@ -269,7 +269,8 @@ class DynamicDataTable extends Component {
         const onClickHandler = (
             canOrderBy
                 ? () => this.changeOrder(field)
-                : () => {}
+                : () => {
+                }
         );
 
         const cursor = (
@@ -280,9 +281,9 @@ class DynamicDataTable extends Component {
 
         return (
             <th style={{ cursor }} key={field.name} onClick={onClickHandler}>
-                { field.label }
+                {field.label}
                 &nbsp;
-                { orderByIcon }
+                {orderByIcon}
             </th>
         );
     }
@@ -312,7 +313,7 @@ class DynamicDataTable extends Component {
                         Actions
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        { this.props.actions.map(action => this.renderActionButton(action))}
+                        {this.props.actions.map(action => this.renderActionButton(action))}
                     </div>
                 </div>
             </th>
@@ -330,7 +331,7 @@ class DynamicDataTable extends Component {
                     this.setState({ checkedRows: [] });
                 }}
             >
-                { action.name }
+                {action.name}
             </button>
         );
     }
@@ -368,12 +369,12 @@ class DynamicDataTable extends Component {
 
         if (value === 'all') {
             return (
-                <th>{ checkbox }</th>
+                <th>{checkbox}</th>
             );
         }
 
         return (
-            <td>{ checkbox }</td>
+            <td>{checkbox}</td>
         );
     }
 
@@ -457,20 +458,20 @@ class DynamicDataTable extends Component {
             <div className="table-responsive">
                 <table className="table table-striped">
                     <tbody>
-                        <tr>
-                            <td className="text-center">
-                                {!!loadingIndicator && (
-                                    <div>
-                                        { loadingIndicator }
-                                    </div>
-                                )}
-                                {!!loadingMessage && (
-                                    <div>
-                                        { loadingMessage }
-                                    </div>
-                                )}
-                            </td>
-                        </tr>
+                    <tr>
+                        <td className="text-center">
+                            {!!loadingIndicator && (
+                                <div>
+                                    {loadingIndicator}
+                                </div>
+                            )}
+                            {!!loadingMessage && (
+                                <div>
+                                    {loadingMessage}
+                                </div>
+                            )}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -484,7 +485,7 @@ class DynamicDataTable extends Component {
                     <tbody>
                     <tr>
                         <td className="text-center">
-                            { this.props.errorMessage }
+                            {this.props.errorMessage}
                         </td>
                     </tr>
                     </tbody>
@@ -505,11 +506,11 @@ class DynamicDataTable extends Component {
             <div className="table-responsive">
                 <table className="table table-striped">
                     <tbody>
-                        <tr>
-                            <td className="text-center">
-                                { noDataMessage }
-                            </td>
-                        </tr>
+                    <tr>
+                        <td className="text-center">
+                            {noDataMessage}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
