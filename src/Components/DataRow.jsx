@@ -88,7 +88,7 @@ class DataRow extends Component {
 
             return (
                 <td key={key}>
-                    <input defaultValue={value} value={column.controlled ? value : undefined} onChange={event => {
+                    <input type={column.type} defaultValue={value} value={column.controlled ? value : undefined} onChange={event => {
                         event.stopPropagation();
                         column.onChange(event, field.name, row, index)
                     }} />
