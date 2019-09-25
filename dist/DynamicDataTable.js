@@ -588,17 +588,19 @@ function (_Component) {
     value: function rowRenderer(_ref) {
       var row = _ref.row,
           onClick = _ref.onClick,
-          onMouseUp = _ref.onMouseUp,
-          onMouseDown = _ref.onMouseDown,
           buttons = _ref.buttons,
           fields = _ref.fields,
+          onMouseUp = _ref.onMouseUp,
+          onMouseDown = _ref.onMouseDown,
           renderCheckboxes = _ref.renderCheckboxes,
           checkboxIsChecked = _ref.checkboxIsChecked,
           onCheckboxChange = _ref.onCheckboxChange,
           _dataItemManipulator2 = _ref.dataItemManipulator,
           dangerouslyRenderFields = _ref.dangerouslyRenderFields,
-          actions = _ref.actions;
-      return _react["default"].createElement(_DataRow["default"], {
+          actions = _ref.actions,
+          editableColumns = _ref.editableColumns,
+          index = _ref.index;
+      return _react.default.createElement(_DataRow.default, {
         key: row.id,
         row: row,
         onClick: onClick,

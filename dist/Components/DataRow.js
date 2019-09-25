@@ -118,7 +118,7 @@ function (_Component) {
 
       var checkbox = _react.default.createElement("div", {
         className: "form-check"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         name: "bulk-select-".concat(row.id),
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
@@ -168,6 +168,7 @@ function (_Component) {
         return _react.default.createElement("td", {
           key: key
         }, _react.default.createElement("input", {
+          type: column.type,
           defaultValue: value,
           value: column.controlled ? value : undefined,
           onChange: function onChange(event) {
