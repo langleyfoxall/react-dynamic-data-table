@@ -245,7 +245,7 @@ class DynamicDataTable extends Component {
             fields: this.getFields(),
             dataItemManipulator: (field, value) => dataItemManipulator(field, value),
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
-            onCheckboxChange: (e) => this.checkboxChange(e),
+            onCheckboxChange: (e) => this.checkboxChange(e, row),
             dangerouslyRenderFields,
             actions,
             editableColumns,
@@ -402,7 +402,7 @@ class DynamicDataTable extends Component {
         return index !== -1;
     }
 
-    checkboxChange({ event, row }) {
+    checkboxChange(event, row) {
         const { rows } = this.props;
         const { target } = event;
 
