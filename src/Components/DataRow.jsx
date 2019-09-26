@@ -9,10 +9,10 @@ class DataRow extends Component {
 
     shouldDangerouslyRenderField(field) {
         const { dangerouslyRenderFields } = this.props;
-        
+
         return dangerouslyRenderFields.includes(field);
     }
-    
+
     render() {
         const { row, fields, onClick, onMouseUp, onMouseDown, onContextMenu } = this.props;
 
@@ -55,11 +55,47 @@ class DataRow extends Component {
     }
 
     renderCell(field, row) {
+        const { editableColumns, index } = this.props;
+
         let value = row[field.name];
 
         value = this.props.dataItemManipulator(field.name, value);
 
         const key = `${row.id}_${field.name}`;
+
+        let columnIndex = editableColumns.findIndex(column => column.name === field.name);
+        if (columnIndex !== -1) {
+            let column = editableColumns[columnIndex];
+
+            if(column.type === 'select') {
+                return (
+                    <td key={key}>
+                        <select
+                            defaultValue={value}
+                            value={column.controlled ? value : undefined}
+                            onChange={event => {
+                                event.stopPropagation();
+                                column.onChange(event, field.name, row, index);
+                            }}>
+                            {column.optionsForRow(row, field.name).map(option => (
+                                <option value={option.value}>{option.label}</option>
+                            ))
+
+                            }
+                        </select>
+                    </td>
+                )
+            }
+
+            return (
+                <td key={key}>
+                    <input type={column.type} defaultValue={value} value={column.controlled ? value : undefined} onChange={event => {
+                        event.stopPropagation();
+                        column.onChange(event, field.name, row, index)
+                    }} />
+                </td>
+            )
+        }
 
         if (React.isValidElement(value)) {
             return (
@@ -147,12 +183,14 @@ class DataRow extends Component {
         }
 
         if (typeof button.render === 'function') {
-            <div
-                style={{cursor: 'pointer'}}
-                key={`button_${button.name}`}
-                className="dropdown-item">
-                {button.render(row)}
-            </div>
+            return (
+                <div
+                    style={{cursor: 'pointer'}}
+                    key={`button_${button.name}`}
+                    className="dropdown-item">
+                    {button.render(row)}
+                </div>
+            )
         }
 
         return (
@@ -175,6 +213,7 @@ DataRow.defaultProps = {
     onContextMenu: DataRow.noop,
     dangerouslyRenderFields: [],
     actions: [],
+    editableColumns: [],
 };
 
 DataRow.propTypes = {
@@ -187,11 +226,13 @@ DataRow.propTypes = {
     checkboxChange: PropTypes.func,
     dataItemManipulator: PropTypes.func,
     renderCheckboxes: PropTypes.bool,
+    editableColumns: PropTypes.array,
     onClick: PropTypes.func,
     onMouseUp: PropTypes.func,
     onMouseDown: PropTypes.func,
     onContextMenu: PropTypes.func,
-    dangerouslyRenderFields: PropTypes.array
+    dangerouslyRenderFields: PropTypes.array,
+    index: PropTypes.number.required,
 };
 
 export default DataRow;

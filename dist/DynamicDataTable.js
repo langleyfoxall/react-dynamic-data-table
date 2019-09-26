@@ -7,39 +7,23 @@ require("core-js/modules/es6.weak-map");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
 
-require("core-js/modules/es6.object.define-property");
-
-require("core-js/modules/es6.object.create");
-
 require("core-js/modules/es6.object.set-prototype-of");
-
-require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es7.array.includes");
 
 require("core-js/modules/es6.string.includes");
 
-require("core-js/modules/es6.array.map");
-
-require("core-js/modules/es6.array.is-array");
-
 require("core-js/modules/es6.array.find-index");
-
-require("core-js/modules/es6.array.index-of");
-
-require("core-js/modules/es6.array.filter");
 
 require("core-js/modules/es6.regexp.constructor");
 
 require("core-js/modules/es6.regexp.replace");
-
-require("core-js/modules/es6.string.trim");
 
 require("core-js/modules/es6.function.name");
 
@@ -50,8 +34,6 @@ require("core-js/modules/es6.array.iterator");
 require("core-js/modules/es6.object.to-string");
 
 require("core-js/modules/es6.object.keys");
-
-require("core-js/modules/es6.function.bind");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -65,11 +47,11 @@ var _Pagination = _interopRequireDefault(require("./Components/Pagination"));
 
 var _flatten = _interopRequireDefault(require("core-js/fn/array/flatten"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -124,7 +106,7 @@ function (_Component) {
           onMouseUp = _this$props.onMouseUp,
           onMouseDown = _this$props.onMouseDown,
           hoverable = _this$props.hoverable;
-      return (0, _classnames["default"])(['table', 'table-striped', {
+      return (0, _classnames.default)(['table', 'table-striped', {
         'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
       }]);
     }
@@ -252,7 +234,7 @@ function (_Component) {
           if (_ret === "continue") continue;
         }
 
-        return (0, _flatten["default"])(orderedFields);
+        return (0, _flatten.default)(orderedFields);
       }
 
       return fields;
@@ -280,19 +262,19 @@ function (_Component) {
         return this.renderEmptyTable();
       }
 
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: this.className()
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
         return _this2.renderHeader(field);
-      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row) {
-        return _this2.renderRow(row);
+      }), this.renderActionsCell())), _react.default.createElement("tbody", null, rows.map(function (row, index) {
+        return _this2.renderRow(row, index);
       })))), this.renderPagination());
     }
   }, {
     key: "renderRow",
-    value: function renderRow(row) {
+    value: function renderRow(row, index) {
       var _this3 = this;
 
       var _this$props4 = this.props,
@@ -304,7 +286,8 @@ function (_Component) {
           _dataItemManipulator = _this$props4.dataItemManipulator,
           rowRenderer = _this$props4.rowRenderer,
           dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
-          actions = _this$props4.actions;
+          actions = _this$props4.actions,
+          editableColumns = _this$props4.editableColumns;
       return rowRenderer({
         row: row,
         onClick: onClick,
@@ -324,7 +307,9 @@ function (_Component) {
           return _this3.checkboxChange(e, row);
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
-        actions: actions
+        actions: actions,
+        editableColumns: editableColumns,
+        index: index
       });
     }
   }, {
@@ -349,7 +334,7 @@ function (_Component) {
         return _this4.changeOrder(field);
       } : function () {};
       var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
-      return _react["default"].createElement("th", {
+      return _react.default.createElement("th", {
         style: {
           cursor: cursor
         },
@@ -370,14 +355,14 @@ function (_Component) {
       if (!buttons.length && !actions.length) {
         return null;
       } else if (!actions.length) {
-        return _react["default"].createElement("th", null);
+        return _react.default.createElement("th", null);
       }
 
-      return _react["default"].createElement("th", {
+      return _react.default.createElement("th", {
         className: "rddt-action-cell"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "dropdown"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         className: "btn btn-secondary dropdown-toggle",
         type: "button",
         id: "dropdownMenuButton",
@@ -385,7 +370,7 @@ function (_Component) {
         "aria-haspopup": "true",
         "aria-expanded": "false",
         disabled: !state.checkedRows.length
-      }, "Actions"), _react["default"].createElement("div", {
+      }, "Actions"), _react.default.createElement("div", {
         className: "dropdown-menu",
         "aria-labelledby": "dropdownMenuButton"
       }, this.props.actions.map(function (action) {
@@ -397,7 +382,7 @@ function (_Component) {
     value: function renderActionButton(action) {
       var _this6 = this;
 
-      return _react["default"].createElement("button", {
+      return _react.default.createElement("button", {
         key: "action_".concat(action.name),
         type: "button",
         className: "dropdown-item",
@@ -435,9 +420,9 @@ function (_Component) {
         return;
       }
 
-      var checkbox = _react["default"].createElement("div", {
+      var checkbox = _react.default.createElement("div", {
         className: "form-check"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         type: "checkbox",
         value: value,
         checked: this.checkboxIsChecked(value),
@@ -450,10 +435,10 @@ function (_Component) {
       }));
 
       if (value === 'all') {
-        return _react["default"].createElement("th", null, checkbox);
+        return _react.default.createElement("th", null, checkbox);
       }
 
-      return _react["default"].createElement("td", null, checkbox);
+      return _react.default.createElement("td", null, checkbox);
     }
   }, {
     key: "checkboxIsChecked",
@@ -542,22 +527,22 @@ function (_Component) {
         return loadingComponent;
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table table-striped"
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", {
+      }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", {
         className: "text-center"
-      }, !!loadingIndicator && _react["default"].createElement("div", null, loadingIndicator), !!loadingMessage && _react["default"].createElement("div", null, loadingMessage))))));
+      }, !!loadingIndicator && _react.default.createElement("div", null, loadingIndicator), !!loadingMessage && _react.default.createElement("div", null, loadingMessage))))));
     }
   }, {
     key: "renderErrorTable",
     value: function renderErrorTable() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table table-striped"
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", {
+      }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", {
         className: "text-center"
       }, this.props.errorMessage)))));
     }
@@ -568,15 +553,15 @@ function (_Component) {
           noDataMessage = _this$props8.noDataMessage,
           noDataComponent = _this$props8.noDataComponent;
 
-      if (_react["default"].isValidElement(noDataComponent)) {
+      if (_react.default.isValidElement(noDataComponent)) {
         return noDataComponent;
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table table-striped"
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", {
+      }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", {
         className: "text-center"
       }, noDataMessage)))));
     }
@@ -584,7 +569,7 @@ function (_Component) {
     key: "renderPagination",
     value: function renderPagination() {
       var props = this.props;
-      return _react["default"].createElement(_Pagination["default"], {
+      return _react.default.createElement(_Pagination.default, {
         currentPage: props.currentPage,
         totalPages: props.totalPages,
         changePage: function changePage(page) {
@@ -603,17 +588,19 @@ function (_Component) {
     value: function rowRenderer(_ref) {
       var row = _ref.row,
           onClick = _ref.onClick,
-          onMouseUp = _ref.onMouseUp,
-          onMouseDown = _ref.onMouseDown,
           buttons = _ref.buttons,
           fields = _ref.fields,
+          onMouseUp = _ref.onMouseUp,
+          onMouseDown = _ref.onMouseDown,
           renderCheckboxes = _ref.renderCheckboxes,
           checkboxIsChecked = _ref.checkboxIsChecked,
           onCheckboxChange = _ref.onCheckboxChange,
           _dataItemManipulator2 = _ref.dataItemManipulator,
           dangerouslyRenderFields = _ref.dangerouslyRenderFields,
-          actions = _ref.actions;
-      return _react["default"].createElement(_DataRow["default"], {
+          actions = _ref.actions,
+          editableColumns = _ref.editableColumns,
+          index = _ref.index;
+      return _react.default.createElement(_DataRow.default, {
         key: row.id,
         row: row,
         onClick: onClick,
@@ -623,12 +610,14 @@ function (_Component) {
         fields: fields,
         actions: actions,
         renderCheckboxes: renderCheckboxes,
+        editableColumns: editableColumns,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
         dataItemManipulator: function dataItemManipulator(field, value) {
           return _dataItemManipulator2(field, value);
         },
-        dangerouslyRenderFields: dangerouslyRenderFields
+        dangerouslyRenderFields: dangerouslyRenderFields,
+        index: index
       });
     }
   }]);
@@ -637,34 +626,41 @@ function (_Component) {
 }(_react.Component);
 
 DynamicDataTable.propTypes = {
-  rows: _propTypes["default"].array,
-  fieldsToExclude: _propTypes["default"].array,
-  fieldMap: _propTypes["default"].object,
-  fieldOrder: _propTypes["default"].array,
-  currentPage: _propTypes["default"].number,
-  totalPages: _propTypes["default"].number,
-  orderByField: _propTypes["default"].string,
-  orderByDirection: _propTypes["default"].oneOf(['asc', 'desc']),
-  renderCheckboxes: _propTypes["default"].bool,
-  actions: _propTypes["default"].array,
-  loading: _propTypes["default"].bool,
-  loadingMessage: _propTypes["default"].string,
-  loadingIndicator: _propTypes["default"].element,
-  loadingComponent: _propTypes["default"].element,
-  errorMessage: _propTypes["default"].string,
-  noDataMessage: _propTypes["default"].string,
-  noDataComponent: _propTypes["default"].element,
-  dataItemManipulator: _propTypes["default"].func,
-  buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
-  rowRenderer: _propTypes["default"].func,
-  onClick: _propTypes["default"].func,
-  onMouseUp: _propTypes["default"].func,
-  onMouseDown: _propTypes["default"].func,
-  hoverable: _propTypes["default"].bool,
-  allowOrderingBy: _propTypes["default"].array,
-  disallowOrderingBy: _propTypes["default"].array,
-  dangerouslyRenderFields: _propTypes["default"].array,
-  paginationDelta: _propTypes["default"].number
+  rows: _propTypes.default.array,
+  fieldsToExclude: _propTypes.default.array,
+  fieldMap: _propTypes.default.object,
+  fieldOrder: _propTypes.default.array,
+  currentPage: _propTypes.default.number,
+  totalPages: _propTypes.default.number,
+  orderByField: _propTypes.default.string,
+  orderByDirection: _propTypes.default.oneOf(['asc', 'desc']),
+  renderCheckboxes: _propTypes.default.bool,
+  editableColumns: _propTypes.default.arrayOf(_propTypes.default.shape({
+    name: _propTypes.default.string.isRequired,
+    controlled: _propTypes.default.bool.isRequired,
+    type: _propTypes.default.string.isRequired,
+    onChange: _propTypes.default.func.isRequired,
+    optionsForRow: _propTypes.default.func
+  })),
+  actions: _propTypes.default.array,
+  loading: _propTypes.default.bool,
+  loadingMessage: _propTypes.default.string,
+  loadingIndicator: _propTypes.default.element,
+  loadingComponent: _propTypes.default.element,
+  errorMessage: _propTypes.default.string,
+  noDataMessage: _propTypes.default.string,
+  noDataComponent: _propTypes.default.element,
+  dataItemManipulator: _propTypes.default.func,
+  buttons: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.func]),
+  rowRenderer: _propTypes.default.func,
+  onClick: _propTypes.default.func,
+  onMouseUp: _propTypes.default.func,
+  onMouseDown: _propTypes.default.func,
+  hoverable: _propTypes.default.bool,
+  allowOrderingBy: _propTypes.default.array,
+  disallowOrderingBy: _propTypes.default.array,
+  dangerouslyRenderFields: _propTypes.default.array,
+  paginationDelta: _propTypes.default.number
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -676,6 +672,7 @@ DynamicDataTable.defaultProps = {
   orderByField: null,
   orderByDirection: 'asc',
   renderCheckboxes: false,
+  editableColumns: [],
   actions: [],
   loading: false,
   loadingMessage: 'Loading data...',
@@ -704,4 +701,4 @@ DynamicDataTable.defaultProps = {
   paginationDelta: 4
 };
 var _default = DynamicDataTable;
-exports["default"] = _default;
+exports.default = _default;
