@@ -286,13 +286,13 @@ function (_Component) {
         className: this.className()
       }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
         return _this2.renderHeader(field);
-      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row) {
-        return _this2.renderRow(row);
+      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row, index) {
+        return _this2.renderRow(row, index);
       })))), this.renderPagination());
     }
   }, {
     key: "renderRow",
-    value: function renderRow(row) {
+    value: function renderRow(row, index) {
       var _this3 = this;
 
       var _this$props4 = this.props,
@@ -304,7 +304,8 @@ function (_Component) {
           _dataItemManipulator = _this$props4.dataItemManipulator,
           rowRenderer = _this$props4.rowRenderer,
           dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
-          actions = _this$props4.actions;
+          actions = _this$props4.actions,
+          editableColumns = _this$props4.editableColumns;
       return rowRenderer({
         row: row,
         onClick: onClick,
@@ -324,7 +325,9 @@ function (_Component) {
           return _this3.checkboxChange(e, row);
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
-        actions: actions
+        actions: actions,
+        editableColumns: editableColumns,
+        index: index
       });
     }
   }, {
@@ -600,16 +603,18 @@ function (_Component) {
     value: function rowRenderer(_ref) {
       var row = _ref.row,
           onClick = _ref.onClick,
-          onMouseUp = _ref.onMouseUp,
-          onMouseDown = _ref.onMouseDown,
           buttons = _ref.buttons,
           fields = _ref.fields,
+          onMouseUp = _ref.onMouseUp,
+          onMouseDown = _ref.onMouseDown,
           renderCheckboxes = _ref.renderCheckboxes,
           checkboxIsChecked = _ref.checkboxIsChecked,
           onCheckboxChange = _ref.onCheckboxChange,
           _dataItemManipulator2 = _ref.dataItemManipulator,
           dangerouslyRenderFields = _ref.dangerouslyRenderFields,
-          actions = _ref.actions;
+          actions = _ref.actions,
+          editableColumns = _ref.editableColumns,
+          index = _ref.index;
       return _react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
@@ -620,12 +625,14 @@ function (_Component) {
         fields: fields,
         actions: actions,
         renderCheckboxes: renderCheckboxes,
+        editableColumns: editableColumns,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
         dataItemManipulator: function dataItemManipulator(field, value) {
           return _dataItemManipulator2(field, value);
         },
-        dangerouslyRenderFields: dangerouslyRenderFields
+        dangerouslyRenderFields: dangerouslyRenderFields,
+        index: index
       });
     }
   }]);
@@ -643,6 +650,13 @@ DynamicDataTable.propTypes = {
   orderByField: _propTypes["default"].string,
   orderByDirection: _propTypes["default"].oneOf(['asc', 'desc']),
   renderCheckboxes: _propTypes["default"].bool,
+  editableColumns: _propTypes["default"].arrayOf(_propTypes["default"].shape({
+    name: _propTypes["default"].string.isRequired,
+    controlled: _propTypes["default"].bool.isRequired,
+    type: _propTypes["default"].string.isRequired,
+    onChange: _propTypes["default"].func.isRequired,
+    optionsForRow: _propTypes["default"].func
+  })),
   actions: _propTypes["default"].array,
   loading: _propTypes["default"].bool,
   loadingMessage: _propTypes["default"].string,
@@ -673,6 +687,7 @@ DynamicDataTable.defaultProps = {
   orderByField: null,
   orderByDirection: 'asc',
   renderCheckboxes: false,
+  editableColumns: [],
   actions: [],
   loading: false,
   loadingMessage: 'Loading data...',

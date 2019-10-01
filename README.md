@@ -617,3 +617,76 @@ In order to display an error message, you just need to set the optional
 `errorMessage` prop. This prop expects a string such as `An error has occurred
 while loading user data.`. If the error is resolved, this prop must be reset 
 to an empty string in order to ensure the data table is displayed.
+
+### Editable Columns
+
+If you wish to make certain columns editable you can specify how using the `editableColumns` prop.
+This prop accepts an array of object in the following format:
+
+```js
+[
+    {
+        name: 'ExampleColumnText',
+        controlled: false,
+        type: 'text',
+        onChange: (event, column, row, index) => console.log(event, column, row, index),
+    },
+    {
+        name: 'ExampleColumnSelect',
+        controlled: false,
+        type: 'select',
+        onChange: (event, column, row, index) => console.log(event, column, row, index),
+        optionsForRow: (row, column) => [
+            {
+                label: 'One',
+                value: 1
+             },
+            {
+                label: 'Two',
+                value: 2
+            }
+        ]
+}]
+```
+
+#### Text Inputs
+
+If you specify that the type of the column is `text` the column will contain a text input with a value of the 
+column from the row data.
+
+
+#### Selects
+
+If you wish to use a select instead of a text input you may specify `select` as the type. The column will now contain
+a select input, by default with no options. In order to provide options implement the `optionsForRow` method.
+This method will be called with: `The row data` and `Column name` in that order. It should return an array of objects
+in this format:
+
+```js
+[
+    {
+        label: 'Example one',
+        value: 1
+    },
+    {
+        label: 'Example two',
+        value: 2
+    }
+]
+```
+
+#### Receiving input
+
+In order to receive the users input you can provide the `onChange` method that will be called when the input is changed.
+This method will be called with the following parameters in the given order:
+`The event from the input`, `The column name`, `The row data`, `The row index`.
+
+#### Controlled and Uncontrolled inputs
+
+A uncontrolled input is an input whose value is controlled by the DOM. This means that it cannot be modified
+after the default value has been set by React. You will only receive input from the component and will not be able
+to modify the displayed value.
+
+A controlled input will require you to store the value of the input in the state, the value of the input will be
+read from state meaning you will have to update state on user input to reflect it in component. In this case
+it will mean you will have to alter the data passed in as the `rows` prop.
