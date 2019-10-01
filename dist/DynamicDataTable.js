@@ -442,10 +442,7 @@ function (_Component) {
         value: value,
         checked: this.checkboxIsChecked(value),
         onChange: function onChange(event) {
-          return _this7.checkboxChange({
-            event: event,
-            row: value
-          });
+          return _this7.checkboxChange(event, value);
         }
       }));
 
