@@ -362,7 +362,7 @@ class DynamicDataTable extends Component {
                     type="checkbox"
                     value={value}
                     checked={this.checkboxIsChecked(value)}
-                    onChange={event => this.checkboxChange({ event, row: value })}
+                    onChange={event => this.checkboxChange(event, value)}
                 />
             </div>
         );
