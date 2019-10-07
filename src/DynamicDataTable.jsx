@@ -69,9 +69,13 @@ class DynamicDataTable extends Component {
 
     getFields() {
         const { rows } = this.props;
-        let { fieldsToExclude, fieldMap, fieldOrder } = this.props;
+        let { fieldsToInclude, fieldsToExclude, fieldMap, fieldOrder } = this.props;
 
         const fields = [];
+
+        if (!fieldsToInclude) {
+            fieldsToInclude = [];
+        }
 
         if (!fieldsToExclude) {
             fieldsToExclude = [];
@@ -115,6 +119,22 @@ class DynamicDataTable extends Component {
                         name: rowFieldName,
                         label,
                     });
+                }
+            }
+        }
+
+        if (fieldsToInclude.length > 0) {
+            for (let i = 0; i < fields.length; i++) {
+                const field = fields[i];
+                let shouldExclude = false;
+                if (fieldsToInclude.indexOf(field.name) === -1) {
+                    shouldExclude = true;
+                }
+
+                if (shouldExclude) {
+                    fields.splice(i, 1);
+                    i--;
+                    continue;
                 }
             }
         }
@@ -533,6 +553,7 @@ class DynamicDataTable extends Component {
 
 DynamicDataTable.propTypes = {
     rows: PropTypes.array,
+    fieldsToInclude: PropTypes.array,
     fieldsToExclude: PropTypes.array,
     fieldMap: PropTypes.object,
     fieldOrder: PropTypes.array,
@@ -573,6 +594,7 @@ DynamicDataTable.propTypes = {
 
 DynamicDataTable.defaultProps = {
     rows: [],
+    fieldsToInclude: [],
     fieldsToExclude: [],
     fieldMap: {},
     fieldOrder: [],
