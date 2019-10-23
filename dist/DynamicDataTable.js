@@ -701,7 +701,7 @@ DynamicDataTable.defaultProps = {
   },
   buttons: [{
     name: 'View',
-    callback: function callback(row) {
+    callback: function callback(e, row) {
       window.location = "".concat(location.href, "/").concat(row.id);
     }
   }],
