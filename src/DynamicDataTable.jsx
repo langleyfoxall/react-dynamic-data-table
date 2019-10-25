@@ -594,7 +594,7 @@ DynamicDataTable.defaultProps = {
     buttons: [
         {
             name: 'View',
-            callback: (row) => {
+            callback: (e, row) => {
                 window.location = `${location.href}/${row.id}`;
             }
         },
