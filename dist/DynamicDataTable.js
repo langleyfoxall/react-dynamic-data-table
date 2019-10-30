@@ -705,7 +705,6 @@ DynamicDataTable.defaultProps = {
     name: 'View',
     callback: function callback(e, row) {
       window.location = "".concat(window.location.href.split(/[?#]/)[0], "/").concat(row.id);
-      ;
     }
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
