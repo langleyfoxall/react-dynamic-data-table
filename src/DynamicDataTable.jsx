@@ -594,8 +594,8 @@ DynamicDataTable.defaultProps = {
     buttons: [
         {
             name: 'View',
-            callback: (row) => {
-                window.location = `${location.href}/${row.id}`;
+            callback: (e, row) => {
+                window.location = `${window.location.href.split(/[?#]/)[0]}/${row.id}`;;
             }
         },
     ],

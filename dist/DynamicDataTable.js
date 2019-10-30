@@ -9,6 +9,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+require("core-js/modules/es6.regexp.split");
+
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
@@ -701,8 +703,9 @@ DynamicDataTable.defaultProps = {
   },
   buttons: [{
     name: 'View',
-    callback: function callback(row) {
-      window.location = "".concat(location.href, "/").concat(row.id);
+    callback: function callback(e, row) {
+      window.location = "".concat(window.location.href.split(/[?#]/)[0], "/").concat(row.id);
+      ;
     }
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
