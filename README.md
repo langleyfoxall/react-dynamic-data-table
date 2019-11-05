@@ -204,6 +204,20 @@ Mixing strings and regex is also supported.
 // Output: id, first_name, last_name, email
 ```
 
+### Custom order by icons
+
+When ordering by a field on an element will be rendered next to it. By default 
+these are simple symbols (`↓` and `↑`). These can be changed by passing a valid
+node into `orderByAscIcon` and `orderByDescIcon`.
+
+```JSX
+<DynamicDataTable
+    orderByAscIcon="Ascending"
+    // orderByAscIcon={<p>Ascending</p>}
+    // orderByAscIcon={<FancyDecendingIcon />}
+/>
+```
+
 ### Pagination
 
 Making pagination work with React Dynamic Data Table requires three extra
