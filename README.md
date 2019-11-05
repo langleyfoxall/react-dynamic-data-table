@@ -214,7 +214,7 @@ node into `orderByAscIcon` and `orderByDescIcon`.
 <DynamicDataTable
     orderByAscIcon="Ascending"
     // orderByAscIcon={<p>Ascending</p>}
-    // orderByAscIcon={<FancyDecendingIcon />}
+    // orderByAscIcon={<FancyAscendingIcon />}
 />
 ```
 
