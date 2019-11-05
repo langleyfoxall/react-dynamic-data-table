@@ -340,13 +340,19 @@ function (_Component) {
       var _this$props5 = this.props,
           orderByField = _this$props5.orderByField,
           orderByDirection = _this$props5.orderByDirection,
+          orderByAscIcon = _this$props5.orderByAscIcon,
+          orderByDescIcon = _this$props5.orderByDescIcon,
           allowOrderingBy = _this$props5.allowOrderingBy,
           disallowOrderingBy = _this$props5.disallowOrderingBy,
           changeOrder = _this$props5.changeOrder;
       var orderByIcon = '';
 
       if (orderByField === field.name) {
-        orderByIcon = orderByDirection === 'asc' ? '↓' : '↑';
+        if (orderByDirection === 'asc') {
+          orderByIcon = orderByAscIcon;
+        } else {
+          orderByIcon = orderByDescIcon;
+        }
       }
 
       var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
@@ -651,6 +657,8 @@ DynamicDataTable.propTypes = {
   totalPages: _propTypes["default"].number,
   orderByField: _propTypes["default"].string,
   orderByDirection: _propTypes["default"].oneOf(['asc', 'desc']),
+  orderByAscIcon: _propTypes["default"].node,
+  orderByDescIcon: _propTypes["default"].node,
   renderCheckboxes: _propTypes["default"].bool,
   editableColumns: _propTypes["default"].arrayOf(_propTypes["default"].shape({
     name: _propTypes["default"].string.isRequired,
@@ -688,6 +696,8 @@ DynamicDataTable.defaultProps = {
   totalPages: 1,
   orderByField: null,
   orderByDirection: 'asc',
+  orderByAscIcon: '↓',
+  orderByDescIcon: '↑',
   renderCheckboxes: false,
   editableColumns: [],
   actions: [],

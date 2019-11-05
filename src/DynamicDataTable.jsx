@@ -254,11 +254,15 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, allowOrderingBy, disallowOrderingBy, changeOrder } = this.props;
+        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder } = this.props;
         let orderByIcon = '';
 
         if (orderByField === field.name) {
-            orderByIcon = (orderByDirection === 'asc') ? '↓' : '↑';
+            if (orderByDirection === 'asc') {
+                orderByIcon = orderByAscIcon
+            } else {
+                orderByIcon = orderByDescIcon
+            }
         }
 
         const canOrderBy = (
@@ -540,6 +544,8 @@ DynamicDataTable.propTypes = {
     totalPages: PropTypes.number,
     orderByField: PropTypes.string,
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
+    orderByAscIcon: PropTypes.node,
+    orderByDescIcon: PropTypes.node,
     renderCheckboxes: PropTypes.bool,
     editableColumns: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -580,6 +586,8 @@ DynamicDataTable.defaultProps = {
     totalPages: 1,
     orderByField: null,
     orderByDirection: 'asc',
+    orderByAscIcon: '↓',
+    orderByDescIcon: '↑',
     renderCheckboxes: false,
     editableColumns: [],
     actions: [],
