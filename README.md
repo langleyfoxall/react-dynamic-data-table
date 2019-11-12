@@ -533,12 +533,14 @@ Examples of how to use actions is shown below.
 ### Data Item Manipulation
 
 If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the 
-`DynamicDataTable`. This prop expects a `function` which will be passed two parameters, the `field`, and the `value`. 
+`DynamicDataTable`. This prop expects a `function` which will be passed three parameters, the `field`, the `value` and
+the `row`.
+ 
 This function will be called once for every cell that is to be rendered.
 
 ```JSX
 <DynamicDataTable
-    dataItemManipulator={(field, value) => {
+    dataItemManipulator={(field, value, row) => {
         switch(field) {
             case 'id':
                 return 'ID:' + value;

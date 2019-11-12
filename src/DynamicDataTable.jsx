@@ -37,7 +37,7 @@ class DynamicDataTable extends Component {
                 editableColumns={editableColumns}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
-                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+                dataItemManipulator={(field, value, row) => dataItemManipulator(field, value, row)}
                 dangerouslyRenderFields={dangerouslyRenderFields}
                 index={index}
             />

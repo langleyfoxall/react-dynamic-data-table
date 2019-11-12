@@ -59,7 +59,7 @@ class DataRow extends Component {
 
         let value = row[field.name];
 
-        value = this.props.dataItemManipulator(field.name, value);
+        value = this.props.dataItemManipulator(field.name, value, row);
 
         const key = `${row.id}_${field.name}`;
 
