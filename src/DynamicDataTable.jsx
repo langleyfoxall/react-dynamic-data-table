@@ -254,7 +254,7 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder } = this.props;
+        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
         let orderByIcon = '';
 
         if (orderByField === field.name) {
@@ -283,9 +283,20 @@ class DynamicDataTable extends Component {
                 : 'default'
         );
 
+        let width = columnWidths[field.name]
+
+        if (typeof width === 'number') {
+            width = `${width}%`
+        }
+        
         return (
-            <th style={{ cursor }} key={field.name} onClick={onClickHandler}>
-                {field.label}
+            <th
+                key={field.name}
+                width={width}
+                onClick={onClickHandler}
+                style={{ cursor }}
+            >
+                { field.label }
                 &nbsp;
                 {orderByIcon}
             </th>
@@ -575,6 +586,7 @@ DynamicDataTable.propTypes = {
     disallowOrderingBy: PropTypes.array,
     dangerouslyRenderFields: PropTypes.array,
     paginationDelta: PropTypes.number,
+    columnWidths: PropTypes.object,
 };
 
 DynamicDataTable.defaultProps = {
@@ -616,6 +628,7 @@ DynamicDataTable.defaultProps = {
     disallowOrderingBy: [],
     dangerouslyRenderFields: [],
     paginationDelta: 4,
+    columnWidths: {},
 };
 
 export default DynamicDataTable;

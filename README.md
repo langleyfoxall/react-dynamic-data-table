@@ -204,6 +204,31 @@ Mixing strings and regex is also supported.
 // Output: id, first_name, last_name, email
 ```
 
+### Column Widths
+
+In some cases there may be a need to make some columns be different widths
+by defining a width, rather than the table changing based off of content.
+
+The `columnWidths` prop expects an object with column names as the keys and either a string or number as the values.
+
+When a number is passed the width will become a percentage. If a string is passed then
+it respects whatever unit is set.
+
+```jsx
+<DynamicDataTable
+    rows={[
+        { id: 1, email: 'info@langleyfoxall.co.uk', first_name: 'Langley', last_name: 'Foxall' }
+    ]}
+    columnWidths={{
+        // 10%
+        id: 10,
+
+        // 100px
+        email: '100px'
+    }}
+/>
+```
+
 ### Custom order by icons
 
 When ordering by a field on an element will be rendered next to it. By default 

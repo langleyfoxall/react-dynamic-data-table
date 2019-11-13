@@ -71,7 +71,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -344,7 +344,8 @@ function (_Component) {
           orderByDescIcon = _this$props5.orderByDescIcon,
           allowOrderingBy = _this$props5.allowOrderingBy,
           disallowOrderingBy = _this$props5.disallowOrderingBy,
-          changeOrder = _this$props5.changeOrder;
+          changeOrder = _this$props5.changeOrder,
+          columnWidths = _this$props5.columnWidths;
       var orderByIcon = '';
 
       if (orderByField === field.name) {
@@ -360,12 +361,19 @@ function (_Component) {
         return _this4.changeOrder(field);
       } : function () {};
       var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
+      var width = columnWidths[field.name];
+
+      if (typeof width === 'number') {
+        width = "".concat(width, "%");
+      }
+
       return _react["default"].createElement("th", {
+        key: field.name,
+        width: width,
+        onClick: onClickHandler,
         style: {
           cursor: cursor
-        },
-        key: field.name,
-        onClick: onClickHandler
+        }
       }, field.label, "\xA0", orderByIcon);
     }
   }, {
@@ -685,7 +693,8 @@ DynamicDataTable.propTypes = {
   allowOrderingBy: _propTypes["default"].array,
   disallowOrderingBy: _propTypes["default"].array,
   dangerouslyRenderFields: _propTypes["default"].array,
-  paginationDelta: _propTypes["default"].number
+  paginationDelta: _propTypes["default"].number,
+  columnWidths: _propTypes["default"].object
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -725,7 +734,8 @@ DynamicDataTable.defaultProps = {
   allowOrderingBy: [],
   disallowOrderingBy: [],
   dangerouslyRenderFields: [],
-  paginationDelta: 4
+  paginationDelta: 4,
+  columnWidths: {}
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;
