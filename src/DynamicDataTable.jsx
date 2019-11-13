@@ -243,7 +243,7 @@ class DynamicDataTable extends Component {
             renderCheckboxes,
             key: row.id,
             fields: this.getFields(),
-            dataItemManipulator: (field, value) => dataItemManipulator(field, value),
+            dataItemManipulator: (field, value, row) => dataItemManipulator(field, value, row),
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
             onCheckboxChange: (e) => this.checkboxChange(e, row),
             dangerouslyRenderFields,
@@ -610,7 +610,7 @@ DynamicDataTable.defaultProps = {
     errorMessage: '',
     noDataMessage: 'No data.',
     noDataComponent: null,
-    dataItemManipulator: (field, value) => value === null ? '' : value,
+    dataItemManipulator: (field, value, row) => value === null ? '' : value,
     buttons: [
         {
             name: 'View',
