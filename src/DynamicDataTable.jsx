@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import DataRow from "./Components/DataRow";
 import Pagination from "./Components/Pagination";
 
+import flatten from "core-js/fn/array/flatten";
+
 class DynamicDataTable extends Component {
     constructor(props) {
         super(props);
@@ -20,20 +22,24 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions }) {
+    static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index }) {
         return (
             <DataRow
                 key={row.id}
                 row={row}
                 onClick={onClick}
+                onMouseUp={onMouseUp}
+                onMouseDown={onMouseDown}
                 buttons={buttons}
                 fields={fields}
                 actions={actions}
                 renderCheckboxes={renderCheckboxes}
+                editableColumns={editableColumns}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
-                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+                dataItemManipulator={(field, value, row) => dataItemManipulator(field, value, row)}
                 dangerouslyRenderFields={dangerouslyRenderFields}
+                index={index}
             />
         );
     }
@@ -47,13 +53,15 @@ class DynamicDataTable extends Component {
     }
 
     className() {
-        const { onClick, hoverable } = this.props;
+        const { onClick, onMouseUp, onMouseDown, hoverable } = this.props;
 
         return classNames([
             'table', 'table-striped',
             {
-                'table-hover': 
-                    onClick !== DynamicDataTable.noop 
+                'table-hover':
+                    onClick !== DynamicDataTable.noop
+                    || onMouseUp !== DynamicDataTable.noop
+                    || onMouseDown !== DynamicDataTable.noop
                     || hoverable
             }
         ]);
@@ -124,7 +132,7 @@ class DynamicDataTable extends Component {
                 for (let j = 0; j < regExpsToExclude.length; j++) {
                     if (regExpsToExclude[j].test(field.name)) {
                         shouldExclude = true;
-    
+
                         break;
                     }
                 }
@@ -150,7 +158,7 @@ class DynamicDataTable extends Component {
                 const field = fields[i];
                 const j = fieldOrder.findIndex(query => {
                     if (query.constructor) {
-                        switch(query.constructor) {
+                        switch (query.constructor) {
                             case RegExp:
                                 return query.test(field.name);
                             default:
@@ -178,7 +186,7 @@ class DynamicDataTable extends Component {
                 orderedFields.push(field);
             }
 
-            return orderedFields.flat();
+            return flatten(orderedFields);
         }
 
         return fields;
@@ -205,50 +213,58 @@ class DynamicDataTable extends Component {
                 <div className="table-responsive">
                     <table className={this.className()}>
                         <thead>
-                            <tr>
-                                { this.renderCheckboxCell('all') }
-                                { fields.map(field => this.renderHeader(field)) }
-                                { this.renderActionsCell() }
-                            </tr>
+                        <tr>
+                            {this.renderCheckboxCell('all')}
+                            {fields.map(field => this.renderHeader(field))}
+                            {this.renderActionsCell()}
+                        </tr>
                         </thead>
                         <tbody>
-                            { rows.map(row => this.renderRow(row)) }
+                        {rows.map((row, index) => this.renderRow(row, index))}
                         </tbody>
                     </table>
                 </div>
-                { this.renderPagination() }
+                {this.renderPagination()}
             </div>
         );
     }
 
-    renderRow(row) {
+    renderRow(row, index) {
         const {
-            onClick, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions
+            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
         } = this.props;
 
         return rowRenderer({
             row,
             onClick,
+            onMouseUp,
+            onMouseDown,
             buttons,
             renderCheckboxes,
             key: row.id,
             fields: this.getFields(),
             dataItemManipulator: (field, value) => dataItemManipulator(field, value),
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
-            onCheckboxChange: (e) => this.checkboxChange(e),
+            onCheckboxChange: (e) => this.checkboxChange(e, row),
             dangerouslyRenderFields,
-            actions
+            actions,
+            editableColumns,
+            index,
         });
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
+        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
         let orderByIcon = '';
 
         if (orderByField === field.name) {
-            orderByIcon = (orderByDirection === 'asc') ? '↓' : '↑';
+            if (orderByDirection === 'asc') {
+                orderByIcon = orderByAscIcon
+            } else {
+                orderByIcon = orderByDescIcon
+            }
         }
-        
+
         const canOrderBy = (
             (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name))
             && !disallowOrderingBy.includes(field.name)
@@ -257,9 +273,10 @@ class DynamicDataTable extends Component {
         const onClickHandler = (
             canOrderBy
                 ? () => this.changeOrder(field)
-                : () => {}
+                : () => {
+                }
         );
-        
+
         const cursor = (
             changeOrder && canOrderBy
                 ? 'pointer'
@@ -281,7 +298,7 @@ class DynamicDataTable extends Component {
             >
                 { field.label }
                 &nbsp;
-                { orderByIcon }
+                {orderByIcon}
             </th>
         );
     }
@@ -311,7 +328,7 @@ class DynamicDataTable extends Component {
                         Actions
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        { this.props.actions.map(action => this.renderActionButton(action))}
+                        {this.props.actions.map(action => this.renderActionButton(action))}
                     </div>
                 </div>
             </th>
@@ -329,7 +346,7 @@ class DynamicDataTable extends Component {
                     this.setState({ checkedRows: [] });
                 }}
             >
-                { action.name }
+                {action.name}
             </button>
         );
     }
@@ -360,19 +377,19 @@ class DynamicDataTable extends Component {
                     type="checkbox"
                     value={value}
                     checked={this.checkboxIsChecked(value)}
-                    onChange={event => this.checkboxChange({ event, row: value })}
+                    onChange={event => this.checkboxChange(event, value)}
                 />
             </div>
         );
 
         if (value === 'all') {
             return (
-                <th>{ checkbox }</th>
+                <th>{checkbox}</th>
             );
         }
 
         return (
-            <td>{ checkbox }</td>
+            <td>{checkbox}</td>
         );
     }
 
@@ -400,7 +417,7 @@ class DynamicDataTable extends Component {
         return index !== -1;
     }
 
-    checkboxChange({ event, row }) {
+    checkboxChange(event, row) {
         const { rows } = this.props;
         const { target } = event;
 
@@ -456,20 +473,20 @@ class DynamicDataTable extends Component {
             <div className="table-responsive">
                 <table className="table table-striped">
                     <tbody>
-                        <tr>
-                            <td className="text-center">
-                                {!!loadingIndicator && (
-                                    <div>
-                                        { loadingIndicator }
-                                    </div>
-                                )}
-                                {!!loadingMessage && (
-                                    <div>
-                                        { loadingMessage }
-                                    </div>
-                                )}
-                            </td>
-                        </tr>
+                    <tr>
+                        <td className="text-center">
+                            {!!loadingIndicator && (
+                                <div>
+                                    {loadingIndicator}
+                                </div>
+                            )}
+                            {!!loadingMessage && (
+                                <div>
+                                    {loadingMessage}
+                                </div>
+                            )}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -483,7 +500,7 @@ class DynamicDataTable extends Component {
                     <tbody>
                     <tr>
                         <td className="text-center">
-                            { this.props.errorMessage }
+                            {this.props.errorMessage}
                         </td>
                     </tr>
                     </tbody>
@@ -504,11 +521,11 @@ class DynamicDataTable extends Component {
             <div className="table-responsive">
                 <table className="table table-striped">
                     <tbody>
-                        <tr>
-                            <td className="text-center">
-                                { noDataMessage }
-                            </td>
-                        </tr>
+                    <tr>
+                        <td className="text-center">
+                            {noDataMessage}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -538,7 +555,16 @@ DynamicDataTable.propTypes = {
     totalPages: PropTypes.number,
     orderByField: PropTypes.string,
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
+    orderByAscIcon: PropTypes.node,
+    orderByDescIcon: PropTypes.node,
     renderCheckboxes: PropTypes.bool,
+    editableColumns: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        controlled: PropTypes.bool.isRequired,
+        type: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
+        optionsForRow: PropTypes.func
+    })),
     actions: PropTypes.array,
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
@@ -553,6 +579,8 @@ DynamicDataTable.propTypes = {
     ]),
     rowRenderer: PropTypes.func,
     onClick: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseDown: PropTypes.func,
     hoverable: PropTypes.bool,
     allowOrderingBy: PropTypes.array,
     disallowOrderingBy: PropTypes.array,
@@ -570,7 +598,10 @@ DynamicDataTable.defaultProps = {
     totalPages: 1,
     orderByField: null,
     orderByDirection: 'asc',
+    orderByAscIcon: '↓',
+    orderByDescIcon: '↑',
     renderCheckboxes: false,
+    editableColumns: [],
     actions: [],
     loading: false,
     loadingMessage: 'Loading data...',
@@ -583,13 +614,15 @@ DynamicDataTable.defaultProps = {
     buttons: [
         {
             name: 'View',
-            callback: (row) => {
-                window.location = `${location.href}/${row.id}`;
+            callback: (e, row) => {
+                window.location = `${window.location.href.split(/[?#]/)[0]}/${row.id}`;
             }
         },
     ],
     rowRenderer: DynamicDataTable.rowRenderer,
     onClick: DynamicDataTable.noop,
+    onMouseUp: DynamicDataTable.noop,
+    onMouseDown: DynamicDataTable.noop,
     hoverable: false,
     allowOrderingBy: [],
     disallowOrderingBy: [],

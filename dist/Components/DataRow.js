@@ -1,5 +1,15 @@
 "use strict";
 
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.iterator");
+
+require("core-js/modules/es6.object.to-string");
+
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.weak-map");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -15,6 +25,8 @@ require("core-js/modules/es6.object.create");
 
 require("core-js/modules/es6.object.set-prototype-of");
 
+require("core-js/modules/es6.array.find-index");
+
 require("core-js/modules/es6.function.name");
 
 require("core-js/modules/es6.array.map");
@@ -29,7 +41,9 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -75,10 +89,18 @@ function (_Component) {
           row = _this$props.row,
           fields = _this$props.fields,
           _onClick = _this$props.onClick,
+          _onMouseUp = _this$props.onMouseUp,
+          _onMouseDown = _this$props.onMouseDown,
           _onContextMenu = _this$props.onContextMenu;
       return _react["default"].createElement("tr", {
         onClick: function onClick(e) {
           return _onClick(e, row);
+        },
+        onMouseUp: function onMouseUp(e) {
+          return _onMouseUp(e, row);
+        },
+        onMouseDown: function onMouseDown(e) {
+          return _onMouseDown(e, row);
         },
         onContextMenu: function onContextMenu(e) {
           return _onContextMenu(e, row);
@@ -103,6 +125,7 @@ function (_Component) {
       var checkbox = _react["default"].createElement("div", {
         className: "form-check"
       }, _react["default"].createElement("input", {
+        name: "bulk-select-".concat(row.id),
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
         onChange: function onChange(e) {
@@ -118,9 +141,48 @@ function (_Component) {
   }, {
     key: "renderCell",
     value: function renderCell(field, row) {
+      var _this$props3 = this.props,
+          editableColumns = _this$props3.editableColumns,
+          index = _this$props3.index;
       var value = row[field.name];
-      value = this.props.dataItemManipulator(field.name, value);
+      value = this.props.dataItemManipulator(field.name, value, row);
       var key = "".concat(row.id, "_").concat(field.name);
+      var columnIndex = editableColumns.findIndex(function (column) {
+        return column.name === field.name;
+      });
+
+      if (columnIndex !== -1) {
+        var column = editableColumns[columnIndex];
+
+        if (column.type === 'select') {
+          return _react["default"].createElement("td", {
+            key: key
+          }, _react["default"].createElement("select", {
+            defaultValue: value,
+            value: column.controlled ? value : undefined,
+            onChange: function onChange(event) {
+              event.stopPropagation();
+              column.onChange(event, field.name, row, index);
+            }
+          }, column.optionsForRow(row, field.name).map(function (option) {
+            return _react["default"].createElement("option", {
+              value: option.value
+            }, option.label);
+          })));
+        }
+
+        return _react["default"].createElement("td", {
+          key: key
+        }, _react["default"].createElement("input", {
+          type: column.type,
+          defaultValue: value,
+          value: column.controlled ? value : undefined,
+          onChange: function onChange(event) {
+            event.stopPropagation();
+            column.onChange(event, field.name, row, index);
+          }
+        }));
+      }
 
       if (_react["default"].isValidElement(value)) {
         return _react["default"].createElement("td", {
@@ -150,9 +212,9 @@ function (_Component) {
     value: function renderButtons(row) {
       var _this3 = this;
 
-      var _this$props3 = this.props,
-          buttons = _this$props3.buttons,
-          actions = _this$props3.actions;
+      var _this$props4 = this.props,
+          buttons = _this$props4.buttons,
+          actions = _this$props4.actions;
 
       if (typeof buttons === 'function') {
         return buttons(row);
@@ -217,7 +279,7 @@ function (_Component) {
       }
 
       if (typeof button.render === 'function') {
-        _react["default"].createElement("div", {
+        return _react["default"].createElement("div", {
           style: {
             cursor: 'pointer'
           },
@@ -249,9 +311,12 @@ function (_Component) {
 
 DataRow.defaultProps = {
   onClick: DataRow.noop,
+  onMouseUp: DataRow.noop,
+  onMouseDown: DataRow.noop,
   onContextMenu: DataRow.noop,
   dangerouslyRenderFields: [],
-  actions: []
+  actions: [],
+  editableColumns: []
 };
 DataRow.propTypes = {
   row: _propTypes["default"].object,
@@ -261,9 +326,13 @@ DataRow.propTypes = {
   checkboxChange: _propTypes["default"].func,
   dataItemManipulator: _propTypes["default"].func,
   renderCheckboxes: _propTypes["default"].bool,
+  editableColumns: _propTypes["default"].array,
   onClick: _propTypes["default"].func,
+  onMouseUp: _propTypes["default"].func,
+  onMouseDown: _propTypes["default"].func,
   onContextMenu: _propTypes["default"].func,
-  dangerouslyRenderFields: _propTypes["default"].array
+  dangerouslyRenderFields: _propTypes["default"].array,
+  index: _propTypes["default"].number.required
 };
 var _default = DataRow;
 exports["default"] = _default;

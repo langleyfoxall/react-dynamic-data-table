@@ -229,6 +229,20 @@ it respects whatever unit is set.
 />
 ```
 
+### Custom order by icons
+
+When ordering by a field on an element will be rendered next to it. By default 
+these are simple symbols (`↓` and `↑`). These can be changed by passing a valid
+node into `orderByAscIcon` and `orderByDescIcon`.
+
+```JSX
+<DynamicDataTable
+    orderByAscIcon="Ascending"
+    // orderByAscIcon={<p>Ascending</p>}
+    // orderByAscIcon={<FancyAscendingIcon />}
+/>
+```
+
 ### Pagination
 
 Making pagination work with React Dynamic Data Table requires three extra
@@ -370,6 +384,8 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
 {
   row,                // Instance of data row
   onClick,            // Row on click handler
+  onMouseUp,          // Row on MouseUp handler
+  onMouseDown,        // Row on MouseDown handler
   buttons,            // Array of buttons
   actions,            // Array of header actions
   fields,             // Visible fields
@@ -393,6 +409,20 @@ an instance of the row that is clicked. It also adds the bootstrap `table-hover`
     onClick={(event, row) => console.warn(event, row.name)}
 />
 ```
+
+#### Mouse Events
+
+For more complex interactions, such as supporting the ability to Middle-click, you can use the `onMouseUp` and `onMouseDown` events instead. It also adds the bootstrap `table-hover` class onto the table. The `onMouseDown` and `onMouseUp` props should be callables, that will be passed an event object along withan instance of the row that is clicked.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    onMouseDown={this.handleMouseDown}
+    onMouseUp={this.handleMouseUp}
+/>
+```
+
+#### Context Menus
 
 The ability to right click rows can be enabled by using `onContextMenu` and `rowRenderer`.
 In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`](https://github.com/langleyfoxall/react-dynamic-context-menu):
@@ -528,12 +558,14 @@ Examples of how to use actions is shown below.
 ### Data Item Manipulation
 
 If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the 
-`DynamicDataTable`. This prop expects a `function` which will be passed two parameters, the `field`, and the `value`. 
+`DynamicDataTable`. This prop expects a `function` which will be passed three parameters, the `field`, the `value` and
+the `row`.
+ 
 This function will be called once for every cell that is to be rendered.
 
 ```JSX
 <DynamicDataTable
-    dataItemManipulator={(field, value) => {
+    dataItemManipulator={(field, value, row) => {
         switch(field) {
             case 'id':
                 return 'ID:' + value;
@@ -626,3 +658,76 @@ In order to display an error message, you just need to set the optional
 `errorMessage` prop. This prop expects a string such as `An error has occurred
 while loading user data.`. If the error is resolved, this prop must be reset 
 to an empty string in order to ensure the data table is displayed.
+
+### Editable Columns
+
+If you wish to make certain columns editable you can specify how using the `editableColumns` prop.
+This prop accepts an array of object in the following format:
+
+```js
+[
+    {
+        name: 'ExampleColumnText',
+        controlled: false,
+        type: 'text',
+        onChange: (event, column, row, index) => console.log(event, column, row, index),
+    },
+    {
+        name: 'ExampleColumnSelect',
+        controlled: false,
+        type: 'select',
+        onChange: (event, column, row, index) => console.log(event, column, row, index),
+        optionsForRow: (row, column) => [
+            {
+                label: 'One',
+                value: 1
+             },
+            {
+                label: 'Two',
+                value: 2
+            }
+        ]
+}]
+```
+
+#### Text Inputs
+
+If you specify that the type of the column is `text` the column will contain a text input with a value of the 
+column from the row data.
+
+
+#### Selects
+
+If you wish to use a select instead of a text input you may specify `select` as the type. The column will now contain
+a select input, by default with no options. In order to provide options implement the `optionsForRow` method.
+This method will be called with: `The row data` and `Column name` in that order. It should return an array of objects
+in this format:
+
+```js
+[
+    {
+        label: 'Example one',
+        value: 1
+    },
+    {
+        label: 'Example two',
+        value: 2
+    }
+]
+```
+
+#### Receiving input
+
+In order to receive the users input you can provide the `onChange` method that will be called when the input is changed.
+This method will be called with the following parameters in the given order:
+`The event from the input`, `The column name`, `The row data`, `The row index`.
+
+#### Controlled and Uncontrolled inputs
+
+A uncontrolled input is an input whose value is controlled by the DOM. This means that it cannot be modified
+after the default value has been set by React. You will only receive input from the component and will not be able
+to modify the displayed value.
+
+A controlled input will require you to store the value of the input in the state, the value of the input will be
+read from state meaning you will have to update state on user input to reflect it in component. In this case
+it will mean you will have to alter the data passed in as the `rows` prop.

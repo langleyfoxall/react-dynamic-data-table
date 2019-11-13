@@ -1,9 +1,15 @@
 "use strict";
 
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.weak-map");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+require("core-js/modules/es6.regexp.split");
 
 require("core-js/modules/es7.symbol.async-iterator");
 
@@ -59,9 +65,13 @@ var _DataRow = _interopRequireDefault(require("./Components/DataRow"));
 
 var _Pagination = _interopRequireDefault(require("./Components/Pagination"));
 
+var _flatten = _interopRequireDefault(require("core-js/fn/array/flatten"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -113,9 +123,11 @@ function (_Component) {
     value: function className() {
       var _this$props = this.props,
           onClick = _this$props.onClick,
+          onMouseUp = _this$props.onMouseUp,
+          onMouseDown = _this$props.onMouseDown,
           hoverable = _this$props.hoverable;
       return (0, _classnames["default"])(['table', 'table-striped', {
-        'table-hover': onClick !== DynamicDataTable.noop || hoverable
+        'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
       }]);
     }
   }, {
@@ -242,7 +254,7 @@ function (_Component) {
           if (_ret === "continue") continue;
         }
 
-        return orderedFields.flat();
+        return (0, _flatten["default"])(orderedFields);
       }
 
       return fields;
@@ -276,26 +288,31 @@ function (_Component) {
         className: this.className()
       }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
         return _this2.renderHeader(field);
-      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row) {
-        return _this2.renderRow(row);
+      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row, index) {
+        return _this2.renderRow(row, index);
       })))), this.renderPagination());
     }
   }, {
     key: "renderRow",
-    value: function renderRow(row) {
+    value: function renderRow(row, index) {
       var _this3 = this;
 
       var _this$props4 = this.props,
           onClick = _this$props4.onClick,
+          onMouseUp = _this$props4.onMouseUp,
+          onMouseDown = _this$props4.onMouseDown,
           buttons = _this$props4.buttons,
           renderCheckboxes = _this$props4.renderCheckboxes,
           _dataItemManipulator = _this$props4.dataItemManipulator,
           rowRenderer = _this$props4.rowRenderer,
           dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
-          actions = _this$props4.actions;
+          actions = _this$props4.actions,
+          editableColumns = _this$props4.editableColumns;
       return rowRenderer({
         row: row,
         onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
         buttons: buttons,
         renderCheckboxes: renderCheckboxes,
         key: row.id,
@@ -307,10 +324,12 @@ function (_Component) {
           return _this3.checkboxIsChecked(value);
         },
         onCheckboxChange: function onCheckboxChange(e) {
-          return _this3.checkboxChange(e);
+          return _this3.checkboxChange(e, row);
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
-        actions: actions
+        actions: actions,
+        editableColumns: editableColumns,
+        index: index
       });
     }
   }, {
@@ -321,6 +340,8 @@ function (_Component) {
       var _this$props5 = this.props,
           orderByField = _this$props5.orderByField,
           orderByDirection = _this$props5.orderByDirection,
+          orderByAscIcon = _this$props5.orderByAscIcon,
+          orderByDescIcon = _this$props5.orderByDescIcon,
           allowOrderingBy = _this$props5.allowOrderingBy,
           disallowOrderingBy = _this$props5.disallowOrderingBy,
           changeOrder = _this$props5.changeOrder,
@@ -328,7 +349,11 @@ function (_Component) {
       var orderByIcon = '';
 
       if (orderByField === field.name) {
-        orderByIcon = orderByDirection === 'asc' ? '↓' : '↑';
+        if (orderByDirection === 'asc') {
+          orderByIcon = orderByAscIcon;
+        } else {
+          orderByIcon = orderByDescIcon;
+        }
       }
 
       var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
@@ -436,10 +461,7 @@ function (_Component) {
         value: value,
         checked: this.checkboxIsChecked(value),
         onChange: function onChange(event) {
-          return _this7.checkboxChange({
-            event: event,
-            row: value
-          });
+          return _this7.checkboxChange(event, value);
         }
       }));
 
@@ -475,9 +497,7 @@ function (_Component) {
     }
   }, {
     key: "checkboxChange",
-    value: function checkboxChange(_ref) {
-      var event = _ref.event,
-          row = _ref.row;
+    value: function checkboxChange(event, row) {
       var rows = this.props.rows;
       var target = event.target;
 
@@ -596,31 +616,39 @@ function (_Component) {
     }
   }, {
     key: "rowRenderer",
-    value: function rowRenderer(_ref2) {
-      var row = _ref2.row,
-          onClick = _ref2.onClick,
-          buttons = _ref2.buttons,
-          fields = _ref2.fields,
-          renderCheckboxes = _ref2.renderCheckboxes,
-          checkboxIsChecked = _ref2.checkboxIsChecked,
-          onCheckboxChange = _ref2.onCheckboxChange,
-          _dataItemManipulator2 = _ref2.dataItemManipulator,
-          dangerouslyRenderFields = _ref2.dangerouslyRenderFields,
-          actions = _ref2.actions;
+    value: function rowRenderer(_ref) {
+      var row = _ref.row,
+          onClick = _ref.onClick,
+          buttons = _ref.buttons,
+          fields = _ref.fields,
+          onMouseUp = _ref.onMouseUp,
+          onMouseDown = _ref.onMouseDown,
+          renderCheckboxes = _ref.renderCheckboxes,
+          checkboxIsChecked = _ref.checkboxIsChecked,
+          onCheckboxChange = _ref.onCheckboxChange,
+          _dataItemManipulator2 = _ref.dataItemManipulator,
+          dangerouslyRenderFields = _ref.dangerouslyRenderFields,
+          actions = _ref.actions,
+          editableColumns = _ref.editableColumns,
+          index = _ref.index;
       return _react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
         onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
         buttons: buttons,
         fields: fields,
         actions: actions,
         renderCheckboxes: renderCheckboxes,
+        editableColumns: editableColumns,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
-        dataItemManipulator: function dataItemManipulator(field, value) {
-          return _dataItemManipulator2(field, value);
+        dataItemManipulator: function dataItemManipulator(field, value, row) {
+          return _dataItemManipulator2(field, value, row);
         },
-        dangerouslyRenderFields: dangerouslyRenderFields
+        dangerouslyRenderFields: dangerouslyRenderFields,
+        index: index
       });
     }
   }]);
@@ -637,7 +665,16 @@ DynamicDataTable.propTypes = {
   totalPages: _propTypes["default"].number,
   orderByField: _propTypes["default"].string,
   orderByDirection: _propTypes["default"].oneOf(['asc', 'desc']),
+  orderByAscIcon: _propTypes["default"].node,
+  orderByDescIcon: _propTypes["default"].node,
   renderCheckboxes: _propTypes["default"].bool,
+  editableColumns: _propTypes["default"].arrayOf(_propTypes["default"].shape({
+    name: _propTypes["default"].string.isRequired,
+    controlled: _propTypes["default"].bool.isRequired,
+    type: _propTypes["default"].string.isRequired,
+    onChange: _propTypes["default"].func.isRequired,
+    optionsForRow: _propTypes["default"].func
+  })),
   actions: _propTypes["default"].array,
   loading: _propTypes["default"].bool,
   loadingMessage: _propTypes["default"].string,
@@ -650,6 +687,8 @@ DynamicDataTable.propTypes = {
   buttons: _propTypes["default"].oneOfType([_propTypes["default"].array, _propTypes["default"].func]),
   rowRenderer: _propTypes["default"].func,
   onClick: _propTypes["default"].func,
+  onMouseUp: _propTypes["default"].func,
+  onMouseDown: _propTypes["default"].func,
   hoverable: _propTypes["default"].bool,
   allowOrderingBy: _propTypes["default"].array,
   disallowOrderingBy: _propTypes["default"].array,
@@ -666,7 +705,10 @@ DynamicDataTable.defaultProps = {
   totalPages: 1,
   orderByField: null,
   orderByDirection: 'asc',
+  orderByAscIcon: '↓',
+  orderByDescIcon: '↑',
   renderCheckboxes: false,
+  editableColumns: [],
   actions: [],
   loading: false,
   loadingMessage: 'Loading data...',
@@ -680,12 +722,14 @@ DynamicDataTable.defaultProps = {
   },
   buttons: [{
     name: 'View',
-    callback: function callback(row) {
-      window.location = "".concat(location.href, "/").concat(row.id);
+    callback: function callback(e, row) {
+      window.location = "".concat(window.location.href.split(/[?#]/)[0], "/").concat(row.id);
     }
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
   onClick: DynamicDataTable.noop,
+  onMouseUp: DynamicDataTable.noop,
+  onMouseDown: DynamicDataTable.noop,
   hoverable: false,
   allowOrderingBy: [],
   disallowOrderingBy: [],
