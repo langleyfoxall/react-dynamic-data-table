@@ -9,6 +9,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+require("core-js/modules/es6.regexp.split");
+
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
@@ -360,13 +362,20 @@ function (_Component) {
       var _this$props5 = this.props,
           orderByField = _this$props5.orderByField,
           orderByDirection = _this$props5.orderByDirection,
+          orderByAscIcon = _this$props5.orderByAscIcon,
+          orderByDescIcon = _this$props5.orderByDescIcon,
           allowOrderingBy = _this$props5.allowOrderingBy,
           disallowOrderingBy = _this$props5.disallowOrderingBy,
-          changeOrder = _this$props5.changeOrder;
+          changeOrder = _this$props5.changeOrder,
+          columnWidths = _this$props5.columnWidths;
       var orderByIcon = '';
 
       if (orderByField === field.name) {
-        orderByIcon = orderByDirection === 'asc' ? '↓' : '↑';
+        if (orderByDirection === 'asc') {
+          orderByIcon = orderByAscIcon;
+        } else {
+          orderByIcon = orderByDescIcon;
+        }
       }
 
       var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
@@ -374,12 +383,19 @@ function (_Component) {
         return _this4.changeOrder(field);
       } : function () {};
       var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
+      var width = columnWidths[field.name];
+
+      if (typeof width === 'number') {
+        width = "".concat(width, "%");
+      }
+
       return _react["default"].createElement("th", {
+        key: field.name,
+        width: width,
+        onClick: onClickHandler,
         style: {
           cursor: cursor
-        },
-        key: field.name,
-        onClick: onClickHandler
+        }
       }, field.label, "\xA0", orderByIcon);
     }
   }, {
@@ -650,8 +666,8 @@ function (_Component) {
         editableColumns: editableColumns,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
-        dataItemManipulator: function dataItemManipulator(field, value) {
-          return _dataItemManipulator2(field, value);
+        dataItemManipulator: function dataItemManipulator(field, value, row) {
+          return _dataItemManipulator2(field, value, row);
         },
         dangerouslyRenderFields: dangerouslyRenderFields,
         index: index
@@ -672,6 +688,8 @@ DynamicDataTable.propTypes = {
   totalPages: _propTypes["default"].number,
   orderByField: _propTypes["default"].string,
   orderByDirection: _propTypes["default"].oneOf(['asc', 'desc']),
+  orderByAscIcon: _propTypes["default"].node,
+  orderByDescIcon: _propTypes["default"].node,
   renderCheckboxes: _propTypes["default"].bool,
   editableColumns: _propTypes["default"].arrayOf(_propTypes["default"].shape({
     name: _propTypes["default"].string.isRequired,
@@ -698,7 +716,8 @@ DynamicDataTable.propTypes = {
   allowOrderingBy: _propTypes["default"].array,
   disallowOrderingBy: _propTypes["default"].array,
   dangerouslyRenderFields: _propTypes["default"].array,
-  paginationDelta: _propTypes["default"].number
+  paginationDelta: _propTypes["default"].number,
+  columnWidths: _propTypes["default"].object
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -710,6 +729,8 @@ DynamicDataTable.defaultProps = {
   totalPages: 1,
   orderByField: null,
   orderByDirection: 'asc',
+  orderByAscIcon: '↓',
+  orderByDescIcon: '↑',
   renderCheckboxes: false,
   editableColumns: [],
   actions: [],
@@ -725,8 +746,8 @@ DynamicDataTable.defaultProps = {
   },
   buttons: [{
     name: 'View',
-    callback: function callback(row) {
-      window.location = "".concat(location.href, "/").concat(row.id);
+    callback: function callback(e, row) {
+      window.location = "".concat(window.location.href.split(/[?#]/)[0], "/").concat(row.id);
     }
   }],
   rowRenderer: DynamicDataTable.rowRenderer,
@@ -737,7 +758,8 @@ DynamicDataTable.defaultProps = {
   allowOrderingBy: [],
   disallowOrderingBy: [],
   dangerouslyRenderFields: [],
-  paginationDelta: 4
+  paginationDelta: 4,
+  columnWidths: {}
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;

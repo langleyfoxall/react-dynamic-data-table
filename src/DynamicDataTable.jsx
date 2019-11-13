@@ -37,7 +37,7 @@ class DynamicDataTable extends Component {
                 editableColumns={editableColumns}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
-                dataItemManipulator={(field, value) => dataItemManipulator(field, value)}
+                dataItemManipulator={(field, value, row) => dataItemManipulator(field, value, row)}
                 dangerouslyRenderFields={dangerouslyRenderFields}
                 index={index}
             />
@@ -274,11 +274,15 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, allowOrderingBy, disallowOrderingBy, changeOrder } = this.props;
+        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
         let orderByIcon = '';
 
         if (orderByField === field.name) {
-            orderByIcon = (orderByDirection === 'asc') ? '↓' : '↑';
+            if (orderByDirection === 'asc') {
+                orderByIcon = orderByAscIcon
+            } else {
+                orderByIcon = orderByDescIcon
+            }
         }
 
         const canOrderBy = (
@@ -299,9 +303,20 @@ class DynamicDataTable extends Component {
                 : 'default'
         );
 
+        let width = columnWidths[field.name]
+
+        if (typeof width === 'number') {
+            width = `${width}%`
+        }
+        
         return (
-            <th style={{ cursor }} key={field.name} onClick={onClickHandler}>
-                {field.label}
+            <th
+                key={field.name}
+                width={width}
+                onClick={onClickHandler}
+                style={{ cursor }}
+            >
+                { field.label }
                 &nbsp;
                 {orderByIcon}
             </th>
@@ -561,6 +576,8 @@ DynamicDataTable.propTypes = {
     totalPages: PropTypes.number,
     orderByField: PropTypes.string,
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
+    orderByAscIcon: PropTypes.node,
+    orderByDescIcon: PropTypes.node,
     renderCheckboxes: PropTypes.bool,
     editableColumns: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -590,6 +607,7 @@ DynamicDataTable.propTypes = {
     disallowOrderingBy: PropTypes.array,
     dangerouslyRenderFields: PropTypes.array,
     paginationDelta: PropTypes.number,
+    columnWidths: PropTypes.object,
 };
 
 DynamicDataTable.defaultProps = {
@@ -602,6 +620,8 @@ DynamicDataTable.defaultProps = {
     totalPages: 1,
     orderByField: null,
     orderByDirection: 'asc',
+    orderByAscIcon: '↓',
+    orderByDescIcon: '↑',
     renderCheckboxes: false,
     editableColumns: [],
     actions: [],
@@ -616,8 +636,8 @@ DynamicDataTable.defaultProps = {
     buttons: [
         {
             name: 'View',
-            callback: (row) => {
-                window.location = `${location.href}/${row.id}`;
+            callback: (e, row) => {
+                window.location = `${window.location.href.split(/[?#]/)[0]}/${row.id}`;
             }
         },
     ],
@@ -630,6 +650,7 @@ DynamicDataTable.defaultProps = {
     disallowOrderingBy: [],
     dangerouslyRenderFields: [],
     paginationDelta: 4,
+    columnWidths: {},
 };
 
 export default DynamicDataTable;

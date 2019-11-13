@@ -225,6 +225,45 @@ Mixing strings and regex is also supported.
 // Output: id, first_name, last_name, email
 ```
 
+### Column Widths
+
+In some cases there may be a need to make some columns be different widths
+by defining a width, rather than the table changing based off of content.
+
+The `columnWidths` prop expects an object with column names as the keys and either a string or number as the values.
+
+When a number is passed the width will become a percentage. If a string is passed then
+it respects whatever unit is set.
+
+```jsx
+<DynamicDataTable
+    rows={[
+        { id: 1, email: 'info@langleyfoxall.co.uk', first_name: 'Langley', last_name: 'Foxall' }
+    ]}
+    columnWidths={{
+        // 10%
+        id: 10,
+
+        // 100px
+        email: '100px'
+    }}
+/>
+```
+
+### Custom order by icons
+
+When ordering by a field on an element will be rendered next to it. By default 
+these are simple symbols (`↓` and `↑`). These can be changed by passing a valid
+node into `orderByAscIcon` and `orderByDescIcon`.
+
+```JSX
+<DynamicDataTable
+    orderByAscIcon="Ascending"
+    // orderByAscIcon={<p>Ascending</p>}
+    // orderByAscIcon={<FancyAscendingIcon />}
+/>
+```
+
 ### Pagination
 
 Making pagination work with React Dynamic Data Table requires three extra
@@ -540,12 +579,14 @@ Examples of how to use actions is shown below.
 ### Data Item Manipulation
 
 If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the 
-`DynamicDataTable`. This prop expects a `function` which will be passed two parameters, the `field`, and the `value`. 
+`DynamicDataTable`. This prop expects a `function` which will be passed three parameters, the `field`, the `value` and
+the `row`.
+ 
 This function will be called once for every cell that is to be rendered.
 
 ```JSX
 <DynamicDataTable
-    dataItemManipulator={(field, value) => {
+    dataItemManipulator={(field, value, row) => {
         switch(field) {
             case 'id':
                 return 'ID:' + value;

@@ -145,7 +145,7 @@ function (_Component) {
           editableColumns = _this$props3.editableColumns,
           index = _this$props3.index;
       var value = row[field.name];
-      value = this.props.dataItemManipulator(field.name, value);
+      value = this.props.dataItemManipulator(field.name, value, row);
       var key = "".concat(row.id, "_").concat(field.name);
       var columnIndex = editableColumns.findIndex(function (column) {
         return column.name === field.name;
