@@ -116,7 +116,8 @@ function (_Component) {
 
       var _this$props2 = this.props,
           row = _this$props2.row,
-          renderCheckboxes = _this$props2.renderCheckboxes;
+          renderCheckboxes = _this$props2.renderCheckboxes,
+          disableCheckbox = _this$props2.disableCheckbox;
 
       if (!renderCheckboxes) {
         return;
@@ -133,7 +134,8 @@ function (_Component) {
         },
         onClick: function onClick(e) {
           return e.stopPropagation();
-        }
+        },
+        disabled: disableCheckbox
       }));
 
       return _react["default"].createElement("td", null, checkbox);
