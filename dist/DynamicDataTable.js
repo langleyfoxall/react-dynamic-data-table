@@ -303,6 +303,7 @@ function (_Component) {
           onMouseDown = _this$props4.onMouseDown,
           buttons = _this$props4.buttons,
           renderCheckboxes = _this$props4.renderCheckboxes,
+          disabledCheckboxes = _this$props4.disabledCheckboxes,
           _dataItemManipulator = _this$props4.dataItemManipulator,
           rowRenderer = _this$props4.rowRenderer,
           dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
@@ -315,6 +316,7 @@ function (_Component) {
         onMouseDown: onMouseDown,
         buttons: buttons,
         renderCheckboxes: renderCheckboxes,
+        disableCheckbox: disabledCheckboxes.includes(row.id),
         key: row.id,
         fields: this.getFields(),
         dataItemManipulator: function dataItemManipulator(field, value, row) {
@@ -475,10 +477,15 @@ function (_Component) {
     key: "checkboxIsChecked",
     value: function checkboxIsChecked(row) {
       var checkedRows = this.state.checkedRows;
-      var rows = this.props.rows;
+      var _this$props7 = this.props,
+          rows = _this$props7.rows,
+          disabledCheckboxes = _this$props7.disabledCheckboxes;
 
       if (row === 'all') {
-        return checkedRows.length === rows.length;
+        return checkedRows.length === rows.filter(function (_ref) {
+          var id = _ref.id;
+          return !disabledCheckboxes.includes(id);
+        }).length;
       }
 
       var index = -1;
@@ -498,13 +505,18 @@ function (_Component) {
   }, {
     key: "checkboxChange",
     value: function checkboxChange(event, row) {
-      var rows = this.props.rows;
+      var _this$props8 = this.props,
+          rows = _this$props8.rows,
+          disabledCheckboxes = _this$props8.disabledCheckboxes;
       var target = event.target;
 
       if (row === 'all') {
         if (target.checked) {
           var _checkedRows = [];
-          rows.forEach(function (row) {
+          rows.filter(function (_ref2) {
+            var id = _ref2.id;
+            return !disabledCheckboxes.includes(id);
+          }).forEach(function (row) {
             return _checkedRows.push(row);
           });
           this.setState({
@@ -549,10 +561,10 @@ function (_Component) {
   }, {
     key: "renderLoadingTable",
     value: function renderLoadingTable() {
-      var _this$props7 = this.props,
-          loadingIndicator = _this$props7.loadingIndicator,
-          loadingMessage = _this$props7.loadingMessage,
-          loadingComponent = _this$props7.loadingComponent;
+      var _this$props9 = this.props,
+          loadingIndicator = _this$props9.loadingIndicator,
+          loadingMessage = _this$props9.loadingMessage,
+          loadingComponent = _this$props9.loadingComponent;
 
       if (loadingComponent) {
         return loadingComponent;
@@ -580,9 +592,9 @@ function (_Component) {
   }, {
     key: "renderEmptyTable",
     value: function renderEmptyTable() {
-      var _this$props8 = this.props,
-          noDataMessage = _this$props8.noDataMessage,
-          noDataComponent = _this$props8.noDataComponent;
+      var _this$props10 = this.props,
+          noDataMessage = _this$props10.noDataMessage,
+          noDataComponent = _this$props10.noDataComponent;
 
       if (_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;
@@ -616,21 +628,22 @@ function (_Component) {
     }
   }, {
     key: "rowRenderer",
-    value: function rowRenderer(_ref) {
-      var row = _ref.row,
-          onClick = _ref.onClick,
-          buttons = _ref.buttons,
-          fields = _ref.fields,
-          onMouseUp = _ref.onMouseUp,
-          onMouseDown = _ref.onMouseDown,
-          renderCheckboxes = _ref.renderCheckboxes,
-          checkboxIsChecked = _ref.checkboxIsChecked,
-          onCheckboxChange = _ref.onCheckboxChange,
-          _dataItemManipulator2 = _ref.dataItemManipulator,
-          dangerouslyRenderFields = _ref.dangerouslyRenderFields,
-          actions = _ref.actions,
-          editableColumns = _ref.editableColumns,
-          index = _ref.index;
+    value: function rowRenderer(_ref3) {
+      var row = _ref3.row,
+          onClick = _ref3.onClick,
+          buttons = _ref3.buttons,
+          fields = _ref3.fields,
+          onMouseUp = _ref3.onMouseUp,
+          onMouseDown = _ref3.onMouseDown,
+          renderCheckboxes = _ref3.renderCheckboxes,
+          disableCheckbox = _ref3.disableCheckbox,
+          checkboxIsChecked = _ref3.checkboxIsChecked,
+          onCheckboxChange = _ref3.onCheckboxChange,
+          _dataItemManipulator2 = _ref3.dataItemManipulator,
+          dangerouslyRenderFields = _ref3.dangerouslyRenderFields,
+          actions = _ref3.actions,
+          editableColumns = _ref3.editableColumns,
+          index = _ref3.index;
       return _react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
@@ -641,6 +654,7 @@ function (_Component) {
         fields: fields,
         actions: actions,
         renderCheckboxes: renderCheckboxes,
+        disableCheckbox: disableCheckbox,
         editableColumns: editableColumns,
         checkboxIsChecked: checkboxIsChecked,
         checkboxChange: onCheckboxChange,
@@ -668,6 +682,7 @@ DynamicDataTable.propTypes = {
   orderByAscIcon: _propTypes["default"].node,
   orderByDescIcon: _propTypes["default"].node,
   renderCheckboxes: _propTypes["default"].bool,
+  disabledCheckboxes: _propTypes["default"].arrayOf(_propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string])),
   editableColumns: _propTypes["default"].arrayOf(_propTypes["default"].shape({
     name: _propTypes["default"].string.isRequired,
     controlled: _propTypes["default"].bool.isRequired,
@@ -708,6 +723,7 @@ DynamicDataTable.defaultProps = {
   orderByAscIcon: '↓',
   orderByDescIcon: '↑',
   renderCheckboxes: false,
+  disabledCheckboxes: [],
   editableColumns: [],
   actions: [],
   loading: false,

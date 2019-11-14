@@ -22,7 +22,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index }) {
+    static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, disableCheckbox, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index }) {
         return (
             <DataRow
                 key={row.id}
@@ -34,6 +34,7 @@ class DynamicDataTable extends Component {
                 fields={fields}
                 actions={actions}
                 renderCheckboxes={renderCheckboxes}
+                disableCheckbox={disableCheckbox}
                 editableColumns={editableColumns}
                 checkboxIsChecked={checkboxIsChecked}
                 checkboxChange={onCheckboxChange}
@@ -231,7 +232,7 @@ class DynamicDataTable extends Component {
 
     renderRow(row, index) {
         const {
-            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
+            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
         } = this.props;
 
         return rowRenderer({
@@ -241,6 +242,7 @@ class DynamicDataTable extends Component {
             onMouseDown,
             buttons,
             renderCheckboxes,
+            disableCheckbox: disabledCheckboxes.includes(row.id),
             key: row.id,
             fields: this.getFields(),
             dataItemManipulator: (field, value, row) => dataItemManipulator(field, value, row),
@@ -395,10 +397,14 @@ class DynamicDataTable extends Component {
 
     checkboxIsChecked(row) {
         const { checkedRows } = this.state;
-        const { rows } = this.props;
+        const { rows, disabledCheckboxes } = this.props;
 
         if (row === 'all') {
-            return checkedRows.length === rows.length;
+            return (
+                checkedRows.length === rows.filter(({ id }) => (
+                    !disabledCheckboxes.includes(id)
+                )).length
+            );
         }
 
         let index = -1;
@@ -418,14 +424,15 @@ class DynamicDataTable extends Component {
     }
 
     checkboxChange(event, row) {
-        const { rows } = this.props;
+        const { rows, disabledCheckboxes } = this.props;
         const { target } = event;
 
         if (row === 'all') {
             if (target.checked) {
                 const checkedRows = [];
 
-                rows.forEach(row => checkedRows.push(row));
+                rows.filter(({ id }) => !disabledCheckboxes.includes(id))
+                    .forEach(row => checkedRows.push(row));
 
                 this.setState({ checkedRows });
             } else {
@@ -558,6 +565,11 @@ DynamicDataTable.propTypes = {
     orderByAscIcon: PropTypes.node,
     orderByDescIcon: PropTypes.node,
     renderCheckboxes: PropTypes.bool,
+    disabledCheckboxes: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.number, PropTypes.string
+        ])
+    ),
     editableColumns: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         controlled: PropTypes.bool.isRequired,
@@ -601,6 +613,7 @@ DynamicDataTable.defaultProps = {
     orderByAscIcon: '↓',
     orderByDescIcon: '↑',
     renderCheckboxes: false,
+    disabledCheckboxes: [],
     editableColumns: [],
     actions: [],
     loading: false,

@@ -390,6 +390,7 @@ The argument passed to the `rowRenderer` callable is a JavaScript object that co
   actions,            // Array of header actions
   fields,             // Visible fields
   renderCheckboxes,   // Boolean indicating whether to render checkboxes
+  disableCheckbox,    // Boolean indicating whether to disable the checkbox per row
   checkboxIsChecked,  // Boolean indicating if checkbox is checked
   onCheckboxChange,   // Callable that is called when a per row checkbox is changed
   dataItemManipulator // Callable that handles manipulation of every item in the data row
@@ -505,6 +506,19 @@ checkboxes against each row, on the left side of the table.
 
 Bulk select checkboxes are usually combined with bulk actions to perform
 actions on one or more rows at once.
+
+### Disable checkboxes
+
+Checkboxes can also be disabled for each individual row by passing in `disabledCheckboxes` which
+should container an array of identifiers. If an identifier is in the array then the checkbox will have `disabled` set to `true`.
+
+```JSX
+<DynamicDataTable
+    rows={this.state.users}
+    renderCheckboxes
+    disabledCheckboxes={[1]}
+    />
+```
 
 ### Actions
 

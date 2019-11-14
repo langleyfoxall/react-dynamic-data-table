@@ -31,7 +31,7 @@ class DataRow extends Component {
     }
 
     renderCheckboxCell() {
-        const { row, renderCheckboxes } = this.props;
+        const { row, renderCheckboxes, disableCheckbox } = this.props;
 
         if (!renderCheckboxes) {
             return;
@@ -45,6 +45,7 @@ class DataRow extends Component {
                     checked={this.props.checkboxIsChecked(row)}
                     onChange={e => this.props.checkboxChange(e, row)}
                     onClick={e => e.stopPropagation()}
+                    disabled={disableCheckbox}
                 />
             </div>
         );
