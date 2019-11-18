@@ -46,7 +46,11 @@ The `rows` prop expects an array of objects, such as the following.
 ### Excluding fields
 
 By default, React Dynamic Data Table will render a table containing all fields present
-in the `rows` prop. To exclude specific fields, you can use the `fieldsToExclude` props.
+in the `rows` prop.
+
+#### Blacklisting
+
+To exclude specific fields, you can use the `fieldsToExclude` prop.
 
 In the example below, the `email` field will be excluded.
 
@@ -67,6 +71,23 @@ In the example below, all ID fields will be excluded.
 ```
 
 The `fieldsToExclude` prop expects an array of strings or regex expressions that represent the fields to exclude.
+
+#### Whitelisting
+
+To only allow specific fields, you can use the `fieldstoInclude` prop.
+
+In the example below, the `email` field will be allowed, all other fields will be removed.
+
+```JSX
+<DynamicDataTable 
+    rows={this.state.users}
+    fieldsToInclude={['email']}
+    />
+```
+
+The `fieldsToInclude` prop expects an array of strings. It does **not** support regex expressions.
+
+**Note:** Using both a black and white list will result in all fields not appearing on the whitelist being removed, and any fields remaining that are also on the blacklist, also being removed.
 
 ### Mapping fields
 

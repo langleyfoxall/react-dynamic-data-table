@@ -33,9 +33,9 @@ require("core-js/modules/es6.array.is-array");
 
 require("core-js/modules/es6.array.find-index");
 
-require("core-js/modules/es6.array.index-of");
-
 require("core-js/modules/es6.array.filter");
+
+require("core-js/modules/es6.array.index-of");
 
 require("core-js/modules/es6.regexp.constructor");
 
@@ -135,10 +135,15 @@ function (_Component) {
     value: function getFields() {
       var rows = this.props.rows;
       var _this$props2 = this.props,
+          fieldsToInclude = _this$props2.fieldsToInclude,
           fieldsToExclude = _this$props2.fieldsToExclude,
           fieldMap = _this$props2.fieldMap,
           fieldOrder = _this$props2.fieldOrder;
       var fields = [];
+
+      if (!fieldsToInclude) {
+        fieldsToInclude = [];
+      }
 
       if (!fieldsToExclude) {
         fieldsToExclude = [];
@@ -181,42 +186,59 @@ function (_Component) {
         }
       }
 
+      if (fieldsToInclude.length > 0) {
+        for (var _i = 0; _i < fields.length; _i++) {
+          var _field = fields[_i];
+          var shouldExclude = false;
+
+          if (fieldsToInclude.indexOf(_field.name) === -1) {
+            shouldExclude = true;
+          }
+
+          if (shouldExclude) {
+            fields.splice(_i, 1);
+            _i--;
+            continue;
+          }
+        }
+      }
+
       var regExpsToExclude = fieldsToExclude.filter(function (field) {
         return field.constructor && field.constructor === RegExp;
       });
 
-      for (var _i = 0; _i < fields.length; _i++) {
-        var _field = fields[_i];
-        var shouldExclude = false; // Field exclusion
+      for (var _i2 = 0; _i2 < fields.length; _i2++) {
+        var _field2 = fields[_i2];
+        var _shouldExclude = false; // Field exclusion
 
-        if (fieldsToExclude.indexOf(_field.name) !== -1) {
-          shouldExclude = true;
+        if (fieldsToExclude.indexOf(_field2.name) !== -1) {
+          _shouldExclude = true;
         } else {
           for (var _j = 0; _j < regExpsToExclude.length; _j++) {
-            if (regExpsToExclude[_j].test(_field.name)) {
-              shouldExclude = true;
+            if (regExpsToExclude[_j].test(_field2.name)) {
+              _shouldExclude = true;
               break;
             }
           }
         }
 
-        if (shouldExclude) {
-          fields.splice(_i, 1);
-          _i--;
+        if (_shouldExclude) {
+          fields.splice(_i2, 1);
+          _i2--;
           continue;
         } // Field mapping
 
 
-        if (fieldMap.hasOwnProperty(_field.name)) {
-          fields[_i].label = fieldMap[_field.name];
+        if (fieldMap.hasOwnProperty(_field2.name)) {
+          fields[_i2].label = fieldMap[_field2.name];
         }
       }
 
       if (fieldOrder.length) {
         var orderedFields = Array(fieldOrder.length);
 
-        var _loop = function _loop(_i2) {
-          var field = fields[_i2];
+        var _loop = function _loop(_i3) {
+          var field = fields[_i3];
           var j = fieldOrder.findIndex(function (query) {
             if (query.constructor) {
               switch (query.constructor) {
@@ -248,8 +270,8 @@ function (_Component) {
           orderedFields.push(field);
         };
 
-        for (var _i2 = 0; _i2 < fields.length; _i2++) {
-          var _ret = _loop(_i2);
+        for (var _i3 = 0; _i3 < fields.length; _i3++) {
+          var _ret = _loop(_i3);
 
           if (_ret === "continue") continue;
         }
@@ -672,6 +694,7 @@ function (_Component) {
 
 DynamicDataTable.propTypes = {
   rows: _propTypes["default"].array,
+  fieldsToInclude: _propTypes["default"].array,
   fieldsToExclude: _propTypes["default"].array,
   fieldMap: _propTypes["default"].object,
   fieldOrder: _propTypes["default"].array,
@@ -713,6 +736,7 @@ DynamicDataTable.propTypes = {
 };
 DynamicDataTable.defaultProps = {
   rows: [],
+  fieldsToInclude: [],
   fieldsToExclude: [],
   fieldMap: {},
   fieldOrder: [],
