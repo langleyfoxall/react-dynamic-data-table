@@ -147,8 +147,7 @@ function (_Component) {
           currentPage = _this$state.currentPage,
           totalPages = _this$state.totalPages,
           orderByField = _this$state.orderByField,
-          orderByDirection = _this$state.orderByDirection,
-          loading = _this$state.loading;
+          orderByDirection = _this$state.orderByDirection;
 
       var _this$props = this.props,
           disallowOrderingBy = _this$props.disallowOrderingBy,
@@ -160,7 +159,7 @@ function (_Component) {
         totalPages: totalPages,
         orderByField: orderByField,
         orderByDirection: orderByDirection,
-        loading: loading,
+        loading: this.loading,
         changePage: this.changePage,
         changeOrder: this.changeOrder,
         disallowOrderingBy: this.disallowOrderingBy
@@ -237,6 +236,13 @@ function (_Component) {
       });
     }
   }, {
+    key: "loading",
+    get: function get() {
+      var state = this.state.loading;
+      var prop = this.props.loading;
+      return state || prop;
+    }
+  }, {
     key: "disallowOrderingBy",
     get: function get() {
       var state = this.state.disallowOrderingBy;
@@ -252,6 +258,7 @@ AjaxDynamicDataTable.defaultProps = {
   onLoad: function onLoad() {
     return null;
   },
+  loading: false,
   params: {},
   defaultOrderByField: null,
   defaultOrderByDirection: null,
@@ -261,6 +268,7 @@ AjaxDynamicDataTable.defaultProps = {
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes["default"].string,
   onLoad: _propTypes["default"].func,
+  loading: _propTypes["default"].bool,
   params: _propTypes["default"].object,
   defaultOrderByField: _propTypes["default"].string,
   defaultOrderByDirection: _propTypes["default"].string,
