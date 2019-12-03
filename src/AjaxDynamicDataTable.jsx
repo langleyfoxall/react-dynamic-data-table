@@ -33,6 +33,13 @@ class AjaxDynamicDataTable extends Component {
         }
     }
 
+    get loading() {
+        const { loading: state } = this.state;
+        const { loading: prop } = this.props;
+
+        return state || prop;
+    }
+
     get disallowOrderingBy() {
         const { disallowOrderingBy: state } = this.state;
         const { disallowOrderingBy: prop } = this.props;
@@ -40,12 +47,12 @@ class AjaxDynamicDataTable extends Component {
         return [
             ...state,
             ...prop
-        ]
+        ];
     }
 
     render() {
 
-        const { rows, currentPage, totalPages, orderByField, orderByDirection, loading } = this.state;
+        const { rows, currentPage, totalPages, orderByField, orderByDirection } = this.state;
         const { disallowOrderingBy, ...props } = this.props;
 
         return (
@@ -55,7 +62,7 @@ class AjaxDynamicDataTable extends Component {
                 totalPages={totalPages}
                 orderByField={orderByField}
                 orderByDirection={orderByDirection}
-                loading={loading}
+                loading={this.loading}
                 changePage={this.changePage}
                 changeOrder={this.changeOrder}
                 disallowOrderingBy={this.disallowOrderingBy}
@@ -119,6 +126,7 @@ class AjaxDynamicDataTable extends Component {
 
 AjaxDynamicDataTable.defaultProps = {
     onLoad: () => null,
+    loading: false,
     params: {},
     defaultOrderByField: null,
     defaultOrderByDirection: null,
@@ -130,6 +138,7 @@ AjaxDynamicDataTable.defaultProps = {
 AjaxDynamicDataTable.propTypes = {
     apiUrl: PropTypes.string,
     onLoad: PropTypes.func,
+    loading: PropTypes.bool,
     params: PropTypes.object,
     defaultOrderByField: PropTypes.string,
     defaultOrderByDirection: PropTypes.string,
