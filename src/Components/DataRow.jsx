@@ -233,7 +233,7 @@ DataRow.propTypes = {
     onMouseDown: PropTypes.func,
     onContextMenu: PropTypes.func,
     dangerouslyRenderFields: PropTypes.array,
-    index: PropTypes.number.required,
+    index: PropTypes.number.isRequired,
 };
 
 export default DataRow;

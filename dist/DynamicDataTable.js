@@ -21,13 +21,13 @@ require("core-js/modules/es6.object.create");
 
 require("core-js/modules/es6.object.set-prototype-of");
 
+require("core-js/modules/es6.array.map");
+
 require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es7.array.includes");
 
 require("core-js/modules/es6.string.includes");
-
-require("core-js/modules/es6.array.map");
 
 require("core-js/modules/es6.array.is-array");
 
@@ -65,13 +65,15 @@ var _DataRow = _interopRequireDefault(require("./Components/DataRow"));
 
 var _Pagination = _interopRequireDefault(require("./Components/Pagination"));
 
+var _PerPage = _interopRequireDefault(require("./Components/PerPage"));
+
 var _flatten = _interopRequireDefault(require("core-js/fn/array/flatten"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -106,6 +108,7 @@ function (_Component) {
       checkedRows: []
     };
     _this.className = _this.className.bind(_assertThisInitialized(_this));
+    _this.changePerPage = _this.changePerPage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -260,178 +263,6 @@ function (_Component) {
       return fields;
     }
   }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      var _this$props3 = this.props,
-          errorMessage = _this$props3.errorMessage,
-          loading = _this$props3.loading,
-          rows = _this$props3.rows;
-      var fields = this.getFields();
-
-      if (errorMessage) {
-        return this.renderErrorTable();
-      }
-
-      if (loading) {
-        return this.renderLoadingTable();
-      }
-
-      if (!rows || !rows.length) {
-        return this.renderEmptyTable();
-      }
-
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
-        className: "table-responsive"
-      }, _react["default"].createElement("table", {
-        className: this.className()
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
-        return _this2.renderHeader(field);
-      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row, index) {
-        return _this2.renderRow(row, index);
-      })))), this.renderPagination());
-    }
-  }, {
-    key: "renderRow",
-    value: function renderRow(row, index) {
-      var _this3 = this;
-
-      var _this$props4 = this.props,
-          onClick = _this$props4.onClick,
-          onMouseUp = _this$props4.onMouseUp,
-          onMouseDown = _this$props4.onMouseDown,
-          buttons = _this$props4.buttons,
-          renderCheckboxes = _this$props4.renderCheckboxes,
-          disabledCheckboxes = _this$props4.disabledCheckboxes,
-          _dataItemManipulator = _this$props4.dataItemManipulator,
-          rowRenderer = _this$props4.rowRenderer,
-          dangerouslyRenderFields = _this$props4.dangerouslyRenderFields,
-          actions = _this$props4.actions,
-          editableColumns = _this$props4.editableColumns;
-      return rowRenderer({
-        row: row,
-        onClick: onClick,
-        onMouseUp: onMouseUp,
-        onMouseDown: onMouseDown,
-        buttons: buttons,
-        renderCheckboxes: renderCheckboxes,
-        disableCheckbox: disabledCheckboxes.includes(row.id),
-        key: row.id,
-        fields: this.getFields(),
-        dataItemManipulator: function dataItemManipulator(field, value, row) {
-          return _dataItemManipulator(field, value, row);
-        },
-        checkboxIsChecked: function checkboxIsChecked(value) {
-          return _this3.checkboxIsChecked(value);
-        },
-        onCheckboxChange: function onCheckboxChange(e) {
-          return _this3.checkboxChange(e, row);
-        },
-        dangerouslyRenderFields: dangerouslyRenderFields,
-        actions: actions,
-        editableColumns: editableColumns,
-        index: index
-      });
-    }
-  }, {
-    key: "renderHeader",
-    value: function renderHeader(field) {
-      var _this4 = this;
-
-      var _this$props5 = this.props,
-          orderByField = _this$props5.orderByField,
-          orderByDirection = _this$props5.orderByDirection,
-          orderByAscIcon = _this$props5.orderByAscIcon,
-          orderByDescIcon = _this$props5.orderByDescIcon,
-          allowOrderingBy = _this$props5.allowOrderingBy,
-          disallowOrderingBy = _this$props5.disallowOrderingBy,
-          changeOrder = _this$props5.changeOrder,
-          columnWidths = _this$props5.columnWidths;
-      var orderByIcon = '';
-
-      if (orderByField === field.name) {
-        if (orderByDirection === 'asc') {
-          orderByIcon = orderByAscIcon;
-        } else {
-          orderByIcon = orderByDescIcon;
-        }
-      }
-
-      var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
-      var onClickHandler = canOrderBy ? function () {
-        return _this4.changeOrder(field);
-      } : function () {};
-      var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
-      var width = columnWidths[field.name];
-
-      if (typeof width === 'number') {
-        width = "".concat(width, "%");
-      }
-
-      return _react["default"].createElement("th", {
-        key: field.name,
-        width: width,
-        onClick: onClickHandler,
-        style: {
-          cursor: cursor
-        }
-      }, field.label, "\xA0", orderByIcon);
-    }
-  }, {
-    key: "renderActionsCell",
-    value: function renderActionsCell() {
-      var _this5 = this;
-
-      var _this$props6 = this.props,
-          actions = _this$props6.actions,
-          buttons = _this$props6.buttons;
-      var state = this.state;
-
-      if (!buttons.length && !actions.length) {
-        return null;
-      } else if (!actions.length) {
-        return _react["default"].createElement("th", null);
-      }
-
-      return _react["default"].createElement("th", {
-        className: "rddt-action-cell"
-      }, _react["default"].createElement("div", {
-        className: "dropdown"
-      }, _react["default"].createElement("button", {
-        className: "btn btn-secondary dropdown-toggle",
-        type: "button",
-        id: "dropdownMenuButton",
-        "data-toggle": "dropdown",
-        "aria-haspopup": "true",
-        "aria-expanded": "false",
-        disabled: !state.checkedRows.length
-      }, "Actions"), _react["default"].createElement("div", {
-        className: "dropdown-menu",
-        "aria-labelledby": "dropdownMenuButton"
-      }, this.props.actions.map(function (action) {
-        return _this5.renderActionButton(action);
-      }))));
-    }
-  }, {
-    key: "renderActionButton",
-    value: function renderActionButton(action) {
-      var _this6 = this;
-
-      return _react["default"].createElement("button", {
-        key: "action_".concat(action.name),
-        type: "button",
-        className: "dropdown-item",
-        onClick: function onClick() {
-          action.callback(_this6.state.checkedRows);
-
-          _this6.setState({
-            checkedRows: []
-          });
-        }
-      }, action.name);
-    }
-  }, {
     key: "changeOrder",
     value: function changeOrder(field) {
       var props = this.props;
@@ -448,38 +279,23 @@ function (_Component) {
       props.changeOrder(field.name, newOrderByDirection);
     }
   }, {
-    key: "renderCheckboxCell",
-    value: function renderCheckboxCell(value) {
-      var _this7 = this;
+    key: "changePerPage",
+    value: function changePerPage(limit) {
+      var changePerPage = this.props.changePerPage;
 
-      if (!this.props.renderCheckboxes) {
+      if (!changePerPage) {
         return;
       }
 
-      var checkbox = _react["default"].createElement("div", {
-        className: "form-check"
-      }, _react["default"].createElement("input", {
-        type: "checkbox",
-        value: value,
-        checked: this.checkboxIsChecked(value),
-        onChange: function onChange(event) {
-          return _this7.checkboxChange(event, value);
-        }
-      }));
-
-      if (value === 'all') {
-        return _react["default"].createElement("th", null, checkbox);
-      }
-
-      return _react["default"].createElement("td", null, checkbox);
+      changePerPage(limit);
     }
   }, {
     key: "checkboxIsChecked",
     value: function checkboxIsChecked(row) {
       var checkedRows = this.state.checkedRows;
-      var _this$props7 = this.props,
-          rows = _this$props7.rows,
-          disabledCheckboxes = _this$props7.disabledCheckboxes;
+      var _this$props3 = this.props,
+          rows = _this$props3.rows,
+          disabledCheckboxes = _this$props3.disabledCheckboxes;
 
       if (row === 'all') {
         return checkedRows.length === rows.filter(function (_ref) {
@@ -505,9 +321,9 @@ function (_Component) {
   }, {
     key: "checkboxChange",
     value: function checkboxChange(event, row) {
-      var _this$props8 = this.props,
-          rows = _this$props8.rows,
-          disabledCheckboxes = _this$props8.disabledCheckboxes;
+      var _this$props4 = this.props,
+          rows = _this$props4.rows,
+          disabledCheckboxes = _this$props4.disabledCheckboxes;
       var target = event.target;
 
       if (row === 'all') {
@@ -557,6 +373,206 @@ function (_Component) {
       this.setState({
         checkedRows: checkedRows
       });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props5 = this.props,
+          errorMessage = _this$props5.errorMessage,
+          loading = _this$props5.loading,
+          rows = _this$props5.rows;
+      var fields = this.getFields();
+
+      if (errorMessage) {
+        return this.renderErrorTable();
+      }
+
+      if (loading) {
+        return this.renderLoadingTable();
+      }
+
+      if (!rows || !rows.length) {
+        return this.renderEmptyTable();
+      }
+
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        className: "table-responsive"
+      }, _react["default"].createElement("table", {
+        className: this.className()
+      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
+        return _this2.renderHeader(field);
+      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row, index) {
+        return _this2.renderRow(row, index);
+      })))), _react["default"].createElement("div", {
+        className: 'd-flex justify-content-between align-items-center'
+      }, this.renderPerPage(), this.renderPagination()));
+    }
+  }, {
+    key: "renderRow",
+    value: function renderRow(row, index) {
+      var _this3 = this;
+
+      var _this$props6 = this.props,
+          onClick = _this$props6.onClick,
+          onMouseUp = _this$props6.onMouseUp,
+          onMouseDown = _this$props6.onMouseDown,
+          buttons = _this$props6.buttons,
+          renderCheckboxes = _this$props6.renderCheckboxes,
+          disabledCheckboxes = _this$props6.disabledCheckboxes,
+          _dataItemManipulator = _this$props6.dataItemManipulator,
+          rowRenderer = _this$props6.rowRenderer,
+          dangerouslyRenderFields = _this$props6.dangerouslyRenderFields,
+          actions = _this$props6.actions,
+          editableColumns = _this$props6.editableColumns;
+      return rowRenderer({
+        row: row,
+        onClick: onClick,
+        onMouseUp: onMouseUp,
+        onMouseDown: onMouseDown,
+        buttons: buttons,
+        renderCheckboxes: renderCheckboxes,
+        disableCheckbox: disabledCheckboxes.includes(row.id),
+        key: row.id,
+        fields: this.getFields(),
+        dataItemManipulator: function dataItemManipulator(field, value, row) {
+          return _dataItemManipulator(field, value, row);
+        },
+        checkboxIsChecked: function checkboxIsChecked(value) {
+          return _this3.checkboxIsChecked(value);
+        },
+        onCheckboxChange: function onCheckboxChange(e) {
+          return _this3.checkboxChange(e, row);
+        },
+        dangerouslyRenderFields: dangerouslyRenderFields,
+        actions: actions,
+        editableColumns: editableColumns,
+        index: index
+      });
+    }
+  }, {
+    key: "renderHeader",
+    value: function renderHeader(field) {
+      var _this4 = this;
+
+      var _this$props7 = this.props,
+          orderByField = _this$props7.orderByField,
+          orderByDirection = _this$props7.orderByDirection,
+          orderByAscIcon = _this$props7.orderByAscIcon,
+          orderByDescIcon = _this$props7.orderByDescIcon,
+          allowOrderingBy = _this$props7.allowOrderingBy,
+          disallowOrderingBy = _this$props7.disallowOrderingBy,
+          changeOrder = _this$props7.changeOrder,
+          columnWidths = _this$props7.columnWidths;
+      var orderByIcon = '';
+
+      if (orderByField === field.name) {
+        if (orderByDirection === 'asc') {
+          orderByIcon = orderByAscIcon;
+        } else {
+          orderByIcon = orderByDescIcon;
+        }
+      }
+
+      var canOrderBy = (allowOrderingBy.length === 0 || allowOrderingBy.includes(field.name)) && !disallowOrderingBy.includes(field.name);
+      var onClickHandler = canOrderBy ? function () {
+        return _this4.changeOrder(field);
+      } : function () {};
+      var cursor = changeOrder && canOrderBy ? 'pointer' : 'default';
+      var width = columnWidths[field.name];
+
+      if (typeof width === 'number') {
+        width = "".concat(width, "%");
+      }
+
+      return _react["default"].createElement("th", {
+        key: field.name,
+        width: width,
+        onClick: onClickHandler,
+        style: {
+          cursor: cursor
+        }
+      }, field.label, "\xA0", orderByIcon);
+    }
+  }, {
+    key: "renderActionsCell",
+    value: function renderActionsCell() {
+      var _this5 = this;
+
+      var _this$props8 = this.props,
+          actions = _this$props8.actions,
+          buttons = _this$props8.buttons;
+      var state = this.state;
+
+      if (!buttons.length && !actions.length) {
+        return null;
+      } else if (!actions.length) {
+        return _react["default"].createElement("th", null);
+      }
+
+      return _react["default"].createElement("th", {
+        className: "rddt-action-cell"
+      }, _react["default"].createElement("div", {
+        className: "dropdown"
+      }, _react["default"].createElement("button", {
+        className: "btn btn-secondary dropdown-toggle",
+        type: "button",
+        id: "dropdownMenuButton",
+        "data-toggle": "dropdown",
+        "aria-haspopup": "true",
+        "aria-expanded": "false",
+        disabled: !state.checkedRows.length
+      }, "Actions"), _react["default"].createElement("div", {
+        className: "dropdown-menu",
+        "aria-labelledby": "dropdownMenuButton"
+      }, this.props.actions.map(function (action) {
+        return _this5.renderActionButton(action);
+      }))));
+    }
+  }, {
+    key: "renderActionButton",
+    value: function renderActionButton(action) {
+      var _this6 = this;
+
+      return _react["default"].createElement("button", {
+        key: "action_".concat(action.name),
+        type: "button",
+        className: "dropdown-item",
+        onClick: function onClick() {
+          action.callback(_this6.state.checkedRows);
+
+          _this6.setState({
+            checkedRows: []
+          });
+        }
+      }, action.name);
+    }
+  }, {
+    key: "renderCheckboxCell",
+    value: function renderCheckboxCell(value) {
+      var _this7 = this;
+
+      if (!this.props.renderCheckboxes) {
+        return;
+      }
+
+      var checkbox = _react["default"].createElement("div", {
+        className: "form-check"
+      }, _react["default"].createElement("input", {
+        type: "checkbox",
+        value: value,
+        checked: this.checkboxIsChecked(value),
+        onChange: function onChange(event) {
+          return _this7.checkboxChange(event, value);
+        }
+      }));
+
+      if (value === 'all') {
+        return _react["default"].createElement("th", null, checkbox);
+      }
+
+      return _react["default"].createElement("td", null, checkbox);
     }
   }, {
     key: "renderLoadingTable",
@@ -620,6 +636,34 @@ function (_Component) {
         },
         paginationDelta: props.paginationDelta
       });
+    }
+  }, {
+    key: "renderPerPage",
+    value: function renderPerPage() {
+      var _this$props11 = this.props,
+          changePerPage = _this$props11.changePerPage,
+          totalRows = _this$props11.totalRows,
+          perPage = _this$props11.perPage,
+          perPageRenderer = _this$props11.perPageRenderer;
+      var props = {
+        totalRows: totalRows,
+        value: perPage,
+        onChange: this.changePerPage
+      };
+
+      if (!changePerPage) {
+        return;
+      }
+
+      if (typeof perPageRenderer === 'function') {
+        return perPageRenderer(props);
+      }
+
+      if (_react["default"].isValidElement(perPageRenderer)) {
+        return _react["default"].cloneElement(perPageRenderer, props);
+      }
+
+      return perPageRenderer;
     }
   }], [{
     key: "noop",
@@ -709,7 +753,11 @@ DynamicDataTable.propTypes = {
   disallowOrderingBy: _propTypes["default"].array,
   dangerouslyRenderFields: _propTypes["default"].array,
   paginationDelta: _propTypes["default"].number,
-  columnWidths: _propTypes["default"].object
+  columnWidths: _propTypes["default"].object,
+  totalRows: _propTypes["default"].number,
+  changePerPage: _propTypes["default"].func,
+  perPage: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]),
+  perPageRenderer: _propTypes["default"].oneOfType([_propTypes["default"].node, _propTypes["default"].func])
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -751,7 +799,13 @@ DynamicDataTable.defaultProps = {
   disallowOrderingBy: [],
   dangerouslyRenderFields: [],
   paginationDelta: 4,
-  columnWidths: {}
+  columnWidths: {},
+  totalRows: 0,
+  changePerPage: null,
+  perPage: 15,
+  perPageRenderer: function perPageRenderer(props) {
+    return _react["default"].createElement(_PerPage["default"], props);
+  }
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;

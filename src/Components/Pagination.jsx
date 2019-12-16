@@ -30,8 +30,8 @@ class Pagination extends Component {
         });
 
         return (
-            <nav aria-label="Page navigation">
-                <ul className="pagination">
+            <nav aria-label="Page navigation ml-auto">
+                <ul className="pagination mb-0">
                     <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
                         <button type="button" className="page-link" onClick={() => this.previousPage()}>Previous</button>
                     </li>

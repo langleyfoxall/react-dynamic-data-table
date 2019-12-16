@@ -59,7 +59,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -115,7 +115,9 @@ function (_Component) {
     _this.state = {
       rows: [],
       currentPage: 1,
+      perPage: 15,
       totalPages: 1,
+      totalRows: 0,
       orderByField: defaultOrderByField,
       orderByDirection: defaultOrderByDirection,
       disallowOrderingBy: [],
@@ -124,6 +126,7 @@ function (_Component) {
     _this.reload = _this.reload.bind(_assertThisInitialized(_this));
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_this));
     _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_this));
+    _this.changePerPage = _this.changePerPage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -144,7 +147,9 @@ function (_Component) {
     value: function render() {
       var _this$state = this.state,
           rows = _this$state.rows,
+          totalRows = _this$state.totalRows,
           currentPage = _this$state.currentPage,
+          perPage = _this$state.perPage,
           totalPages = _this$state.totalPages,
           orderByField = _this$state.orderByField,
           orderByDirection = _this$state.orderByDirection;
@@ -155,13 +160,16 @@ function (_Component) {
 
       return _react["default"].createElement(_DynamicDataTable["default"], _extends({
         rows: rows,
+        totalRows: totalRows,
         currentPage: currentPage,
+        perPage: perPage,
         totalPages: totalPages,
         orderByField: orderByField,
         orderByDirection: orderByDirection,
         loading: this.loading,
         changePage: this.changePage,
         changeOrder: this.changeOrder,
+        changePerPage: this.changePerPage,
         disallowOrderingBy: this.disallowOrderingBy
       }, props));
     }
@@ -177,6 +185,7 @@ function (_Component) {
       var _this2 = this;
 
       var _this$state2 = this.state,
+          perPage = _this$state2.perPage,
           orderByField = _this$state2.orderByField,
           orderByDirection = _this$state2.orderByDirection;
       var _this$props2 = this.props,
@@ -189,6 +198,7 @@ function (_Component) {
         axios.get(_this2.props.apiUrl, {
           params: _objectSpread({}, params, {
             page: page,
+            perPage: perPage,
             orderByField: orderByField,
             orderByDirection: orderByDirection
           })
@@ -196,6 +206,7 @@ function (_Component) {
           var response = _ref.data;
           var _response$data = response.data,
               rows = _response$data.data,
+              total = _response$data.total,
               current_page = _response$data.current_page,
               last_page = _response$data.last_page;
           var disallow_ordering_by = [];
@@ -207,6 +218,7 @@ function (_Component) {
           var newState = {
             disallowOrderingBy: disallow_ordering_by,
             rows: rows,
+            totalRows: total,
             currentPage: current_page,
             totalPages: last_page,
             loading: false
@@ -222,6 +234,13 @@ function (_Component) {
     key: "changePage",
     value: function changePage(page) {
       this.loadPage(page);
+    }
+  }, {
+    key: "changePerPage",
+    value: function changePerPage(limit) {
+      this.setState({
+        perPage: limit
+      }, this.reload);
     }
   }, {
     key: "changeOrder",
