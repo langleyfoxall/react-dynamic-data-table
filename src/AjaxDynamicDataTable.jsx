@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DynamicDataTable from "./DynamicDataTable";
+
+import DynamicDataTable from './DynamicDataTable';
 
 class AjaxDynamicDataTable extends Component {
 
@@ -11,7 +12,9 @@ class AjaxDynamicDataTable extends Component {
         this.state = {
             rows: [],
             currentPage: 1,
+            perPage: 15,
             totalPages: 1,
+            totalRows: 0,
             orderByField: defaultOrderByField,
             orderByDirection: defaultOrderByDirection,
             disallowOrderingBy: [],
@@ -19,8 +22,10 @@ class AjaxDynamicDataTable extends Component {
         };
 
         this.reload = this.reload.bind(this);
+
         this.changePage = this.changePage.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
+        this.changePerPage = this.changePerPage.bind(this);
     }
 
     componentDidMount() {
@@ -52,19 +57,22 @@ class AjaxDynamicDataTable extends Component {
 
     render() {
 
-        const { rows, currentPage, totalPages, orderByField, orderByDirection } = this.state;
+        const { rows, totalRows, currentPage, perPage, totalPages, orderByField, orderByDirection } = this.state;
         const { disallowOrderingBy, ...props } = this.props;
 
         return (
             <DynamicDataTable
                 rows={rows}
+                totalRows={totalRows}
                 currentPage={currentPage}
+                perPage={perPage}
                 totalPages={totalPages}
                 orderByField={orderByField}
                 orderByDirection={orderByDirection}
                 loading={this.loading}
                 changePage={this.changePage}
                 changeOrder={this.changeOrder}
+                changePerPage={this.changePerPage}
                 disallowOrderingBy={this.disallowOrderingBy}
                 {...props}
             />
@@ -76,7 +84,7 @@ class AjaxDynamicDataTable extends Component {
     }
 
     loadPage(page) {
-        const {orderByField, orderByDirection} = this.state;
+        const {perPage, orderByField, orderByDirection} = this.state;
         const {onLoad, params, axios} = this.props;
 
         this.setState(
@@ -84,11 +92,11 @@ class AjaxDynamicDataTable extends Component {
             () => {
                 axios.get(this.props.apiUrl, {
 
-                    params: { ...params, page, orderByField, orderByDirection }
+                    params: { ...params, page, perPage, orderByField, orderByDirection }
 
                 }).then(({ data: response }) => {
 
-                    const { data: rows, current_page, last_page } = response.data;
+                    const { data: rows, total, current_page, last_page } = response.data;
                     let disallow_ordering_by = [];
 
                     if (response.meta) {
@@ -98,6 +106,7 @@ class AjaxDynamicDataTable extends Component {
                     const newState = {
                         disallowOrderingBy: disallow_ordering_by,
                         rows,
+                        totalRows: total,
                         currentPage: current_page,
                         totalPages:last_page,
                         loading: false
@@ -112,6 +121,13 @@ class AjaxDynamicDataTable extends Component {
 
     changePage(page) {
         this.loadPage(page)
+    }
+
+    changePerPage(limit) {
+        this.setState(
+            { perPage: limit },
+            this.reload
+        )
     }
 
     changeOrder(field, direction) {

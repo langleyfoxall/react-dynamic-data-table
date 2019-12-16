@@ -25,7 +25,9 @@ require("core-js/modules/es6.object.create");
 
 require("core-js/modules/es6.object.set-prototype-of");
 
-require("core-js/modules/es6.array.for-each");
+require("core-js/modules/es6.array.map");
+
+require("core-js/modules/es6.function.bind");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -47,130 +49,88 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Pagination =
+var PerPage =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Pagination, _Component);
+  _inherits(PerPage, _Component);
 
-  function Pagination() {
-    _classCallCheck(this, Pagination);
+  function PerPage(props) {
+    var _this;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Pagination).apply(this, arguments));
+    _classCallCheck(this, PerPage);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PerPage).call(this, props));
+    _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
-  _createClass(Pagination, [{
+  _createClass(PerPage, [{
+    key: "onChange",
+    value: function onChange(_ref) {
+      var value = _ref.target.value;
+      var onChange = this.props.onChange;
+      onChange(value);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
-
-      var pageLinks = [];
-      var props = this.props;
-      var currentPage = props.currentPage;
-      var totalPages = props.totalPages;
-
-      if (totalPages <= 1) {
-        return null;
-      }
-
-      this.getPagesToDisplay(currentPage, totalPages).forEach(function (page, index) {
-        pageLinks.push(_react["default"].createElement("li", {
-          key: "page_index_".concat(index),
-          className: "page-item ".concat(currentPage === page ? 'active' : '')
-        }, _react["default"].createElement("button", {
-          type: "button",
-          className: "page-link ".concat(!page ? 'disabled' : ''),
-          onClick: function onClick() {
-            if (page) {
-              _this.changePage(page);
-            }
-          }
-        }, page || '...')));
-      });
-      return _react["default"].createElement("nav", {
-        "aria-label": "Page navigation ml-auto"
-      }, _react["default"].createElement("ul", {
-        className: "pagination mb-0"
-      }, _react["default"].createElement("li", {
-        className: "page-item ".concat(currentPage <= 1 ? 'disabled' : '')
-      }, _react["default"].createElement("button", {
-        type: "button",
-        className: "page-link",
-        onClick: function onClick() {
-          return _this.previousPage();
-        }
-      }, "Previous")), pageLinks, _react["default"].createElement("li", {
-        className: "page-item ".concat(currentPage >= totalPages ? 'disabled' : '')
-      }, _react["default"].createElement("button", {
-        type: "button",
-        className: "page-link",
-        onClick: function onClick() {
-          return _this.nextPage();
-        }
-      }, "Next"))));
-    }
-  }, {
-    key: "changePage",
-    value: function changePage(page) {
-      this.props.changePage(page);
-    }
-  }, {
-    key: "previousPage",
-    value: function previousPage() {
-      if (this.props.currentPage > 1) {
-        this.changePage(this.props.currentPage - 1);
-      }
-    }
-  }, {
-    key: "nextPage",
-    value: function nextPage() {
-      if (this.props.currentPage < this.props.totalPages) {
-        this.changePage(this.props.currentPage + 1);
-      }
-    }
-  }, {
-    key: "getPagesToDisplay",
-    value: function getPagesToDisplay(currentPage, totalPages) {
-      var paginationDelta = this.props.paginationDelta;
-      var pages = [];
-
-      for (var i = 1; i <= totalPages; i++) {
-        var isFirstPage = i === 1;
-        var isLastPage = i === totalPages;
-        var isWithinDelta = Math.abs(currentPage - i) <= paginationDelta;
-
-        if (isFirstPage || isLastPage || isWithinDelta) {
-          // If this element isn't directly sequential to the last, add a filler null element.
-          if (pages.length >= 1 && i !== pages[pages.length - 1] + 1) {
-            pages.push(null);
-          }
-
-          pages.push(i);
-        }
-      }
-
-      return pages;
+      var _this$props = this.props,
+          _this$props$className = _this$props.className,
+          container = _this$props$className.container,
+          innerContainer = _this$props$className.innerContainer,
+          select = _this$props$className.select,
+          value = _this$props.value,
+          defaultValue = _this$props.defaultValue,
+          options = _this$props.options,
+          totalRows = _this$props.totalRows;
+      return _react["default"].createElement("div", {
+        className: container
+      }, _react["default"].createElement("span", null, "Showing"), _react["default"].createElement("div", {
+        className: innerContainer
+      }, _react["default"].createElement("select", {
+        className: select,
+        value: value || defaultValue,
+        onChange: this.onChange
+      }, options.map(function (option) {
+        return _react["default"].createElement("option", {
+          key: option,
+          value: option
+        }, option);
+      }))), _react["default"].createElement("span", null, "of ", totalRows, " records"));
     }
   }]);
 
-  return Pagination;
+  return PerPage;
 }(_react.Component);
 
-Pagination.defaultProps = {
-  paginationDelta: 4
+PerPage.defaultProps = {
+  className: {
+    container: 'd-flex align-items-center',
+    innerContainer: 'form-group mb-0 mx-sm-3 mx-2',
+    select: 'form-control'
+  },
+  defaultValue: 15,
+  options: [10, 15, 30, 50, 75, 100]
 };
-Pagination.propTypes = {
-  currentPage: _propTypes["default"].number,
-  totalPages: _propTypes["default"].number,
-  changePage: _propTypes["default"].func,
-  paginationDelta: _propTypes["default"].number
+PerPage.propTypes = {
+  onChange: _propTypes["default"].func.isRequired,
+  totalRows: _propTypes["default"].number.isRequired,
+  value: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]).isRequired,
+  defaultValue: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]),
+  className: _propTypes["default"].shape({
+    container: _propTypes["default"].string,
+    innerContainer: _propTypes["default"].string,
+    select: _propTypes["default"].string
+  }),
+  options: _propTypes["default"].arrayOf(_propTypes["default"].number)
 };
-var _default = Pagination;
+var _default = PerPage;
 exports["default"] = _default;

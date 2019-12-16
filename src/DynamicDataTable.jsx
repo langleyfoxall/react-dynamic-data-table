@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import DataRow from "./Components/DataRow";
-import Pagination from "./Components/Pagination";
+import DataRow from './Components/DataRow';
+import Pagination from './Components/Pagination';
+import PerPage from './Components/PerPage';
 
-import flatten from "core-js/fn/array/flatten";
+import flatten from 'core-js/fn/array/flatten';
 
 class DynamicDataTable extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class DynamicDataTable extends Component {
         };
 
         this.className = this.className.bind(this);
+        this.changePerPage = this.changePerPage.bind(this);
     }
 
     static noop() {
@@ -193,6 +195,105 @@ class DynamicDataTable extends Component {
         return fields;
     }
 
+    changeOrder(field) {
+        const props = this.props;
+        let newOrderByDirection = 'asc';
+
+        if (!props.changeOrder) {
+            return;
+        }
+
+        if (props.orderByField === field.name) {
+            newOrderByDirection = (props.orderByDirection === 'asc') ? 'desc' : 'asc';
+        }
+
+        props.changeOrder(field.name, newOrderByDirection);
+    }
+
+    changePerPage(limit) {
+        const { changePerPage } = this.props;
+
+        if (!changePerPage) {
+            return;
+        }
+
+        changePerPage(limit);
+    }
+
+    checkboxIsChecked(row) {
+        const { checkedRows } = this.state;
+        const { rows, disabledCheckboxes } = this.props;
+
+        if (row === 'all') {
+            return (
+                checkedRows.length === rows.filter(({ id }) => (
+                    !disabledCheckboxes.includes(id)
+                )).length
+            );
+        }
+
+        let index = -1;
+        const selected = JSON.stringify(row);
+
+        for (let i = 0; i < checkedRows.length; i++) {
+            const current = JSON.stringify(checkedRows[i]);
+
+            if (current === selected) {
+                index = i;
+
+                break;
+            }
+        }
+
+        return index !== -1;
+    }
+
+    checkboxChange(event, row) {
+        const { rows, disabledCheckboxes } = this.props;
+        const { target } = event;
+
+        if (row === 'all') {
+            if (target.checked) {
+                const checkedRows = [];
+
+                rows.filter(({ id }) => !disabledCheckboxes.includes(id))
+                    .forEach(row => checkedRows.push(row));
+
+                this.setState({ checkedRows });
+            } else {
+                this.setState({ checkedRows: [] });
+            }
+
+            return;
+        }
+
+        let index = -1;
+        const { checkedRows } = this.state;
+        const selected = JSON.stringify(row);
+
+        for (let i = 0; i < checkedRows.length; i++) {
+            const current = JSON.stringify(checkedRows[i]);
+
+            if (current === selected) {
+                index = i;
+
+                break;
+            }
+        }
+
+        if (target.checked) {
+            if (index === -1) {
+                checkedRows.push(row);
+            }
+        } else {
+            if (index !== -1) {
+                checkedRows.splice(index, 1);
+            }
+        }
+
+        this.setState({ checkedRows });
+    }
+
     render() {
         const { errorMessage, loading, rows } = this.props;
         const fields = this.getFields();
@@ -225,7 +326,10 @@ class DynamicDataTable extends Component {
                         </tbody>
                     </table>
                 </div>
-                {this.renderPagination()}
+                <div className={'d-flex justify-content-between align-items-center'}>
+                    {this.renderPerPage()}
+                    {this.renderPagination()}
+                </div>
             </div>
         );
     }
@@ -353,21 +457,6 @@ class DynamicDataTable extends Component {
         );
     }
 
-    changeOrder(field) {
-        const props = this.props;
-        let newOrderByDirection = 'asc';
-
-        if (!props.changeOrder) {
-            return;
-        }
-
-        if (props.orderByField === field.name) {
-            newOrderByDirection = (props.orderByDirection === 'asc') ? 'desc' : 'asc';
-        }
-
-        props.changeOrder(field.name, newOrderByDirection);
-    }
-
     renderCheckboxCell(value) {
         if (!this.props.renderCheckboxes) {
             return;
@@ -393,80 +482,6 @@ class DynamicDataTable extends Component {
         return (
             <td>{checkbox}</td>
         );
-    }
-
-    checkboxIsChecked(row) {
-        const { checkedRows } = this.state;
-        const { rows, disabledCheckboxes } = this.props;
-
-        if (row === 'all') {
-            return (
-                checkedRows.length === rows.filter(({ id }) => (
-                    !disabledCheckboxes.includes(id)
-                )).length
-            );
-        }
-
-        let index = -1;
-        const selected = JSON.stringify(row);
-
-        for (let i = 0; i < checkedRows.length; i++) {
-            const current = JSON.stringify(checkedRows[i]);
-
-            if (current === selected) {
-                index = i;
-
-                break;
-            }
-        }
-
-        return index !== -1;
-    }
-
-    checkboxChange(event, row) {
-        const { rows, disabledCheckboxes } = this.props;
-        const { target } = event;
-
-        if (row === 'all') {
-            if (target.checked) {
-                const checkedRows = [];
-
-                rows.filter(({ id }) => !disabledCheckboxes.includes(id))
-                    .forEach(row => checkedRows.push(row));
-
-                this.setState({ checkedRows });
-            } else {
-                this.setState({ checkedRows: [] });
-            }
-
-            return;
-        }
-
-        let index = -1;
-        const { checkedRows } = this.state;
-        const selected = JSON.stringify(row);
-
-        for (let i = 0; i < checkedRows.length; i++) {
-            const current = JSON.stringify(checkedRows[i]);
-
-            if (current === selected) {
-                index = i;
-
-                break;
-            }
-        }
-
-        if (target.checked) {
-            if (index === -1) {
-                checkedRows.push(row);
-            }
-        } else {
-            if (index !== -1) {
-                checkedRows.splice(index, 1);
-            }
-        }
-
-        this.setState({ checkedRows });
     }
 
     renderLoadingTable() {
@@ -551,6 +566,34 @@ class DynamicDataTable extends Component {
             />
         );
     }
+
+    renderPerPage() {
+        const { changePerPage, totalRows, perPage, perPageRenderer } = this.props;
+        const props = {
+            totalRows,
+            value: perPage,
+            onChange: this.changePerPage,
+        };
+
+        if (!changePerPage) {
+            return;
+        }
+
+        if (typeof perPageRenderer === 'function') {
+            return perPageRenderer(props);
+        }
+
+        if (React.isValidElement(perPageRenderer)) {
+            return (
+                React.cloneElement(
+                    perPageRenderer,
+                    props
+                )
+            );
+        }
+
+        return perPageRenderer;
+    }
 }
 
 DynamicDataTable.propTypes = {
@@ -599,6 +642,14 @@ DynamicDataTable.propTypes = {
     dangerouslyRenderFields: PropTypes.array,
     paginationDelta: PropTypes.number,
     columnWidths: PropTypes.object,
+    totalRows: PropTypes.number,
+    changePerPage: PropTypes.func,
+    perPage: PropTypes.oneOfType([
+        PropTypes.number, PropTypes.string,
+    ]),
+    perPageRenderer: PropTypes.oneOfType([
+        PropTypes.node, PropTypes.func,
+    ]),
 };
 
 DynamicDataTable.defaultProps = {
@@ -642,6 +693,12 @@ DynamicDataTable.defaultProps = {
     dangerouslyRenderFields: [],
     paginationDelta: 4,
     columnWidths: {},
+    totalRows: 0,
+    changePerPage: null,
+    perPage: 15,
+    perPageRenderer: props => (
+        <PerPage {...props} />
+    )
 };
 
 export default DynamicDataTable;

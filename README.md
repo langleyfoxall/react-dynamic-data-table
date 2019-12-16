@@ -298,6 +298,42 @@ This delta can be changed by passing a `paginationDelta` prop into `DynamicDataT
     />
 ```
 
+### Per page limiting
+
+Changing the number of entries displaying in the data table is easy. The `totalRows`, `perPage`, `changePerPage` and `perPageRenderer` allow you to customize a per page limit control.
+
+* `totalRows` the total number of rows within the dataset
+* `perPage` the current per page limit (default: `15`)
+* `changePerPage` handles the logic for changing the `perPage` prop. This recieved a single argument which is the new limit.
+* `perPageRender` can either be a node or a function.
+
+By default a Bootstrap styled select is displayed if `changePerPage` is a function.
+
+```jsx
+<DynamicDataTable
+    totalRows={totalRows}
+    perPage={perPage}
+    changePerPage={newPerPage => (
+        this.setState({
+            perPage: newPerPage
+        })
+    )}
+    perPageRenderer={props => (
+        <PerPage {...props} />
+    )}
+/>
+```
+
+#### `perPageRenderer`
+
+The `perPageRenderer` prop accepts either a node or function. If a valid react element is passed then `React.cloneElement` is used to bind:
+
+* `totalRows`
+* `value` (see `perPage` above)
+* `onChange` (see `changePerPage` above)
+
+If a function is passed then the props described above are passed in an object.
+
 ### Row buttons
 
 Row buttons appear on the right hand side of every row in the React Dynamic Data 
