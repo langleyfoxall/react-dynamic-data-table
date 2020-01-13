@@ -49,6 +49,10 @@ class AjaxDynamicDataTable extends Component {
         const { disallowOrderingBy: state } = this.state;
         const { disallowOrderingBy: prop } = this.props;
 
+        if (typeof prop === 'function') {
+            return prop(state);
+        }
+
         return [
             ...state,
             ...prop
@@ -159,7 +163,12 @@ AjaxDynamicDataTable.propTypes = {
     defaultOrderByField: PropTypes.string,
     defaultOrderByDirection: PropTypes.string,
     axios: PropTypes.any,
-    disallowOrderingBy: PropTypes.arrayOf(PropTypes.string),
+    disallowOrderingBy: (
+        PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.string),
+            PropTypes.func,
+        ])
+    ),
 };
 
 export default AjaxDynamicDataTable;
