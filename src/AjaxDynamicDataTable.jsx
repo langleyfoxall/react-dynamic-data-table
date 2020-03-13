@@ -101,7 +101,7 @@ class AjaxDynamicDataTable extends Component {
                 axios.get(this.props.apiUrl, {
 
                     params: { ...params, page, perPage, orderByField, orderByDirection },
-                    cancelToken: new CancelToken(function executor(c){thisComponent.cancelRequest=c;})
+                    cancelToken: new CancelToken(callback => this.cancelRequest = callback)
 
                 }).then(({ data: response }) => {
 
