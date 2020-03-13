@@ -568,31 +568,33 @@ class DynamicDataTable extends Component {
     }
 
     renderPerPage() {
-        const { changePerPage, totalRows, perPage, perPageRenderer } = this.props;
-        const props = {
-            totalRows,
-            value: perPage,
-            onChange: this.changePerPage,
-        };
+        const { changePerPage, totalRows, perPage, perPageRenderer, hidePerPage } = this.props;
+        if(typeof hidePerPage=="undefined"||!hidePerPage) {
+            const props = {
+                totalRows,
+                value: perPage,
+                onChange: this.changePerPage,
+            };
 
-        if (!changePerPage) {
-            return;
+            if (!changePerPage) {
+                return;
+            }
+
+            if (typeof perPageRenderer === 'function') {
+                return perPageRenderer(props);
+            }
+
+            if (React.isValidElement(perPageRenderer)) {
+                return (
+                    React.cloneElement(
+                        perPageRenderer,
+                        props
+                    )
+                );
+            }
+
+            return perPageRenderer;
         }
-
-        if (typeof perPageRenderer === 'function') {
-            return perPageRenderer(props);
-        }
-
-        if (React.isValidElement(perPageRenderer)) {
-            return (
-                React.cloneElement(
-                    perPageRenderer,
-                    props
-                )
-            );
-        }
-
-        return perPageRenderer;
     }
 }
 
