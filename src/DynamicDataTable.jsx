@@ -222,7 +222,11 @@ class DynamicDataTable extends Component {
 
     checkboxIsChecked(row) {
         const { checkedRows } = this.state;
-        const { rows, disabledCheckboxes } = this.props;
+        const { rows, isCheckboxChecked, disabledCheckboxes } = this.props;
+
+        if (isCheckboxChecked !== DynamicDataTable.noop) {
+            return isCheckboxChecked(row, rows);
+        }
 
         if (row === 'all') {
             return (
@@ -249,8 +253,20 @@ class DynamicDataTable extends Component {
     }
 
     checkboxChange(event, row) {
-        const { rows, disabledCheckboxes } = this.props;
+        const { rows, onMasterCheckboxChange, onCheckboxChange, isCheckboxChecked, disabledCheckboxes } = this.props;
         const { target } = event;
+
+        if (row === 'all') {
+            if(onMasterCheckboxChange !== DynamicDataTable.noop) {
+                onMasterCheckboxChange(event, rows);
+            }
+        } else if (onCheckboxChange !== DynamicDataTable.noop) {
+            onCheckboxChange(event, row);
+        }
+
+        if (isCheckboxChecked !== DynamicDataTable.noop) {
+            return;
+        }
 
         if (row === 'all') {
             if (target.checked) {
@@ -650,6 +666,9 @@ DynamicDataTable.propTypes = {
     perPageRenderer: PropTypes.oneOfType([
         PropTypes.node, PropTypes.func,
     ]),
+    isCheckboxChecked: PropTypes.func,
+    onMasterCheckboxChange: PropTypes.func,
+    onCheckboxChange: PropTypes.func
 };
 
 DynamicDataTable.defaultProps = {
@@ -698,7 +717,10 @@ DynamicDataTable.defaultProps = {
     perPage: 15,
     perPageRenderer: props => (
         <PerPage {...props} />
-    )
+    ),
+    isCheckboxChecked: DynamicDataTable.noop,
+    onMasterCheckboxChange: DynamicDataTable.noop,
+    onCheckboxChange: DynamicDataTable.noop
 };
 
 export default DynamicDataTable;
