@@ -97,7 +97,7 @@ class AjaxDynamicDataTable extends Component {
             () => {
                 const CancelToken = axios.CancelToken;
                 this.cancelRequest=function(){};
-                const thisComponent=this;
+                const thisComponent = this;
                 axios.get(this.props.apiUrl, {
 
                     params: { ...params, page, perPage, orderByField, orderByDirection },
