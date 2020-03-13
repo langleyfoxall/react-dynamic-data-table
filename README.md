@@ -560,6 +560,8 @@ should container an array of identifiers. If an identifier is in the array then 
 
 Combining `isCheckboxChecked`, `onMasterCheckboxChange` and `onCheckboxChange` allows a row's checkbox state to be managed outside of the datatable while still allowing `disabledCheckboxes` to work as intended.
 
+In the example below, we are using a [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) named `checked` to store the current status of the data table's checkboxes.
+
 ```jsx
 const checked = new Set
 
