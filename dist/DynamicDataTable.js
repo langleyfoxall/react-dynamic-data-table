@@ -73,7 +73,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -295,7 +295,12 @@ function (_Component) {
       var checkedRows = this.state.checkedRows;
       var _this$props3 = this.props,
           rows = _this$props3.rows,
+          isCheckboxChecked = _this$props3.isCheckboxChecked,
           disabledCheckboxes = _this$props3.disabledCheckboxes;
+
+      if (isCheckboxChecked !== DynamicDataTable.noop) {
+        return isCheckboxChecked(row, rows);
+      }
 
       if (row === 'all') {
         return checkedRows.length === rows.filter(function (_ref) {
@@ -323,8 +328,23 @@ function (_Component) {
     value: function checkboxChange(event, row) {
       var _this$props4 = this.props,
           rows = _this$props4.rows,
+          onMasterCheckboxChange = _this$props4.onMasterCheckboxChange,
+          onCheckboxChange = _this$props4.onCheckboxChange,
+          isCheckboxChecked = _this$props4.isCheckboxChecked,
           disabledCheckboxes = _this$props4.disabledCheckboxes;
       var target = event.target;
+
+      if (row === 'all') {
+        if (onMasterCheckboxChange !== DynamicDataTable.noop) {
+          onMasterCheckboxChange(event, rows);
+        }
+      } else if (onCheckboxChange !== DynamicDataTable.noop) {
+        onCheckboxChange(event, row);
+      }
+
+      if (isCheckboxChecked !== DynamicDataTable.noop) {
+        return;
+      }
 
       if (row === 'all') {
         if (target.checked) {
@@ -757,7 +777,10 @@ DynamicDataTable.propTypes = {
   totalRows: _propTypes["default"].number,
   changePerPage: _propTypes["default"].func,
   perPage: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]),
-  perPageRenderer: _propTypes["default"].oneOfType([_propTypes["default"].node, _propTypes["default"].func])
+  perPageRenderer: _propTypes["default"].oneOfType([_propTypes["default"].node, _propTypes["default"].func]),
+  isCheckboxChecked: _propTypes["default"].func,
+  onMasterCheckboxChange: _propTypes["default"].func,
+  onCheckboxChange: _propTypes["default"].func
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -805,7 +828,10 @@ DynamicDataTable.defaultProps = {
   perPage: 15,
   perPageRenderer: function perPageRenderer(props) {
     return _react["default"].createElement(_PerPage["default"], props);
-  }
+  },
+  isCheckboxChecked: DynamicDataTable.noop,
+  onMasterCheckboxChange: DynamicDataTable.noop,
+  onCheckboxChange: DynamicDataTable.noop
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;

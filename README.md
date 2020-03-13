@@ -556,6 +556,98 @@ should container an array of identifiers. If an identifier is in the array then 
     />
 ```
 
+### Externally manage checkboxes
+
+Combining `isCheckboxChecked`, `onMasterCheckboxChange` and `onCheckboxChange` allows a row's checkbox state to be managed outside of the datatable while still allowing `disabledCheckboxes` to work as intended.
+
+In the example below, we are using a [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) named `checked` to store the current status of the data table's checkboxes.
+
+```jsx
+const checked = new Set
+
+<DynamicDataTable
+    isCheckboxChecked={({ id }) => checked.has(id)}
+    onMasterCheckboxChange={(_, rows) => {
+        let all = true
+
+        rows.forEach(({ id }) => checked.has(id) || all = false)
+
+        rows.forEach(({ id }) => {
+            if (all) {
+                checked.delete(id)
+            } else if (!checked.has(id)) {
+                checked.add(id)
+            }
+        })
+    }}
+    onCheckboxChange={(_, { id }) => {
+        if (checked.has(id)) {
+            checked.delete(id)
+        } else {
+            checked.add(id)
+        }
+    }}
+/>
+```
+
+#### `isCheckboxChecked`
+
+`isCheckboxChecked` is called on each re-render of the data table allowing for custom logic to determine if a checkbox is checked. It will receive the current row and the visible rows as arguments.
+
+```jsx
+const checked = new Set
+
+<DynamicDataTable
+    isCheckboxChecked={({ id }) => checked.has(id)}
+/>
+```
+
+_Note: This should only be used if `onMasterCheckboxChange` and `onCheckboxChange` are implemented._
+
+#### `onMasterCheckboxChange`
+
+`onMasterCheckboxChange` is called when the master checkbox is clicked. This allows for custom logic for selecting and deselecting multiple rows. It will receive an event object from the input and the visible rows.
+
+The master checkbox refers to the bulk select checkbox found in the top left corner of the data table whenever checkboxes are enabled.
+
+```jsx
+const checked = new Set
+
+<DynamicDataTable
+    onMasterCheckboxChange={(_, rows) => {
+        let all = true
+
+        rows.forEach(({ id }) => checked.has(id) || all = false)
+
+        rows.forEach(({ id }) => {
+            if (all) {
+                checked.delete(id)
+            } else if (!checked.has(id)) {
+                checked.add(id)
+            }
+        })
+    }}
+/>
+```
+
+#### `onCheckboxChange`
+
+`onCheckboxChange` is called when a row checkbox is clicked. This allows for custom logic for selecting and deselecting a single row. It will receive an event object from the input and the current row.
+
+```jsx
+const checked = new Set
+
+<DynamicDataTable
+    onCheckboxChange={(_, { id }) => {
+        if (checked.has(id)) {
+            checked.delete(id)
+        } else {
+            checked.add(id)
+        }
+    }}
+/>
+```
+
 ### Actions
 
 Actions, when combined with bulk select checkboxes allow you perform
