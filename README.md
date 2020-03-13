@@ -602,7 +602,7 @@ const checked = new Set
 />
 ```
 
-_Note: This should only be used if `onMasterCheckboxChange` and `onCheckboxChange` are implemented_
+_Note: This should only be used if `onMasterCheckboxChange` and `onCheckboxChange` are implemented._
 
 #### `onMasterCheckboxChange`
 
