@@ -592,7 +592,7 @@ const checked = new Set
 
 #### `isCheckboxChecked`
 
-`isCheckboxChecked` is called on each re-render of the datatable allowing for custom logic to determine if a checkbox is checked. It will recieve the current row and the visibile rows as arguments.
+`isCheckboxChecked` is called on each re-render of the data table allowing for custom logic to determine if a checkbox is checked. It will receive the current row and the visible rows as arguments.
 
 ```jsx
 const checked = new Set
