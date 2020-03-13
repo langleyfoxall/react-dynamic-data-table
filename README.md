@@ -630,7 +630,7 @@ const checked = new Set
 
 #### `onCheckboxChange`
 
-`onCheckboxChange` is called when a row checkbox is clicked. This allows for custom logic for selecting and deselecting a single row. It will recieve an event object from the input and the current row.
+`onCheckboxChange` is called when a row checkbox is clicked. This allows for custom logic for selecting and deselecting a single row. It will receive an event object from the input and the current row.
 
 ```jsx
 const checked = new Set
