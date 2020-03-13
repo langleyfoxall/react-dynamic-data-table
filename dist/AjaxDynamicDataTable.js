@@ -125,6 +125,10 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_this));
     _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_this));
     _this.changePerPage = _this.changePerPage.bind(_assertThisInitialized(_this));
+    var CancelToken = axios.CancelToken;
+
+    _this.cancelRequest = function () {};
+
     return _this;
   }
 
@@ -200,11 +204,6 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
       this.setState({
         loading: true
       }, function () {
-        var CancelToken = axios.CancelToken;
-
-        _this2.cancelRequest = function () {};
-
-        var thisComponent = _this2;
         axios.get(_this2.props.apiUrl, {
           params: _objectSpread({}, params, {
             page: page,
@@ -212,8 +211,8 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
             orderByField: orderByField,
             orderByDirection: orderByDirection
           }),
-          cancelToken: new CancelToken(function executor(c) {
-            thisComponent.cancelRequest = c;
+          cancelToken: new CancelToken(function (callback) {
+            return _this2.cancelRequest = callback;
           })
         }).then(function (_ref) {
           var response = _ref.data;
