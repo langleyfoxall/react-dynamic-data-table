@@ -560,6 +560,34 @@ should container an array of identifiers. If an identifier is in the array then 
 
 Combining `isCheckboxChecked`, `onMasterCheckboxChange` and `onCheckboxChange` allows a row's checkbox state to be managed outside of the datatable while still allowing `disabledCheckboxes` to work as intended.
 
+```jsx
+const checked = new Set
+
+<DynamicDataTable
+    isCheckboxChecked={({ id }) => checked.has(id)}
+    onMasterCheckboxChange={(_, rows) => {
+        let all = true
+
+        rows.forEach(({ id }) => checked.has(id) || all = false)
+
+        rows.forEach(({ id }) => {
+            if (all) {
+                checked.delete(id)
+            } else if (!checked.has(id)) {
+                checked.add(id)
+            }
+        })
+    }}
+    onCheckboxChange={(_, { id }) => {
+        if (checked.has(id)) {
+            checked.delete(id)
+        } else {
+            checked.add(id)
+        }
+    }}
+/>
+```
+
 #### `isCheckboxChecked`
 
 `isCheckboxChecked` is called on each re-render of the datatable allowing for custom logic to determine if a checkbox is checked. It will recieve the current row and the visibile rows as arguments.
