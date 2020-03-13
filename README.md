@@ -604,7 +604,9 @@ _Note: This should only be used if `onMasterCheckboxChange` and `onCheckboxChang
 
 #### `onMasterCheckboxChange`
 
-`onMasterCheckboxChange` is called when the master checkbox is clicked. This allows for custom logic for selecting and deselecting multiple rows. It will recieve an event object from the input and the visible rows.
+`onMasterCheckboxChange` is called when the master checkbox is clicked. This allows for custom logic for selecting and deselecting multiple rows. It will receive an event object from the input and the visible rows.
+
+The master checkbox refers to the bulk select checkbox found in the top left corner of the data table whenever checkboxes are enabled.
 
 ```jsx
 const checked = new Set
