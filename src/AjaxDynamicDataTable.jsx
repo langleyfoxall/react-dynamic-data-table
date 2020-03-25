@@ -26,6 +26,10 @@ class AjaxDynamicDataTable extends Component {
         this.changePage = this.changePage.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
         this.changePerPage = this.changePerPage.bind(this);
+
+        const CancelToken = axios.CancelToken;
+        this.cancelRequest=function(){};
+
     }
 
     componentDidMount() {
@@ -35,6 +39,12 @@ class AjaxDynamicDataTable extends Component {
     componentDidUpdate(prevProps) {
         if (JSON.stringify(prevProps.params) !== JSON.stringify(this.props.params)) {
             this.loadPage(1);
+        }
+    }
+
+    componentWillUnmount() {
+        if(typeof this.cancelRequest=="function") {
+            this.cancelRequest();
         }
     }
 
@@ -86,13 +96,13 @@ class AjaxDynamicDataTable extends Component {
     loadPage(page) {
         const {perPage, orderByField, orderByDirection} = this.state;
         const {onLoad, params, axios} = this.props;
-
         this.setState(
             { loading: true },
             () => {
                 axios.get(this.props.apiUrl, {
 
-                    params: { ...params, page, perPage, orderByField, orderByDirection }
+                    params: { ...params, page, perPage, orderByField, orderByDirection },
+                    cancelToken: new CancelToken(callback => this.cancelRequest = callback)
 
                 }).then(({ data: response }) => {
 

@@ -61,7 +61,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -99,9 +99,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var AjaxDynamicDataTable =
-/*#__PURE__*/
-function (_Component) {
+var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
   _inherits(AjaxDynamicDataTable, _Component);
 
   function AjaxDynamicDataTable(props) {
@@ -127,6 +125,10 @@ function (_Component) {
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_this));
     _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_this));
     _this.changePerPage = _this.changePerPage.bind(_assertThisInitialized(_this));
+    var CancelToken = axios.CancelToken;
+
+    _this.cancelRequest = function () {};
+
     return _this;
   }
 
@@ -140,6 +142,13 @@ function (_Component) {
     value: function componentDidUpdate(prevProps) {
       if (JSON.stringify(prevProps.params) !== JSON.stringify(this.props.params)) {
         this.loadPage(1);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (typeof this.cancelRequest == "function") {
+        this.cancelRequest();
       }
     }
   }, {
@@ -201,6 +210,9 @@ function (_Component) {
             perPage: perPage,
             orderByField: orderByField,
             orderByDirection: orderByDirection
+          }),
+          cancelToken: new CancelToken(function (callback) {
+            return _this2.cancelRequest = callback;
           })
         }).then(function (_ref) {
           var response = _ref.data;
