@@ -340,6 +340,9 @@ class DynamicDataTable extends Component {
                         <tbody>
                         {rows.map((row, index) => this.renderRow(row, index))}
                         </tbody>
+                        <tfoot>
+                            {this.renderFooter()}
+                        </tfoot>
                     </table>
                 </div>
                 <div className={'d-flex justify-content-between align-items-center'}>
@@ -348,6 +351,38 @@ class DynamicDataTable extends Component {
                 </div>
             </div>
         );
+    }
+
+    renderFooter() {
+        const { rows, actions, loading, errorMessage, footer } = this.props;
+
+        const checkbox = this.renderCheckboxCell('all');
+        const width = this.getFields().length;
+
+        if (checkbox) {
+            width++;
+        }
+
+        if (actions.length) {
+            width++;
+        }
+
+        if (typeof footer === 'function') {
+            return (
+                footer({
+                    rows,
+                    width,
+                    loading,
+                    errorMessage
+                })
+            );
+        }
+
+        if (React.isValidElement(footer)) {
+            return footer;
+        }
+
+        return null;
     }
 
     renderRow(row, index) {
@@ -410,7 +445,7 @@ class DynamicDataTable extends Component {
         if (typeof width === 'number') {
             width = `${width}%`
         }
-        
+
         return (
             <th
                 key={field.name}
@@ -668,7 +703,10 @@ DynamicDataTable.propTypes = {
     ]),
     isCheckboxChecked: PropTypes.func,
     onMasterCheckboxChange: PropTypes.func,
-    onCheckboxChange: PropTypes.func
+    onCheckboxChange: PropTypes.func,
+    footer: PropTypes.oneOfType([
+        PropTypes.func, PropTypes.node
+    ])
 };
 
 DynamicDataTable.defaultProps = {
@@ -720,7 +758,8 @@ DynamicDataTable.defaultProps = {
     ),
     isCheckboxChecked: DynamicDataTable.noop,
     onMasterCheckboxChange: DynamicDataTable.noop,
-    onCheckboxChange: DynamicDataTable.noop
+    onCheckboxChange: DynamicDataTable.noop,
+    footer: null
 };
 
 export default DynamicDataTable;
