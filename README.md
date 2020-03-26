@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/dt/@langleyfoxall/react-dynamic-data-table.svg)](https://npm-stat.com/charts.html?package=%40langleyfoxall%2Freact-dynamic-data-table)
 
 
-This package provides a React Dynamic Data Table component that supports sortable columns, 
+This package provides a React Dynamic Data Table component that supports sortable columns,
 pagination, field mapping, data manipulation, and more.
 
 ## Installation
@@ -51,7 +51,7 @@ in the `rows` prop. To exclude specific fields, you can use the `fieldsToExclude
 In the example below, the `email` field will be excluded.
 
 ```JSX
-<DynamicDataTable 
+<DynamicDataTable
     rows={this.state.users}
     fieldsToExclude={['email']}
     />
@@ -60,7 +60,7 @@ In the example below, the `email` field will be excluded.
 In the example below, all ID fields will be excluded.
 
 ```JSX
-<DynamicDataTable 
+<DynamicDataTable
     rows={this.state.users}
     fieldsToExclude={[/_?id/]}
     />
@@ -77,7 +77,7 @@ You can override this behaviour with a field map.
 In the example below, you can render the `email` field as 'Email Address'.
 
 ```JSX
-<DynamicDataTable 
+<DynamicDataTable
     rows={this.state.users}
     fieldMap={{ email: 'Email address' }}
     />
@@ -88,38 +88,38 @@ The `fieldMap` prop expects an object which maps the `rows` keys to alternative 
 
 ### Ordering data
 
-The React Dynamic Data Table will display the `rows` in the order they are provided 
-in the array. However, it is possible to show, in the column header, that the data 
+The React Dynamic Data Table will display the `rows` in the order they are provided
+in the array. However, it is possible to show, in the column header, that the data
 has been sorted.
 
-In the example below, the name column header will show a down arrow indicating 
+In the example below, the name column header will show a down arrow indicating
 that the data has been sorted by name (ascending).
 
 ```JSX
 // this.state.orderByField = 'name';
 // this.state.orderByDirection = 'asc';
 
-<DynamicDataTable 
+<DynamicDataTable
     rows={this.state.users}
     orderByField={this.state.orderByField}
     orderByDirection={this.state.orderByDirection}
     />
 ```
 
-The `orderByField` prop expects a string indicating the field to sort by (one of the 
+The `orderByField` prop expects a string indicating the field to sort by (one of the
 keys from the `rows` object).
 
-The `orderByDirection` expects either `asc` or `desc`, meaning ascending or descending 
+The `orderByDirection` expects either `asc` or `desc`, meaning ascending or descending
 respectively.
 
-If you wish to let the end-user sort the data table by clicking on the column 
+If you wish to let the end-user sort the data table by clicking on the column
 headings, you can use the `changeOrder` prop. This is shown in the example below.
 
 ```JSX
 // this.state.orderByField = 'name';
 // this.state.orderByDirection = 'asc';
 
-<DynamicDataTable 
+<DynamicDataTable
     rows={this.state.users}
     orderByField={this.state.orderByField}
     orderByDirection={this.state.orderByDirection}
@@ -138,13 +138,13 @@ changeOrder(field, direction) {
 
 The `changeOrder` prop expects a callable. This callable should:
 
-1. Change the `orderByField` and `orderByDirection` props, based on the passed `field` 
+1. Change the `orderByField` and `orderByDirection` props, based on the passed `field`
 and `direction` parameters respectively.
-2. Change / re-retrieve the `rows` prop, such that it is sorted based on the passed 
+2. Change / re-retrieve the `rows` prop, such that it is sorted based on the passed
 `field` and `direction` parameters.
 
-Ordering data is enabled for all fields by default. However, if you wish to restrict 
-which fields the ordering is enabled for, pass an array of the field names into the 
+Ordering data is enabled for all fields by default. However, if you wish to restrict
+which fields the ordering is enabled for, pass an array of the field names into the
 `allowOrderingBy` prop. An example of this is shown below.
 
 ```JSX
@@ -231,7 +231,7 @@ it respects whatever unit is set.
 
 ### Custom order by icons
 
-When ordering by a field on an element will be rendered next to it. By default 
+When ordering by a field on an element will be rendered next to it. By default
 these are simple symbols (`↓` and `↑`). These can be changed by passing a valid
 node into `orderByAscIcon` and `orderByDescIcon`.
 
@@ -247,22 +247,22 @@ node into `orderByAscIcon` and `orderByDescIcon`.
 
 Making pagination work with React Dynamic Data Table requires three extra
 props. These are the `currentPage`, `totalPages` and `changePage` props. Once
-these props are set correctly, a Bootstrap style pagination will be displayed 
+these props are set correctly, a Bootstrap style pagination will be displayed
 below the table.
 
 The `currentPage` prop expects an integer representing the current page number
 (one or above).
 
 The `totalPages` prop expects an integer representing the total number of
-pages in the data set (one or above). Pagination will only be shown if the 
+pages in the data set (one or above). Pagination will only be shown if the
 total number of pages is greater than one.
 
 The `changePage` props expect a callable with a `page` argument, indicating the
 new page number to load. This callable should:
 
-1. Load a new page of data into the `rows` prop based on the passed `page` 
+1. Load a new page of data into the `rows` prop based on the passed `page`
 argument.
-2. Set the `currentPage` prop to be equal to the passed `page` argument. 
+2. Set the `currentPage` prop to be equal to the passed `page` argument.
 
 A example of this is shown below:
 
@@ -286,7 +286,7 @@ changePage(page) {
 ```
 
 Pagination is dynamic, showing only a select subset of the available pages as actual buttons.
-Whether or not an individual button to a page is shown depends on if it is the first or last page (these are always shown), and whether it is within a predefined offset from the current page (a pagination delta). 
+Whether or not an individual button to a page is shown depends on if it is the first or last page (these are always shown), and whether it is within a predefined offset from the current page (a pagination delta).
 This delta can be changed by passing a `paginationDelta` prop into `DynamicDataTable` as shown below:
 
 ```JSX
@@ -336,7 +336,7 @@ If a function is passed then the props described above are passed in an object.
 
 ### Row buttons
 
-Row buttons appear on the right hand side of every row in the React Dynamic Data 
+Row buttons appear on the right hand side of every row in the React Dynamic Data
 Table. By default, a 'View' button is provided, which simply links the user to
 the current URL with the row's `id` appended.
 
@@ -411,7 +411,7 @@ It's worth noting that multiple array elements still respect the dropdown menu.
 ### Rendering custom rows
 
 If you come across a situation where the automatically generated rows are not suitable for your project
-you can use the `rowRenderer` prop. This prop expects a callable that receives a single argument, 
+you can use the `rowRenderer` prop. This prop expects a callable that receives a single argument,
 and returns a valid React element, which should be a `<tr>` element.
 
 The argument passed to the `rowRenderer` callable is a JavaScript object that contain the following properties.
@@ -530,7 +530,7 @@ If you wish to render something other than the table when no rows are present yo
 ### Bulk select checkboxes
 
 If you wish to allow users to bulk select users in a React Dynamic Data Table,
-you can specify the `renderCheckboxes` prop. This will render a series of 
+you can specify the `renderCheckboxes` prop. This will render a series of
 checkboxes against each row, on the left side of the table.
 
 ```JSX
@@ -658,13 +658,13 @@ that will be applied to the selected rows.
 Actions can also be used without bulk select checkboxes. This could allow for creation of action buttons that are not dependant on existing data, such as a 'Create User' button.
 
 To use actions in your React Dynamic Data Table, you must specify the
-`actions` props. This prop expects an array of objects, each containing a `name` 
+`actions` props. This prop expects an array of objects, each containing a `name`
 and `callback`.
 
 The `name` is string, such as 'Delete user(s)', 'Duplicate user(s)' etc.
 
 The `callback` is a callable with a single argument. The argument will
-contain an array of the selected rows. 
+contain an array of the selected rows.
 
 Examples of how to use actions is shown below.
 
@@ -675,7 +675,7 @@ Examples of how to use actions is shown below.
     actions={[
         {
             name: 'Delete user(s)',
-            callback: (rows) => { 
+            callback: (rows) => {
                 // Delete users...
             },
         },
@@ -689,7 +689,7 @@ Examples of how to use actions is shown below.
     actions={[
         {
             name: 'Create user',
-            callback: () => { 
+            callback: () => {
                 // Toggle create user modal...
             },
         },
@@ -699,10 +699,10 @@ Examples of how to use actions is shown below.
 
 ### Data Item Manipulation
 
-If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the 
+If you wish to alter row data prior to it being rendered, you may use the `dataItemManipulator` prop available on the
 `DynamicDataTable`. This prop expects a `function` which will be passed three parameters, the `field`, the `value` and
 the `row`.
- 
+
 This function will be called once for every cell that is to be rendered.
 
 ```JSX
@@ -714,7 +714,7 @@ This function will be called once for every cell that is to be rendered.
             case 'reference':
                 return value.toUpperCase();
         }
-        
+
         return value;
     }}
 />
@@ -729,14 +729,14 @@ It is also possible to render React components directly, by returning them from 
             case 'reference':
                 return <ExampleComponent exampleProp={value} />;
         }
-        
+
         return value;
     }}
 />
 ```
 
-If you wish, you can dangerously render HTML directly by returning a string from the `dataItemManipulator`, you will 
-however need to explicitly specify which fields this should be enabled for. This is done by using the 
+If you wish, you can dangerously render HTML directly by returning a string from the `dataItemManipulator`, you will
+however need to explicitly specify which fields this should be enabled for. This is done by using the
 `dangerouslyRenderFields` prop.
 
  ```JSX
@@ -747,21 +747,63 @@ however need to explicitly specify which fields this should be enabled for. This
              case 'check':
                  return "<i class='fa fa-check'></i>";
          }
-         
+
          return value;
      }}
  />
  ```
 
+### Table footer
+
+To display extra data at the bottom of the table a function or node can be passed into the React Dynamic Data Table by using the `footer` prop.
+
+The `footer` is displayed directly in a `tfoot` to allow for multiple rows. So don't forget your `tr`s.
+
+#### Passing a function
+
+When passing a function into the `footer` prop it receives an object with:
+* `rows`: All of the visible rows
+* `width`: The number of columns in the table
+
+This should return a valid React element.
+
+```jsx
+<DynamicDataTable
+    footer={({ rows, width }) => (
+        <tr>
+            <td colSpan={width}>
+                Table footer.
+            <td>
+        </tr>
+    )}
+/>
+```
+
+#### Passing a node
+
+When passing a node or valid React element it is simply output.
+
+```jsx
+<DynamicDataTable
+    footer={(
+        <tr>
+            <td>
+                Table footer.
+            </td>
+        </tr>
+    )}
+/>
+```
+
 ### Loading message & indicator
 
 By default, the React Dynamic Data Table will not show indication that it is
-loading. On slow connections, this may make the table appear unresponsive or 
+loading. On slow connections, this may make the table appear unresponsive or
 sluggish when initialing loading, changing pages, re-ordering, and so on.
 
-To show a loading message, you can set the `loading` prop to `true`. This will 
+To show a loading message, you can set the `loading` prop to `true`. This will
 display a default loading message, which can be changed by altering passing
-a string into the optional `loadingMessage` prop. If you wish, you can also 
+a string into the optional `loadingMessage` prop. If you wish, you can also
 pass a React component into the `loadingIndicator` prop, which will be displayed
 above the textual loading message.
 
@@ -775,7 +817,7 @@ above the textual loading message.
 />
 ```
 
-Alternatively, if you wish to replace the entire table while data is being loaded, 
+Alternatively, if you wish to replace the entire table while data is being loaded,
 you can pass a React component into the `loadingComponent` prop.
 
 ```JSX
@@ -792,13 +834,13 @@ AJAX Dynamic Data Table handles the loading prop internally but can be overriden
 
 ### Error message
 
-In the case that something goes wrong, such as data failing to load, you 
+In the case that something goes wrong, such as data failing to load, you
 can display and error message in place of the normal React Dynamic
 Data Table output.
 
 In order to display an error message, you just need to set the optional
 `errorMessage` prop. This prop expects a string such as `An error has occurred
-while loading user data.`. If the error is resolved, this prop must be reset 
+while loading user data.`. If the error is resolved, this prop must be reset
 to an empty string in order to ensure the data table is displayed.
 
 ### Editable Columns
@@ -834,7 +876,7 @@ This prop accepts an array of object in the following format:
 
 #### Text Inputs
 
-If you specify that the type of the column is `text` the column will contain a text input with a value of the 
+If you specify that the type of the column is `text` the column will contain a text input with a value of the
 column from the row data.
 
 

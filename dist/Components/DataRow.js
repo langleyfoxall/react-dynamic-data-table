@@ -4,8 +4,6 @@ require("core-js/modules/web.dom.iterable");
 
 require("core-js/modules/es6.array.iterator");
 
-require("core-js/modules/es6.object.to-string");
-
 require("core-js/modules/es6.string.iterator");
 
 require("core-js/modules/es6.weak-map");
@@ -20,6 +18,14 @@ require("core-js/modules/es7.symbol.async-iterator");
 require("core-js/modules/es6.symbol");
 
 require("core-js/modules/es6.object.define-property");
+
+require("core-js/modules/es6.regexp.to-string");
+
+require("core-js/modules/es6.date.to-string");
+
+require("core-js/modules/es6.object.to-string");
+
+require("core-js/modules/es6.reflect.construct");
 
 require("core-js/modules/es6.object.create");
 
@@ -45,7 +51,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -53,9 +59,13 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -63,15 +73,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var DataRow =
-/*#__PURE__*/
-function (_Component) {
+var DataRow = /*#__PURE__*/function (_Component) {
   _inherits(DataRow, _Component);
+
+  var _super = _createSuper(DataRow);
 
   function DataRow() {
     _classCallCheck(this, DataRow);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(DataRow).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   _createClass(DataRow, [{
@@ -92,7 +102,7 @@ function (_Component) {
           _onMouseUp = _this$props.onMouseUp,
           _onMouseDown = _this$props.onMouseDown,
           _onContextMenu = _this$props.onContextMenu;
-      return _react["default"].createElement("tr", {
+      return /*#__PURE__*/_react["default"].createElement("tr", {
         onClick: function onClick(e) {
           return _onClick(e, row);
         },
@@ -123,9 +133,9 @@ function (_Component) {
         return;
       }
 
-      var checkbox = _react["default"].createElement("div", {
+      var checkbox = /*#__PURE__*/_react["default"].createElement("div", {
         className: "form-check"
-      }, _react["default"].createElement("input", {
+      }, /*#__PURE__*/_react["default"].createElement("input", {
         name: "bulk-select-".concat(row.id),
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
@@ -138,7 +148,7 @@ function (_Component) {
         disabled: disableCheckbox
       }));
 
-      return _react["default"].createElement("td", null, checkbox);
+      return /*#__PURE__*/_react["default"].createElement("td", null, checkbox);
     }
   }, {
     key: "renderCell",
@@ -157,9 +167,9 @@ function (_Component) {
         var column = editableColumns[columnIndex];
 
         if (column.type === 'select') {
-          return _react["default"].createElement("td", {
+          return /*#__PURE__*/_react["default"].createElement("td", {
             key: key
-          }, _react["default"].createElement("select", {
+          }, /*#__PURE__*/_react["default"].createElement("select", {
             defaultValue: value,
             value: column.controlled ? value : undefined,
             onChange: function onChange(event) {
@@ -167,15 +177,15 @@ function (_Component) {
               column.onChange(event, field.name, row, index);
             }
           }, column.optionsForRow(row, field.name).map(function (option) {
-            return _react["default"].createElement("option", {
+            return /*#__PURE__*/_react["default"].createElement("option", {
               value: option.value
             }, option.label);
           })));
         }
 
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           key: key
-        }, _react["default"].createElement("input", {
+        }, /*#__PURE__*/_react["default"].createElement("input", {
           type: column.type,
           defaultValue: value,
           value: column.controlled ? value : undefined,
@@ -187,13 +197,13 @@ function (_Component) {
       }
 
       if (_react["default"].isValidElement(value)) {
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           key: key
         }, value);
       }
 
       if (this.shouldDangerouslyRenderField(field.name)) {
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           key: key,
           dangerouslySetInnerHTML: {
             __html: value
@@ -205,7 +215,7 @@ function (_Component) {
         value = JSON.stringify(value);
       }
 
-      return _react["default"].createElement("td", {
+      return /*#__PURE__*/_react["default"].createElement("td", {
         key: key
       }, value);
     }
@@ -225,33 +235,33 @@ function (_Component) {
       if (!buttons.length && !actions.length) {
         return null;
       } else if (!buttons.length) {
-        return _react["default"].createElement("td", null);
+        return /*#__PURE__*/_react["default"].createElement("td", null);
       }
 
       var button = buttons[0];
 
       if (buttons.length === 1) {
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           className: "rddt-action-cell"
         }, this.renderFirstButton(button, row));
       }
 
-      return _react["default"].createElement("td", {
+      return /*#__PURE__*/_react["default"].createElement("td", {
         className: "rddt-action-cell"
-      }, _react["default"].createElement("div", {
+      }, /*#__PURE__*/_react["default"].createElement("div", {
         className: "btn-group",
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, this.renderFirstButton(button, row), _react["default"].createElement("button", {
+      }, this.renderFirstButton(button, row), /*#__PURE__*/_react["default"].createElement("button", {
         type: "button",
         className: "btn btn-primary dropdown-toggle dropdown-toggle-split",
         "data-toggle": "dropdown",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, _react["default"].createElement("span", {
+      }, /*#__PURE__*/_react["default"].createElement("span", {
         className: "sr-only"
-      }, "Toggle Dropdown")), _react["default"].createElement("div", {
+      }, "Toggle Dropdown")), /*#__PURE__*/_react["default"].createElement("div", {
         className: "dropdown-menu",
         "aria-labelledby": "dropdownMenuButton"
       }, buttons.map(function (button, index) {
@@ -265,7 +275,7 @@ function (_Component) {
         return button.render(row);
       }
 
-      return _react["default"].createElement("button", {
+      return /*#__PURE__*/_react["default"].createElement("button", {
         type: "button",
         className: "btn btn-primary",
         onClick: function onClick(e) {
@@ -281,7 +291,7 @@ function (_Component) {
       }
 
       if (typeof button.render === 'function') {
-        return _react["default"].createElement("div", {
+        return /*#__PURE__*/_react["default"].createElement("div", {
           style: {
             cursor: 'pointer'
           },
@@ -290,7 +300,7 @@ function (_Component) {
         }, button.render(row));
       }
 
-      return _react["default"].createElement("div", {
+      return /*#__PURE__*/_react["default"].createElement("div", {
         style: {
           cursor: 'pointer'
         },
