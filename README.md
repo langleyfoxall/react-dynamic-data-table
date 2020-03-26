@@ -793,6 +793,7 @@ When passing a node or valid React element it is simply output.
         </tr>
     )}
 />
+```
 
 ### Loading message & indicator
 
