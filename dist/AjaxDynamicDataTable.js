@@ -17,6 +17,10 @@ require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.array.is-array");
 
+require("core-js/modules/es6.object.assign");
+
+require("core-js/modules/es6.array.index-of");
+
 require("core-js/modules/es6.object.define-properties");
 
 require("core-js/modules/es7.object.get-own-property-descriptors");
@@ -25,11 +29,7 @@ require("core-js/modules/es6.array.for-each");
 
 require("core-js/modules/es6.array.filter");
 
-require("core-js/modules/es6.object.assign");
-
 require("core-js/modules/es6.symbol");
-
-require("core-js/modules/es6.array.index-of");
 
 require("core-js/modules/web.dom.iterable");
 
@@ -79,17 +79,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -133,12 +133,14 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
       orderByField: defaultOrderByField,
       orderByDirection: defaultOrderByDirection,
       disallowOrderingBy: [],
+      meta: {},
       loading: false
     };
     _this.reload = _this.reload.bind(_assertThisInitialized(_this));
     _this.changePage = _this.changePage.bind(_assertThisInitialized(_this));
     _this.changeOrder = _this.changeOrder.bind(_assertThisInitialized(_this));
     _this.changePerPage = _this.changePerPage.bind(_assertThisInitialized(_this));
+    _this.renderFooter = _this.renderFooter.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -155,6 +157,20 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "renderFooter",
+    value: function renderFooter(args) {
+      var meta = this.state.meta;
+      var footer = this.props.footer;
+
+      if (typeof footer === 'function') {
+        return footer(_objectSpread({
+          meta: meta
+        }, args));
+      }
+
+      return footer;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
@@ -168,7 +184,8 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
 
       var _this$props = this.props,
           disallowOrderingBy = _this$props.disallowOrderingBy,
-          props = _objectWithoutProperties(_this$props, ["disallowOrderingBy"]);
+          footer = _this$props.footer,
+          props = _objectWithoutProperties(_this$props, ["disallowOrderingBy", "footer"]);
 
       return /*#__PURE__*/_react["default"].createElement(_DynamicDataTable["default"], _extends({
         rows: rows,
@@ -182,7 +199,8 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
         changePage: this.changePage,
         changeOrder: this.changeOrder,
         changePerPage: this.changePerPage,
-        disallowOrderingBy: this.disallowOrderingBy
+        disallowOrderingBy: this.disallowOrderingBy,
+        footer: footer ? this.renderFooter : undefined
       }, props));
     }
   }, {
@@ -222,14 +240,19 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
               current_page = _response$data.current_page,
               last_page = _response$data.last_page;
           var disallow_ordering_by = [];
+          var meta = {};
 
           if (response.meta) {
-            disallow_ordering_by = response.meta.disallow_ordering_by;
+            var _response$meta = response.meta;
+            disallow_ordering_by = _response$meta.disallow_ordering_by;
+            meta = _objectWithoutProperties(_response$meta, ["disallow_ordering_by"]);
+            _response$meta;
           }
 
           var newState = {
-            disallowOrderingBy: disallow_ordering_by,
             rows: rows,
+            meta: meta,
+            disallowOrderingBy: disallow_ordering_by,
             totalRows: total,
             currentPage: current_page,
             totalPages: last_page,
