@@ -311,7 +311,7 @@ class DynamicDataTable extends Component {
     }
 
     render() {
-        const { errorMessage, loading, rows } = this.props;
+        const { errorMessage, loading, rows, footer } = this.props;
         const fields = this.getFields();
 
         if (errorMessage) {
@@ -340,9 +340,11 @@ class DynamicDataTable extends Component {
                         <tbody>
                         {rows.map((row, index) => this.renderRow(row, index))}
                         </tbody>
-                        <tfoot>
-                            {this.renderFooter()}
-                        </tfoot>
+                        {!!footer && (
+                            <tfoot>
+                                {this.renderFooter()}
+                            </tfoot>
+                        )}
                     </table>
                 </div>
                 <div className={'d-flex justify-content-between align-items-center'}>

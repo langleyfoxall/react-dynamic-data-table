@@ -414,7 +414,8 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props5 = this.props,
           errorMessage = _this$props5.errorMessage,
           loading = _this$props5.loading,
-          rows = _this$props5.rows;
+          rows = _this$props5.rows,
+          footer = _this$props5.footer;
       var fields = this.getFields();
 
       if (errorMessage) {
@@ -437,7 +438,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         return _this2.renderHeader(field);
       }), this.renderActionsCell())), /*#__PURE__*/_react["default"].createElement("tbody", null, rows.map(function (row, index) {
         return _this2.renderRow(row, index);
-      })), /*#__PURE__*/_react["default"].createElement("tfoot", null, this.renderFooter()))), /*#__PURE__*/_react["default"].createElement("div", {
+      })), !!footer && /*#__PURE__*/_react["default"].createElement("tfoot", null, this.renderFooter()))), /*#__PURE__*/_react["default"].createElement("div", {
         className: 'd-flex justify-content-between align-items-center'
       }, this.renderPerPage(), this.renderPagination()));
     }
