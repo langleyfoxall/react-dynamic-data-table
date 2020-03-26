@@ -354,7 +354,7 @@ class DynamicDataTable extends Component {
     }
 
     renderFooter() {
-        const { rows, actions, loading, errorMessage, footer } = this.props;
+        const { rows, actions, footer } = this.props;
 
         const checkbox = this.renderCheckboxCell('all');
         const width = this.getFields().length;
@@ -372,8 +372,6 @@ class DynamicDataTable extends Component {
                 footer({
                     rows,
                     width,
-                    loading,
-                    errorMessage
                 })
             );
         }

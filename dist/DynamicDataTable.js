@@ -447,8 +447,6 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props6 = this.props,
           rows = _this$props6.rows,
           actions = _this$props6.actions,
-          loading = _this$props6.loading,
-          errorMessage = _this$props6.errorMessage,
           footer = _this$props6.footer;
       var checkbox = this.renderCheckboxCell('all');
       var width = this.getFields().length;
@@ -464,9 +462,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       if (typeof footer === 'function') {
         return footer({
           rows: rows,
-          width: width,
-          loading: loading,
-          errorMessage: errorMessage
+          width: width
         });
       }
 
