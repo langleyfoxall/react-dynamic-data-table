@@ -524,7 +524,7 @@ class DynamicDataTable extends Component {
             </div>
         );
 
-        if (value === 'all') {
+        if (value === 'all' && this.props.renderMasterCheckbox) {
             return (
                 <th>{checkbox}</th>
             );
@@ -703,6 +703,7 @@ DynamicDataTable.propTypes = {
     ]),
     isCheckboxChecked: PropTypes.func,
     onMasterCheckboxChange: PropTypes.func,
+    renderMasterCheckbox: PropTypes.bool,
     onCheckboxChange: PropTypes.func,
     footer: PropTypes.oneOfType([
         PropTypes.func, PropTypes.node
@@ -758,6 +759,7 @@ DynamicDataTable.defaultProps = {
     ),
     isCheckboxChecked: DynamicDataTable.noop,
     onMasterCheckboxChange: DynamicDataTable.noop,
+    renderMasterCheckbox: true,
     onCheckboxChange: DynamicDataTable.noop,
     footer: null
 };

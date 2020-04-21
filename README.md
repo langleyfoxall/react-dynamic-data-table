@@ -630,6 +630,18 @@ const checked = new Set
 />
 ```
 
+#### `renderMasterCheckbox`
+
+`renderMasterCheckbox` will determine if the master checkbox will be rendered
+
+The master checkbox refers to the bulk select checkbox found in the top left corner of the data table whenever checkboxes are enabled.
+
+```jsx
+<DynamicDataTable
+    renderMasterCheckbox
+/>
+```
+
 #### `onCheckboxChange`
 
 `onCheckboxChange` is called when a row checkbox is clicked. This allows for custom logic for selecting and deselecting a single row. It will receive an event object from the input and the current row.
