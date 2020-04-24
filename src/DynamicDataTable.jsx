@@ -524,7 +524,11 @@ class DynamicDataTable extends Component {
             </div>
         );
 
-        if (value === 'all' && this.props.renderMasterCheckbox) {
+        if (value === 'all') {
+            if (this.props.renderMasterCheckbox) {
+                return <th/>
+            }
+
             return (
                 <th>{checkbox}</th>
             );
