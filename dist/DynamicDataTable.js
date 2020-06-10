@@ -95,7 +95,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
@@ -467,7 +467,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         });
       }
 
-      if (_react["default"].isValidElement(footer)) {
+      if ( /*#__PURE__*/_react["default"].isValidElement(footer)) {
         return footer;
       }
 
@@ -633,7 +633,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       }));
 
       if (value === 'all') {
-        if (this.props.renderMasterCheckbox) {
+        if (!this.props.renderMasterCheckbox) {
           return /*#__PURE__*/_react["default"].createElement("th", null);
         }
 
@@ -680,7 +680,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           noDataMessage = _this$props11.noDataMessage,
           noDataComponent = _this$props11.noDataComponent;
 
-      if (_react["default"].isValidElement(noDataComponent)) {
+      if ( /*#__PURE__*/_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;
       }
 
@@ -727,8 +727,8 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         return perPageRenderer(props);
       }
 
-      if (_react["default"].isValidElement(perPageRenderer)) {
-        return _react["default"].cloneElement(perPageRenderer, props);
+      if ( /*#__PURE__*/_react["default"].isValidElement(perPageRenderer)) {
+        return /*#__PURE__*/_react["default"].cloneElement(perPageRenderer, props);
       }
 
       return perPageRenderer;
