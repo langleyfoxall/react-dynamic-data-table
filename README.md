@@ -305,6 +305,7 @@ Changing the number of entries displaying in the data table is easy. The `totalR
 * `totalRows` the total number of rows within the dataset
 * `perPage` the current per page limit (default: `15`)
 * `changePerPage` handles the logic for changing the `perPage` prop. This recieved a single argument which is the new limit.
+* `perPageOptions` the results per page options (default: `[10, 15, 30, 50, 75, 100]`)
 * `perPageRender` can either be a node or a function.
 
 By default a Bootstrap styled select is displayed if `changePerPage` is a function.
@@ -331,6 +332,7 @@ The `perPageRenderer` prop accepts either a node or function. If a valid react e
 * `totalRows`
 * `value` (see `perPage` above)
 * `onChange` (see `changePerPage` above)
+* `perPageOptions`
 
 If a function is passed then the props described above are passed in an object.
 
