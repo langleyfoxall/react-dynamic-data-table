@@ -711,12 +711,14 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props12 = this.props,
           changePerPage = _this$props12.changePerPage,
           totalRows = _this$props12.totalRows,
+          perPageOptions = _this$props12.perPageOptions,
           perPage = _this$props12.perPage,
           perPageRenderer = _this$props12.perPageRenderer;
       var props = {
         totalRows: totalRows,
         value: perPage,
-        onChange: this.changePerPage
+        onChange: this.changePerPage,
+        options: perPageOptions
       };
 
       if (!changePerPage) {
@@ -825,6 +827,7 @@ DynamicDataTable.propTypes = {
   totalRows: _propTypes["default"].number,
   changePerPage: _propTypes["default"].func,
   perPage: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]),
+  perPageOptions: _propTypes["default"].arrayOf(_propTypes["default"].number),
   perPageRenderer: _propTypes["default"].oneOfType([_propTypes["default"].node, _propTypes["default"].func]),
   isCheckboxChecked: _propTypes["default"].func,
   onMasterCheckboxChange: _propTypes["default"].func,

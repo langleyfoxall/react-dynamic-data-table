@@ -623,11 +623,13 @@ class DynamicDataTable extends Component {
     }
 
     renderPerPage() {
-        const { changePerPage, totalRows, perPage, perPageRenderer } = this.props;
+        const { changePerPage, totalRows, perPageOptions, perPage, perPageRenderer } = this.props;
+
         const props = {
             totalRows,
             value: perPage,
             onChange: this.changePerPage,
+            options: perPageOptions,
         };
 
         if (!changePerPage) {
@@ -702,6 +704,7 @@ DynamicDataTable.propTypes = {
     perPage: PropTypes.oneOfType([
         PropTypes.number, PropTypes.string,
     ]),
+    perPageOptions: PropTypes.arrayOf(PropTypes.number),
     perPageRenderer: PropTypes.oneOfType([
         PropTypes.node, PropTypes.func,
     ]),

@@ -7,12 +7,12 @@ class AjaxDynamicDataTable extends Component {
 
     constructor(props) {
         super(props);
-        const { defaultOrderByField, defaultOrderByDirection } = props;
+        const { defaultOrderByField, defaultOrderByDirection, perPage } = props;
 
         this.state = {
             rows: [],
             currentPage: 1,
-            perPage: 15,
+            perPage,
             totalPages: 1,
             totalRows: 0,
             orderByField: defaultOrderByField,
@@ -71,15 +71,15 @@ class AjaxDynamicDataTable extends Component {
 
     render() {
 
-        const { rows, totalRows, currentPage, perPage, totalPages, orderByField, orderByDirection } = this.state;
-        const { disallowOrderingBy, footer, ...props } = this.props;
+        const { rows, totalRows, currentPage, totalPages, orderByField, orderByDirection } = this.state;
+        const { disallowOrderingBy, footer, perPage, ...props } = this.props;
 
         return (
             <DynamicDataTable
                 rows={rows}
                 totalRows={totalRows}
                 currentPage={currentPage}
-                perPage={perPage}
+                perPage={this.state.perPage}
                 totalPages={totalPages}
                 orderByField={orderByField}
                 orderByDirection={orderByDirection}
@@ -166,6 +166,7 @@ AjaxDynamicDataTable.defaultProps = {
     axios: typeof window !== 'undefined' && window.axios
         ? window.axios : require('axios'),
     disallowOrderingBy: [],
+    perPage: 15,
 };
 
 AjaxDynamicDataTable.propTypes = {
@@ -177,6 +178,11 @@ AjaxDynamicDataTable.propTypes = {
     defaultOrderByDirection: PropTypes.string,
     axios: PropTypes.any,
     disallowOrderingBy: PropTypes.arrayOf(PropTypes.string),
+    perPage: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
+    perPageOptions: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default AjaxDynamicDataTable;

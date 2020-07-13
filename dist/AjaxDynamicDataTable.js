@@ -123,11 +123,12 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     var defaultOrderByField = props.defaultOrderByField,
-        defaultOrderByDirection = props.defaultOrderByDirection;
+        defaultOrderByDirection = props.defaultOrderByDirection,
+        perPage = props.perPage;
     _this.state = {
       rows: [],
       currentPage: 1,
-      perPage: 15,
+      perPage: perPage,
       totalPages: 1,
       totalRows: 0,
       orderByField: defaultOrderByField,
@@ -177,7 +178,6 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
           rows = _this$state.rows,
           totalRows = _this$state.totalRows,
           currentPage = _this$state.currentPage,
-          perPage = _this$state.perPage,
           totalPages = _this$state.totalPages,
           orderByField = _this$state.orderByField,
           orderByDirection = _this$state.orderByDirection;
@@ -185,13 +185,14 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           disallowOrderingBy = _this$props.disallowOrderingBy,
           footer = _this$props.footer,
-          props = _objectWithoutProperties(_this$props, ["disallowOrderingBy", "footer"]);
+          perPage = _this$props.perPage,
+          props = _objectWithoutProperties(_this$props, ["disallowOrderingBy", "footer", "perPage"]);
 
       return /*#__PURE__*/_react["default"].createElement(_DynamicDataTable["default"], _extends({
         rows: rows,
         totalRows: totalRows,
         currentPage: currentPage,
-        perPage: perPage,
+        perPage: this.state.perPage,
         totalPages: totalPages,
         orderByField: orderByField,
         orderByDirection: orderByDirection,
@@ -317,7 +318,8 @@ AjaxDynamicDataTable.defaultProps = {
   defaultOrderByField: null,
   defaultOrderByDirection: null,
   axios: typeof window !== 'undefined' && window.axios ? window.axios : require('axios'),
-  disallowOrderingBy: []
+  disallowOrderingBy: [],
+  perPage: 15
 };
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes["default"].string,
@@ -327,7 +329,9 @@ AjaxDynamicDataTable.propTypes = {
   defaultOrderByField: _propTypes["default"].string,
   defaultOrderByDirection: _propTypes["default"].string,
   axios: _propTypes["default"].any,
-  disallowOrderingBy: _propTypes["default"].arrayOf(_propTypes["default"].string)
+  disallowOrderingBy: _propTypes["default"].arrayOf(_propTypes["default"].string),
+  perPage: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].number]),
+  perPageOptions: _propTypes["default"].arrayOf(_propTypes["default"].number)
 };
 var _default = AjaxDynamicDataTable;
 exports["default"] = _default;
