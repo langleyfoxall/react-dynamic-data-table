@@ -243,9 +243,8 @@ node into `orderByAscIcon` and `orderByDescIcon`.
 />
 ```
 
-You can also specify an icon to appear when a field can be sorted, but is not
-the currently sorted field; This icon is not shown by default, but you can
-cause it to be like using the `orderByIcon` prop:
+You can optionally specify an icon to appear when a sortable field  is *not* the 
+currently sorted field using the `orderByIcon` prop:
 
 ```JSX
 <DynamicDataTable
