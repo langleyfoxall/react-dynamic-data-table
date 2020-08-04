@@ -525,11 +525,14 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           orderByDirection = _this$props8.orderByDirection,
           orderByAscIcon = _this$props8.orderByAscIcon,
           orderByDescIcon = _this$props8.orderByDescIcon,
+          _this$props8$prependO = _this$props8.prependOrderByIcon,
+          prependOrderByIcon = _this$props8$prependO === void 0 ? false : _this$props8$prependO,
           allowOrderingBy = _this$props8.allowOrderingBy,
           disallowOrderingBy = _this$props8.disallowOrderingBy,
           changeOrder = _this$props8.changeOrder,
           columnWidths = _this$props8.columnWidths;
-      var orderByIcon = '';
+      var _this$props$orderByIc = this.props.orderByIcon,
+          orderByIcon = _this$props$orderByIc === void 0 ? '' : _this$props$orderByIc;
 
       if (orderByField === field.name) {
         if (orderByDirection === 'asc') {
@@ -557,7 +560,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         style: {
           cursor: cursor
         }
-      }, field.label, "\xA0", orderByIcon);
+      }, canOrderBy && prependOrderByIcon ? orderByIcon : '', field.label, "\xA0", canOrderBy && !prependOrderByIcon ? orderByIcon : '');
     }
   }, {
     key: "renderActionsCell",

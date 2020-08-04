@@ -411,8 +411,8 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
-        let orderByIcon = '';
+        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, prependOrderByIcon = false, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
+        let {orderByIcon = ''} = this.props;
 
         if (orderByField === field.name) {
             if (orderByDirection === 'asc') {
@@ -453,9 +453,10 @@ class DynamicDataTable extends Component {
                 onClick={onClickHandler}
                 style={{ cursor }}
             >
+                {canOrderBy && prependOrderByIcon ? orderByIcon : ''}
                 { field.label }
                 &nbsp;
-                {orderByIcon}
+                {canOrderBy && !prependOrderByIcon ? orderByIcon : ''}
             </th>
         );
     }
