@@ -1,7 +1,5 @@
 "use strict";
 
-require("core-js/modules/es6.string.iterator");
-
 require("core-js/modules/es6.weak-map");
 
 Object.defineProperty(exports, "__esModule", {
@@ -9,7 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-require("core-js/modules/es6.regexp.split");
+require("core-js/modules/es6.string.iterator");
+
+require("core-js/modules/es6.array.from");
 
 require("core-js/modules/es7.symbol.async-iterator");
 
@@ -59,6 +59,8 @@ require("core-js/modules/es6.object.to-string");
 
 require("core-js/modules/es6.object.keys");
 
+require("core-js/modules/es6.regexp.split");
+
 require("core-js/modules/es6.function.bind");
 
 var _react = _interopRequireWildcard(require("react"));
@@ -84,6 +86,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -140,10 +154,11 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           onClick = _this$props.onClick,
           onMouseUp = _this$props.onMouseUp,
           onMouseDown = _this$props.onMouseDown,
-          hoverable = _this$props.hoverable;
-      return (0, _classnames["default"])(['table', 'table-striped', {
+          hoverable = _this$props.hoverable,
+          className = _this$props.className;
+      return (0, _classnames["default"])([].concat(_toConsumableArray(className.split(' ')), [{
         'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
-      }]);
+      }]));
     }
   }, {
     key: "getFields",
@@ -651,7 +666,8 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props10 = this.props,
           loadingIndicator = _this$props10.loadingIndicator,
           loadingMessage = _this$props10.loadingMessage,
-          loadingComponent = _this$props10.loadingComponent;
+          loadingComponent = _this$props10.loadingComponent,
+          className = _this$props10.className;
 
       if (loadingComponent) {
         return loadingComponent;
@@ -660,7 +676,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
       }, /*#__PURE__*/_react["default"].createElement("table", {
-        className: "table table-striped"
+        className: className
       }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
       }, !!loadingIndicator && /*#__PURE__*/_react["default"].createElement("div", null, loadingIndicator), !!loadingMessage && /*#__PURE__*/_react["default"].createElement("div", null, loadingMessage))))));
@@ -668,20 +684,24 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderErrorTable",
     value: function renderErrorTable() {
+      var _this$props11 = this.props,
+          className = _this$props11.className,
+          errorMessage = _this$props11.errorMessage;
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
       }, /*#__PURE__*/_react["default"].createElement("table", {
-        className: "table table-striped"
+        className: className
       }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
-      }, this.props.errorMessage)))));
+      }, errorMessage)))));
     }
   }, {
     key: "renderEmptyTable",
     value: function renderEmptyTable() {
-      var _this$props11 = this.props,
-          noDataMessage = _this$props11.noDataMessage,
-          noDataComponent = _this$props11.noDataComponent;
+      var _this$props12 = this.props,
+          noDataMessage = _this$props12.noDataMessage,
+          noDataComponent = _this$props12.noDataComponent,
+          className = _this$props12.className;
 
       if ( /*#__PURE__*/_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;
@@ -690,7 +710,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
       }, /*#__PURE__*/_react["default"].createElement("table", {
-        className: "table table-striped"
+        className: className
       }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
       }, noDataMessage)))));
@@ -711,12 +731,12 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderPerPage",
     value: function renderPerPage() {
-      var _this$props12 = this.props,
-          changePerPage = _this$props12.changePerPage,
-          totalRows = _this$props12.totalRows,
-          perPageOptions = _this$props12.perPageOptions,
-          perPage = _this$props12.perPage,
-          perPageRenderer = _this$props12.perPageRenderer;
+      var _this$props13 = this.props,
+          changePerPage = _this$props13.changePerPage,
+          totalRows = _this$props13.totalRows,
+          perPageOptions = _this$props13.perPageOptions,
+          perPage = _this$props13.perPage,
+          perPageRenderer = _this$props13.perPageRenderer;
       var props = {
         totalRows: totalRows,
         value: perPage,
@@ -837,7 +857,8 @@ DynamicDataTable.propTypes = {
   onMasterCheckboxChange: _propTypes["default"].func,
   renderMasterCheckbox: _propTypes["default"].bool,
   onCheckboxChange: _propTypes["default"].func,
-  footer: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node])
+  footer: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
+  className: _propTypes["default"].string
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -891,7 +912,8 @@ DynamicDataTable.defaultProps = {
   onMasterCheckboxChange: DynamicDataTable.noop,
   renderMasterCheckbox: true,
   onCheckboxChange: DynamicDataTable.noop,
-  footer: null
+  footer: null,
+  className: 'table table-striped'
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;
