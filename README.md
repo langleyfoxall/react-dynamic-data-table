@@ -43,6 +43,18 @@ The `rows` prop expects an array of objects, such as the following.
 ]
 ```
 
+### Specifying a CSS class for the table
+
+By default tables are assigned the bootstrap `table` and `table-striped` CSS classes.
+If you need a different table style, you can override these defaults by providing the 
+`className` prop:
+
+```JSX
+<DynamicDataTable
+    className="table table-sm"
+    />
+```
+
 ### Excluding fields
 
 By default, React Dynamic Data Table will render a table containing all fields present
