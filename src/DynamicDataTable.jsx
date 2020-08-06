@@ -59,7 +59,7 @@ class DynamicDataTable extends Component {
         const { onClick, onMouseUp, onMouseDown, hoverable, className } = this.props;
 
         return classNames([
-            ...className.split(' '),
+            className,
             {
                 'table-hover':
                     onClick !== DynamicDataTable.noop
