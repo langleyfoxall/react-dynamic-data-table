@@ -43,6 +43,18 @@ The `rows` prop expects an array of objects, such as the following.
 ]
 ```
 
+### Specifying a CSS class for the table
+
+By default tables are assigned the bootstrap `table` and `table-striped` CSS classes.
+If you need a different table style, you can override these defaults by providing the 
+`className` prop:
+
+```JSX
+<DynamicDataTable
+    className="table table-sm"
+    />
+```
+
 ### Excluding fields
 
 By default, React Dynamic Data Table will render a table containing all fields present
@@ -240,6 +252,31 @@ node into `orderByAscIcon` and `orderByDescIcon`.
     orderByAscIcon="Ascending"
     // orderByAscIcon={<p>Ascending</p>}
     // orderByAscIcon={<FancyAscendingIcon />}
+/>
+```
+
+You can optionally specify an icon to appear when a sortable field  is *not* the 
+currently sorted field using the `orderByIcon` prop:
+
+```JSX
+<DynamicDataTable
+    orderByIcon="Sortable"
+    // orderByAscIcon={<p>Sortable</p>}
+    // orderByAscIcon={<FancySortableIcon />}
+/>
+```
+
+By default the order by icon will appear following a non-breaking space after
+the column label. You can instead prepend the icon by specifying the
+`prependOrderByIcon` prop; this is particularly useful if you are using css
+`float` to position the icon as it will not flow under the text:
+
+```JSX
+<DynamicDataTable
+    orderByIcon={<i className="mt-1 fad fa-sort float-right"></i>}
+    orderByAscIcon={<i className="mt-1 fad fa-sort-up float-right"></i>}
+    orderByDescIcon={<i className="mt-1 fad fa-sort-down float-right"></i>}
+    prependOrderByIcon
 />
 ```
 
