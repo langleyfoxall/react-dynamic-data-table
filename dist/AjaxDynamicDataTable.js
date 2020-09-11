@@ -221,6 +221,7 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
           orderByDirection = _this$state2.orderByDirection;
       var _this$props2 = this.props,
           onLoad = _this$props2.onLoad,
+          onError = _this$props2.onError,
           params = _this$props2.params,
           axios = _this$props2.axios;
       this.setState({
@@ -263,6 +264,12 @@ var AjaxDynamicDataTable = /*#__PURE__*/function (_Component) {
           _this2.setState(newState);
 
           onLoad(newState);
+        })["catch"](function (e) {
+          _this2.setState({
+            loading: false
+          });
+
+          onError(e);
         });
       });
     }
@@ -313,6 +320,9 @@ AjaxDynamicDataTable.defaultProps = {
   onLoad: function onLoad() {
     return null;
   },
+  onError: function onError() {
+    return null;
+  },
   loading: false,
   params: {},
   defaultOrderByField: null,
@@ -324,6 +334,7 @@ AjaxDynamicDataTable.defaultProps = {
 AjaxDynamicDataTable.propTypes = {
   apiUrl: _propTypes["default"].string,
   onLoad: _propTypes["default"].func,
+  onError: _propTypes["default"].func,
   loading: _propTypes["default"].bool,
   params: _propTypes["default"].object,
   defaultOrderByField: _propTypes["default"].string,
