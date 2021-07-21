@@ -1,6 +1,6 @@
 {
   "name": "@langleyfoxall/react-dynamic-data-table",
-  "version": "7.17.0",
+  "version": "7.17.1",
   "description": "Re-usable data table for React with sortable columns, pagination and more.",
   "keywords": [
     "react",
@@ -25,9 +25,9 @@
     "url": "https://github.com/langleyfoxall/react-dynamic-data-table/issues"
   },
   "peerDependencies": {
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "prop-types": "^15.6.2"
+    "react-dom": "^16.5.2"
   },
   "homepage": "https://github.com/langleyfoxall/react-dynamic-data-table#readme",
   "devDependencies": {
@@ -37,12 +37,12 @@
     "@babel/preset-react": "^7.7.0"
   },
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel": "^6.23.0",
     "classnames": "^2.2.6",
     "core-js": "^2.6.10",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
   }
 }
