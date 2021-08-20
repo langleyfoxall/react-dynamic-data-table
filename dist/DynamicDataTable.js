@@ -140,8 +140,9 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           onClick = _this$props.onClick,
           onMouseUp = _this$props.onMouseUp,
           onMouseDown = _this$props.onMouseDown,
-          hoverable = _this$props.hoverable;
-      return (0, _classnames["default"])(['table', 'table-striped', {
+          hoverable = _this$props.hoverable,
+          className = _this$props.className;
+      return (0, _classnames["default"])([className, {
         'table-hover': onClick !== DynamicDataTable.noop || onMouseUp !== DynamicDataTable.noop || onMouseDown !== DynamicDataTable.noop || hoverable
       }]);
     }
@@ -525,11 +526,14 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           orderByDirection = _this$props8.orderByDirection,
           orderByAscIcon = _this$props8.orderByAscIcon,
           orderByDescIcon = _this$props8.orderByDescIcon,
+          _this$props8$prependO = _this$props8.prependOrderByIcon,
+          prependOrderByIcon = _this$props8$prependO === void 0 ? false : _this$props8$prependO,
           allowOrderingBy = _this$props8.allowOrderingBy,
           disallowOrderingBy = _this$props8.disallowOrderingBy,
           changeOrder = _this$props8.changeOrder,
           columnWidths = _this$props8.columnWidths;
-      var orderByIcon = '';
+      var _this$props$orderByIc = this.props.orderByIcon,
+          orderByIcon = _this$props$orderByIc === void 0 ? '' : _this$props$orderByIc;
 
       if (orderByField === field.name) {
         if (orderByDirection === 'asc') {
@@ -557,7 +561,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         style: {
           cursor: cursor
         }
-      }, field.label, "\xA0", orderByIcon);
+      }, canOrderBy && prependOrderByIcon ? orderByIcon : '', field.label, "\xA0", canOrderBy && !prependOrderByIcon ? orderByIcon : '');
     }
   }, {
     key: "renderActionsCell",
@@ -648,7 +652,8 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props10 = this.props,
           loadingIndicator = _this$props10.loadingIndicator,
           loadingMessage = _this$props10.loadingMessage,
-          loadingComponent = _this$props10.loadingComponent;
+          loadingComponent = _this$props10.loadingComponent,
+          className = _this$props10.className;
 
       if (loadingComponent) {
         return loadingComponent;
@@ -657,7 +662,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
       }, /*#__PURE__*/_react["default"].createElement("table", {
-        className: "table table-striped"
+        className: className
       }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
       }, !!loadingIndicator && /*#__PURE__*/_react["default"].createElement("div", null, loadingIndicator), !!loadingMessage && /*#__PURE__*/_react["default"].createElement("div", null, loadingMessage))))));
@@ -665,20 +670,24 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderErrorTable",
     value: function renderErrorTable() {
+      var _this$props11 = this.props,
+          className = _this$props11.className,
+          errorMessage = _this$props11.errorMessage;
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
       }, /*#__PURE__*/_react["default"].createElement("table", {
-        className: "table table-striped"
+        className: className
       }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
-      }, this.props.errorMessage)))));
+      }, errorMessage)))));
     }
   }, {
     key: "renderEmptyTable",
     value: function renderEmptyTable() {
-      var _this$props11 = this.props,
-          noDataMessage = _this$props11.noDataMessage,
-          noDataComponent = _this$props11.noDataComponent;
+      var _this$props12 = this.props,
+          noDataMessage = _this$props12.noDataMessage,
+          noDataComponent = _this$props12.noDataComponent,
+          className = _this$props12.className;
 
       if ( /*#__PURE__*/_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;
@@ -687,7 +696,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
       }, /*#__PURE__*/_react["default"].createElement("table", {
-        className: "table table-striped"
+        className: className
       }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
       }, noDataMessage)))));
@@ -709,12 +718,12 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderPerPage",
     value: function renderPerPage() {
-      var _this$props12 = this.props,
-          changePerPage = _this$props12.changePerPage,
-          totalRows = _this$props12.totalRows,
-          perPageOptions = _this$props12.perPageOptions,
-          perPage = _this$props12.perPage,
-          perPageRenderer = _this$props12.perPageRenderer;
+      var _this$props13 = this.props,
+          changePerPage = _this$props13.changePerPage,
+          totalRows = _this$props13.totalRows,
+          perPageOptions = _this$props13.perPageOptions,
+          perPage = _this$props13.perPage,
+          perPageRenderer = _this$props13.perPageRenderer;
       var props = {
         totalRows: totalRows,
         value: perPage,
@@ -794,6 +803,7 @@ DynamicDataTable.propTypes = {
   totalPages: _propTypes["default"].number,
   orderByField: _propTypes["default"].string,
   orderByDirection: _propTypes["default"].oneOf(['asc', 'desc']),
+  orderByIcon: _propTypes["default"].node,
   orderByAscIcon: _propTypes["default"].node,
   orderByDescIcon: _propTypes["default"].node,
   renderCheckboxes: _propTypes["default"].bool,
@@ -835,7 +845,8 @@ DynamicDataTable.propTypes = {
   renderMasterCheckbox: _propTypes["default"].bool,
   onCheckboxChange: _propTypes["default"].func,
   footer: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
-  alwaysShowPagination: _propTypes["default"].bool
+  alwaysShowPagination: _propTypes["default"].bool,
+  className: _propTypes["default"].string
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -846,6 +857,7 @@ DynamicDataTable.defaultProps = {
   totalPages: 1,
   orderByField: null,
   orderByDirection: 'asc',
+  orderByIcon: '',
   orderByAscIcon: '↓',
   orderByDescIcon: '↑',
   renderCheckboxes: false,
@@ -889,7 +901,8 @@ DynamicDataTable.defaultProps = {
   renderMasterCheckbox: true,
   onCheckboxChange: DynamicDataTable.noop,
   footer: null,
-  alwaysShowPagination: false
+  alwaysShowPagination: false,
+  className: 'table table-striped'
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;

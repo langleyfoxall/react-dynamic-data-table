@@ -100,7 +100,7 @@ class AjaxDynamicDataTable extends Component {
 
     loadPage(page) {
         const {perPage, orderByField, orderByDirection} = this.state;
-        const {onLoad, params, axios} = this.props;
+        const {onLoad, onError, params, axios} = this.props;
 
         this.setState(
             { loading: true },
@@ -131,6 +131,12 @@ class AjaxDynamicDataTable extends Component {
 
                     this.setState(newState);
                     onLoad(newState);
+
+                }).catch((e) => {
+
+                    this.setState({ loading: false });
+                    onError(e);
+
                 });
             }
         );
@@ -159,6 +165,7 @@ class AjaxDynamicDataTable extends Component {
 
 AjaxDynamicDataTable.defaultProps = {
     onLoad: () => null,
+    onError: () => null,
     loading: false,
     params: {},
     defaultOrderByField: null,
@@ -172,6 +179,7 @@ AjaxDynamicDataTable.defaultProps = {
 AjaxDynamicDataTable.propTypes = {
     apiUrl: PropTypes.string,
     onLoad: PropTypes.func,
+    onError: PropTypes.func,
     loading: PropTypes.bool,
     params: PropTypes.object,
     defaultOrderByField: PropTypes.string,

@@ -56,10 +56,10 @@ class DynamicDataTable extends Component {
     }
 
     className() {
-        const { onClick, onMouseUp, onMouseDown, hoverable } = this.props;
+        const { onClick, onMouseUp, onMouseDown, hoverable, className } = this.props;
 
         return classNames([
-            'table', 'table-striped',
+            className,
             {
                 'table-hover':
                     onClick !== DynamicDataTable.noop
@@ -411,8 +411,8 @@ class DynamicDataTable extends Component {
     }
 
     renderHeader(field) {
-        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
-        let orderByIcon = '';
+        const { orderByField, orderByDirection, orderByAscIcon, orderByDescIcon, prependOrderByIcon = false, allowOrderingBy, disallowOrderingBy, changeOrder, columnWidths } = this.props;
+        let {orderByIcon = ''} = this.props;
 
         if (orderByField === field.name) {
             if (orderByDirection === 'asc') {
@@ -453,9 +453,10 @@ class DynamicDataTable extends Component {
                 onClick={onClickHandler}
                 style={{ cursor }}
             >
+                {canOrderBy && prependOrderByIcon ? orderByIcon : ''}
                 { field.label }
                 &nbsp;
-                {orderByIcon}
+                {canOrderBy && !prependOrderByIcon ? orderByIcon : ''}
             </th>
         );
     }
@@ -540,7 +541,7 @@ class DynamicDataTable extends Component {
     }
 
     renderLoadingTable() {
-        const { loadingIndicator, loadingMessage, loadingComponent } = this.props;
+        const { loadingIndicator, loadingMessage, loadingComponent, className } = this.props;
 
         if (loadingComponent) {
             return loadingComponent;
@@ -548,7 +549,7 @@ class DynamicDataTable extends Component {
 
         return (
             <div className="table-responsive">
-                <table className="table table-striped">
+                <table className={className}>
                     <tbody>
                     <tr>
                         <td className="text-center">
@@ -571,13 +572,14 @@ class DynamicDataTable extends Component {
     }
 
     renderErrorTable() {
+        const { className, errorMessage } = this.props;
         return (
             <div className="table-responsive">
-                <table className="table table-striped">
+                <table className={className}>
                     <tbody>
                     <tr>
                         <td className="text-center">
-                            {this.props.errorMessage}
+                            {errorMessage}
                         </td>
                     </tr>
                     </tbody>
@@ -588,7 +590,7 @@ class DynamicDataTable extends Component {
 
     renderEmptyTable() {
 
-        const { noDataMessage, noDataComponent } = this.props;
+        const { noDataMessage, noDataComponent, className } = this.props;
 
         if (React.isValidElement(noDataComponent)) {
             return noDataComponent;
@@ -596,7 +598,7 @@ class DynamicDataTable extends Component {
 
         return (
             <div className="table-responsive">
-                <table className="table table-striped">
+                <table className={className}>
                     <tbody>
                     <tr>
                         <td className="text-center">
@@ -663,6 +665,7 @@ DynamicDataTable.propTypes = {
     totalPages: PropTypes.number,
     orderByField: PropTypes.string,
     orderByDirection: PropTypes.oneOf(['asc', 'desc']),
+    orderByIcon: PropTypes.node,
     orderByAscIcon: PropTypes.node,
     orderByDescIcon: PropTypes.node,
     renderCheckboxes: PropTypes.bool,
@@ -716,7 +719,8 @@ DynamicDataTable.propTypes = {
     footer: PropTypes.oneOfType([
         PropTypes.func, PropTypes.node
     ]),
-    alwaysShowPagination: PropTypes.bool
+    alwaysShowPagination: PropTypes.bool,
+    className: PropTypes.string
 };
 
 DynamicDataTable.defaultProps = {
@@ -728,6 +732,7 @@ DynamicDataTable.defaultProps = {
     totalPages: 1,
     orderByField: null,
     orderByDirection: 'asc',
+    orderByIcon: '',
     orderByAscIcon: '↓',
     orderByDescIcon: '↑',
     renderCheckboxes: false,
@@ -771,7 +776,8 @@ DynamicDataTable.defaultProps = {
     renderMasterCheckbox: true,
     onCheckboxChange: DynamicDataTable.noop,
     footer: null,
-    alwaysShowPagination: false
+    alwaysShowPagination: false,
+    className: 'table table-striped',
 };
 
 export default DynamicDataTable;

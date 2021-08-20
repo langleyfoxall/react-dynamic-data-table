@@ -1,6 +1,6 @@
 "use strict";
 
-require("core-js/modules/es6.object.define-property");
+require("core-js/modules/es6.object.define-property.js");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
