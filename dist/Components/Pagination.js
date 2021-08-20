@@ -1,37 +1,37 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+require("core-js/modules/web.dom.iterable");
 
-require("core-js/modules/es6.reflect.construct.js");
+require("core-js/modules/es6.array.iterator");
 
-require("core-js/modules/es6.object.create.js");
+require("core-js/modules/es6.string.iterator");
 
-require("core-js/modules/es6.object.define-property.js");
-
-require("core-js/modules/es6.weak-map.js");
-
-require("core-js/modules/es6.string.iterator.js");
-
-require("core-js/modules/es6.object.to-string.js");
-
-require("core-js/modules/es6.array.iterator.js");
-
-require("core-js/modules/web.dom.iterable.js");
-
-require("core-js/modules/es6.object.get-own-property-descriptor.js");
-
-require("core-js/modules/es6.symbol.js");
+require("core-js/modules/es6.weak-map");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
-require("core-js/modules/es6.array.for-each.js");
+require("core-js/modules/es7.symbol.async-iterator");
 
-require("core-js/modules/es6.object.set-prototype-of.js");
+require("core-js/modules/es6.symbol");
 
-require("core-js/modules/es6.object.get-prototype-of.js");
+require("core-js/modules/es6.object.define-property");
+
+require("core-js/modules/es6.object.create");
+
+require("core-js/modules/es6.regexp.to-string");
+
+require("core-js/modules/es6.date.to-string");
+
+require("core-js/modules/es6.object.to-string");
+
+require("core-js/modules/es6.reflect.construct");
+
+require("core-js/modules/es6.object.set-prototype-of");
+
+require("core-js/modules/es6.array.for-each");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -39,9 +39,11 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -59,7 +61,7 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -90,10 +92,10 @@ var Pagination = /*#__PURE__*/function (_Component) {
       }
 
       this.getPagesToDisplay(currentPage, totalPages).forEach(function (page, index) {
-        pageLinks.push(_react["default"].createElement("li", {
+        pageLinks.push( /*#__PURE__*/_react["default"].createElement("li", {
           key: "page_index_".concat(index),
           className: "page-item ".concat(currentPage === page ? 'active' : '')
-        }, _react["default"].createElement("button", {
+        }, /*#__PURE__*/_react["default"].createElement("button", {
           type: "button",
           className: "page-link ".concat(!page ? 'disabled' : ''),
           onClick: function onClick() {
@@ -103,21 +105,21 @@ var Pagination = /*#__PURE__*/function (_Component) {
           }
         }, page || '...')));
       });
-      return _react["default"].createElement("nav", {
+      return /*#__PURE__*/_react["default"].createElement("nav", {
         "aria-label": "Page navigation ml-auto"
-      }, _react["default"].createElement("ul", {
+      }, /*#__PURE__*/_react["default"].createElement("ul", {
         className: "pagination mb-0"
-      }, _react["default"].createElement("li", {
+      }, /*#__PURE__*/_react["default"].createElement("li", {
         className: "page-item ".concat(currentPage <= 1 ? 'disabled' : '')
-      }, _react["default"].createElement("button", {
+      }, /*#__PURE__*/_react["default"].createElement("button", {
         type: "button",
         className: "page-link",
         onClick: function onClick() {
           return _this.previousPage();
         }
-      }, "Previous")), pageLinks, _react["default"].createElement("li", {
+      }, "Previous")), pageLinks, /*#__PURE__*/_react["default"].createElement("li", {
         className: "page-item ".concat(currentPage >= totalPages ? 'disabled' : '')
-      }, _react["default"].createElement("button", {
+      }, /*#__PURE__*/_react["default"].createElement("button", {
         type: "button",
         className: "page-link",
         onClick: function onClick() {
