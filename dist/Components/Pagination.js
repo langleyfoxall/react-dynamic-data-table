@@ -85,8 +85,9 @@ var Pagination = /*#__PURE__*/function (_Component) {
       var props = this.props;
       var currentPage = props.currentPage;
       var totalPages = props.totalPages;
+      var alwaysShowPagination = props.alwaysShowPagination;
 
-      if (totalPages <= 1) {
+      if (!alwaysShowPagination && totalPages <= 1) {
         return null;
       }
 
@@ -174,13 +175,15 @@ var Pagination = /*#__PURE__*/function (_Component) {
 }(_react.Component);
 
 Pagination.defaultProps = {
-  paginationDelta: 4
+  paginationDelta: 4,
+  alwaysShowPagination: false
 };
 Pagination.propTypes = {
   currentPage: _propTypes["default"].number,
   totalPages: _propTypes["default"].number,
   changePage: _propTypes["default"].func,
-  paginationDelta: _propTypes["default"].number
+  paginationDelta: _propTypes["default"].number,
+  alwaysShowPagination: _propTypes["default"].bool
 };
 var _default = Pagination;
 exports["default"] = _default;

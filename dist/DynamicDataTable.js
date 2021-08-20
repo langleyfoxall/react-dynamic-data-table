@@ -702,7 +702,8 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         changePage: function changePage(page) {
           return props.changePage(page);
         },
-        paginationDelta: props.paginationDelta
+        paginationDelta: props.paginationDelta,
+        alwaysShowPagination: props.alwaysShowPagination
       });
     }
   }, {
@@ -833,7 +834,8 @@ DynamicDataTable.propTypes = {
   onMasterCheckboxChange: _propTypes["default"].func,
   renderMasterCheckbox: _propTypes["default"].bool,
   onCheckboxChange: _propTypes["default"].func,
-  footer: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node])
+  footer: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
+  alwaysShowPagination: _propTypes["default"].bool
 };
 DynamicDataTable.defaultProps = {
   rows: [],
@@ -886,7 +888,8 @@ DynamicDataTable.defaultProps = {
   onMasterCheckboxChange: DynamicDataTable.noop,
   renderMasterCheckbox: true,
   onCheckboxChange: DynamicDataTable.noop,
-  footer: null
+  footer: null,
+  alwaysShowPagination: false
 };
 var _default = DynamicDataTable;
 exports["default"] = _default;
