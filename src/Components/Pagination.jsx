@@ -8,8 +8,9 @@ class Pagination extends Component {
         const props = this.props;
         const currentPage = props.currentPage;
         const totalPages = props.totalPages;
+        const alwaysShowPagination = props.alwaysShowPagination;
 
-        if (totalPages <= 1) {
+        if (!alwaysShowPagination && totalPages <= 1) {
             return null;
         }
 
@@ -85,6 +86,7 @@ class Pagination extends Component {
 
 Pagination.defaultProps = {
     paginationDelta: 4,
+    alwaysShowPagination: false,
 };
 
 Pagination.propTypes = {
@@ -92,6 +94,7 @@ Pagination.propTypes = {
     totalPages: PropTypes.number,
     changePage: PropTypes.func,
     paginationDelta: PropTypes.number,
+    alwaysShowPagination: PropTypes.bool,
 };
 
 export default Pagination;

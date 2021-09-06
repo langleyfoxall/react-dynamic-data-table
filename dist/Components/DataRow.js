@@ -1,43 +1,45 @@
 "use strict";
 
-require("core-js/modules/es6.reflect.construct.js");
+require("core-js/modules/web.dom.iterable");
 
-require("core-js/modules/es6.object.create.js");
+require("core-js/modules/es6.array.iterator");
 
-require("core-js/modules/es6.object.define-property.js");
+require("core-js/modules/es6.string.iterator");
 
-require("core-js/modules/es6.symbol.js");
-
-require("core-js/modules/es6.string.iterator.js");
-
-require("core-js/modules/es6.object.to-string.js");
-
-require("core-js/modules/es6.array.iterator.js");
-
-require("core-js/modules/web.dom.iterable.js");
-
-require("core-js/modules/es6.weak-map.js");
-
-require("core-js/modules/es6.object.get-own-property-descriptor.js");
+require("core-js/modules/es6.weak-map");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
-require("core-js/modules/es6.string.includes.js");
+require("core-js/modules/es7.symbol.async-iterator");
 
-require("core-js/modules/es7.array.includes.js");
+require("core-js/modules/es6.symbol");
 
-require("core-js/modules/es6.array.map.js");
+require("core-js/modules/es6.object.define-property");
 
-require("core-js/modules/es6.function.name.js");
+require("core-js/modules/es6.object.create");
 
-require("core-js/modules/es6.array.find-index.js");
+require("core-js/modules/es6.regexp.to-string");
 
-require("core-js/modules/es6.object.set-prototype-of.js");
+require("core-js/modules/es6.date.to-string");
 
-require("core-js/modules/es6.object.get-prototype-of.js");
+require("core-js/modules/es6.object.to-string");
+
+require("core-js/modules/es6.reflect.construct");
+
+require("core-js/modules/es6.object.set-prototype-of");
+
+require("core-js/modules/es6.array.find-index");
+
+require("core-js/modules/es6.function.name");
+
+require("core-js/modules/es6.array.map");
+
+require("core-js/modules/es7.array.includes");
+
+require("core-js/modules/es6.string.includes");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -45,9 +47,9 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -67,7 +69,7 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -100,7 +102,7 @@ var DataRow = /*#__PURE__*/function (_Component) {
           _onMouseUp = _this$props.onMouseUp,
           _onMouseDown = _this$props.onMouseDown,
           _onContextMenu = _this$props.onContextMenu;
-      return _react["default"].createElement("tr", {
+      return /*#__PURE__*/_react["default"].createElement("tr", {
         onClick: function onClick(e) {
           return _onClick(e, row);
         },
@@ -131,9 +133,9 @@ var DataRow = /*#__PURE__*/function (_Component) {
         return;
       }
 
-      var checkbox = _react["default"].createElement("div", {
+      var checkbox = /*#__PURE__*/_react["default"].createElement("div", {
         className: "form-check"
-      }, _react["default"].createElement("input", {
+      }, /*#__PURE__*/_react["default"].createElement("input", {
         name: "bulk-select-".concat(row.id),
         type: "checkbox",
         checked: this.props.checkboxIsChecked(row),
@@ -146,7 +148,7 @@ var DataRow = /*#__PURE__*/function (_Component) {
         disabled: disableCheckbox
       }));
 
-      return _react["default"].createElement("td", null, checkbox);
+      return /*#__PURE__*/_react["default"].createElement("td", null, checkbox);
     }
   }, {
     key: "renderCell",
@@ -165,9 +167,9 @@ var DataRow = /*#__PURE__*/function (_Component) {
         var column = editableColumns[columnIndex];
 
         if (column.type === 'select') {
-          return _react["default"].createElement("td", {
+          return /*#__PURE__*/_react["default"].createElement("td", {
             key: key
-          }, _react["default"].createElement("select", {
+          }, /*#__PURE__*/_react["default"].createElement("select", {
             defaultValue: value,
             value: column.controlled ? value : undefined,
             onChange: function onChange(event) {
@@ -175,15 +177,15 @@ var DataRow = /*#__PURE__*/function (_Component) {
               column.onChange(event, field.name, row, index);
             }
           }, column.optionsForRow(row, field.name).map(function (option) {
-            return _react["default"].createElement("option", {
+            return /*#__PURE__*/_react["default"].createElement("option", {
               value: option.value
             }, option.label);
           })));
         }
 
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           key: key
-        }, _react["default"].createElement("input", {
+        }, /*#__PURE__*/_react["default"].createElement("input", {
           type: column.type,
           defaultValue: value,
           value: column.controlled ? value : undefined,
@@ -194,14 +196,14 @@ var DataRow = /*#__PURE__*/function (_Component) {
         }));
       }
 
-      if (_react["default"].isValidElement(value)) {
-        return _react["default"].createElement("td", {
+      if ( /*#__PURE__*/_react["default"].isValidElement(value)) {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           key: key
         }, value);
       }
 
       if (this.shouldDangerouslyRenderField(field.name)) {
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           key: key,
           dangerouslySetInnerHTML: {
             __html: value
@@ -213,7 +215,7 @@ var DataRow = /*#__PURE__*/function (_Component) {
         value = JSON.stringify(value);
       }
 
-      return _react["default"].createElement("td", {
+      return /*#__PURE__*/_react["default"].createElement("td", {
         key: key
       }, value);
     }
@@ -233,33 +235,33 @@ var DataRow = /*#__PURE__*/function (_Component) {
       if (!buttons.length && !actions.length) {
         return null;
       } else if (!buttons.length) {
-        return _react["default"].createElement("td", null);
+        return /*#__PURE__*/_react["default"].createElement("td", null);
       }
 
       var button = buttons[0];
 
       if (buttons.length === 1) {
-        return _react["default"].createElement("td", {
+        return /*#__PURE__*/_react["default"].createElement("td", {
           className: "rddt-action-cell"
         }, this.renderFirstButton(button, row));
       }
 
-      return _react["default"].createElement("td", {
+      return /*#__PURE__*/_react["default"].createElement("td", {
         className: "rddt-action-cell"
-      }, _react["default"].createElement("div", {
+      }, /*#__PURE__*/_react["default"].createElement("div", {
         className: "btn-group",
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, this.renderFirstButton(button, row), _react["default"].createElement("button", {
+      }, this.renderFirstButton(button, row), /*#__PURE__*/_react["default"].createElement("button", {
         type: "button",
         className: "btn btn-primary dropdown-toggle dropdown-toggle-split",
         "data-toggle": "dropdown",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, _react["default"].createElement("span", {
+      }, /*#__PURE__*/_react["default"].createElement("span", {
         className: "sr-only"
-      }, "Toggle Dropdown")), _react["default"].createElement("div", {
+      }, "Toggle Dropdown")), /*#__PURE__*/_react["default"].createElement("div", {
         className: "dropdown-menu",
         "aria-labelledby": "dropdownMenuButton"
       }, buttons.map(function (button, index) {
@@ -273,7 +275,7 @@ var DataRow = /*#__PURE__*/function (_Component) {
         return button.render(row);
       }
 
-      return _react["default"].createElement("button", {
+      return /*#__PURE__*/_react["default"].createElement("button", {
         type: "button",
         className: "btn btn-primary",
         onClick: function onClick(e) {
@@ -289,7 +291,7 @@ var DataRow = /*#__PURE__*/function (_Component) {
       }
 
       if (typeof button.render === 'function') {
-        return _react["default"].createElement("div", {
+        return /*#__PURE__*/_react["default"].createElement("div", {
           style: {
             cursor: 'pointer'
           },
@@ -298,7 +300,7 @@ var DataRow = /*#__PURE__*/function (_Component) {
         }, button.render(row));
       }
 
-      return _react["default"].createElement("div", {
+      return /*#__PURE__*/_react["default"].createElement("div", {
         style: {
           cursor: 'pointer'
         },

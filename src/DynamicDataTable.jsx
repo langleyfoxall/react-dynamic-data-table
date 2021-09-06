@@ -620,6 +620,7 @@ class DynamicDataTable extends Component {
                 totalPages={props.totalPages}
                 changePage={(page) => props.changePage(page)}
                 paginationDelta={props.paginationDelta}
+                alwaysShowPagination={props.alwaysShowPagination}
             />
         );
     }
@@ -718,6 +719,7 @@ DynamicDataTable.propTypes = {
     footer: PropTypes.oneOfType([
         PropTypes.func, PropTypes.node
     ]),
+    alwaysShowPagination: PropTypes.bool,
     className: PropTypes.string
 };
 
@@ -774,6 +776,7 @@ DynamicDataTable.defaultProps = {
     renderMasterCheckbox: true,
     onCheckboxChange: DynamicDataTable.noop,
     footer: null,
+    alwaysShowPagination: false,
     className: 'table table-striped',
 };
 

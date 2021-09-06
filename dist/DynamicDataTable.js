@@ -1,65 +1,65 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+require("core-js/modules/es6.string.iterator");
 
-require("core-js/modules/es6.reflect.construct.js");
-
-require("core-js/modules/es6.object.create.js");
-
-require("core-js/modules/es6.object.define-property.js");
-
-require("core-js/modules/es6.weak-map.js");
-
-require("core-js/modules/es6.string.iterator.js");
-
-require("core-js/modules/es6.object.to-string.js");
-
-require("core-js/modules/es6.array.iterator.js");
-
-require("core-js/modules/web.dom.iterable.js");
-
-require("core-js/modules/es6.object.get-own-property-descriptor.js");
-
-require("core-js/modules/es6.symbol.js");
+require("core-js/modules/es6.weak-map");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
-require("core-js/modules/es6.function.bind.js");
+require("core-js/modules/es6.regexp.split");
 
-require("core-js/modules/es6.object.keys.js");
+require("core-js/modules/es7.symbol.async-iterator");
 
-require("core-js/modules/es6.function.name.js");
+require("core-js/modules/es6.symbol");
 
-require("core-js/modules/es6.string.trim.js");
+require("core-js/modules/es6.object.define-property");
 
-require("core-js/modules/es6.regexp.replace.js");
+require("core-js/modules/es6.object.create");
 
-require("core-js/modules/es6.regexp.constructor.js");
+require("core-js/modules/es6.regexp.to-string");
 
-require("core-js/modules/es6.array.filter.js");
+require("core-js/modules/es6.date.to-string");
 
-require("core-js/modules/es6.array.index-of.js");
+require("core-js/modules/es6.reflect.construct");
 
-require("core-js/modules/es6.array.find-index.js");
+require("core-js/modules/es6.object.set-prototype-of");
 
-require("core-js/modules/es6.array.is-array.js");
+require("core-js/modules/es6.array.map");
 
-require("core-js/modules/es6.string.includes.js");
+require("core-js/modules/es6.array.for-each");
 
-require("core-js/modules/es7.array.includes.js");
+require("core-js/modules/es7.array.includes");
 
-require("core-js/modules/es6.array.for-each.js");
+require("core-js/modules/es6.string.includes");
 
-require("core-js/modules/es6.array.map.js");
+require("core-js/modules/es6.array.is-array");
 
-require("core-js/modules/es6.object.set-prototype-of.js");
+require("core-js/modules/es6.array.find-index");
 
-require("core-js/modules/es6.object.get-prototype-of.js");
+require("core-js/modules/es6.array.index-of");
 
-require("core-js/modules/es6.regexp.split.js");
+require("core-js/modules/es6.array.filter");
+
+require("core-js/modules/es6.regexp.constructor");
+
+require("core-js/modules/es6.regexp.replace");
+
+require("core-js/modules/es6.string.trim");
+
+require("core-js/modules/es6.function.name");
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.iterator");
+
+require("core-js/modules/es6.object.to-string");
+
+require("core-js/modules/es6.object.keys");
+
+require("core-js/modules/es6.function.bind");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -77,11 +77,13 @@ var _flatten = _interopRequireDefault(require("core-js/fn/array/flatten"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -99,7 +101,7 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -429,15 +431,15 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         return this.renderEmptyTable();
       }
 
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      return /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, /*#__PURE__*/_react["default"].createElement("table", {
         className: this.className()
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
+      }, /*#__PURE__*/_react["default"].createElement("thead", null, /*#__PURE__*/_react["default"].createElement("tr", null, this.renderCheckboxCell('all'), fields.map(function (field) {
         return _this2.renderHeader(field);
-      }), this.renderActionsCell())), _react["default"].createElement("tbody", null, rows.map(function (row, index) {
+      }), this.renderActionsCell())), /*#__PURE__*/_react["default"].createElement("tbody", null, rows.map(function (row, index) {
         return _this2.renderRow(row, index);
-      })), !!footer && _react["default"].createElement("tfoot", null, this.renderFooter()))), _react["default"].createElement("div", {
+      })), !!footer && /*#__PURE__*/_react["default"].createElement("tfoot", null, this.renderFooter()))), /*#__PURE__*/_react["default"].createElement("div", {
         className: 'd-flex justify-content-between align-items-center'
       }, this.renderPerPage(), this.renderPagination()));
     }
@@ -452,11 +454,11 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var width = this.getFields().length;
 
       if (checkbox) {
-        +width, _readOnlyError("width");
+        _readOnlyError("width"), width++;
       }
 
       if (actions.length) {
-        +width, _readOnlyError("width");
+        _readOnlyError("width"), width++;
       }
 
       if (typeof footer === 'function') {
@@ -466,7 +468,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         });
       }
 
-      if (_react["default"].isValidElement(footer)) {
+      if ( /*#__PURE__*/_react["default"].isValidElement(footer)) {
         return footer;
       }
 
@@ -552,7 +554,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         width = "".concat(width, "%");
       }
 
-      return _react["default"].createElement("th", {
+      return /*#__PURE__*/_react["default"].createElement("th", {
         key: field.name,
         width: width,
         onClick: onClickHandler,
@@ -574,14 +576,14 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       if (!buttons.length && !actions.length) {
         return null;
       } else if (!actions.length) {
-        return _react["default"].createElement("th", null);
+        return /*#__PURE__*/_react["default"].createElement("th", null);
       }
 
-      return _react["default"].createElement("th", {
+      return /*#__PURE__*/_react["default"].createElement("th", {
         className: "rddt-action-cell"
-      }, _react["default"].createElement("div", {
+      }, /*#__PURE__*/_react["default"].createElement("div", {
         className: "dropdown"
-      }, _react["default"].createElement("button", {
+      }, /*#__PURE__*/_react["default"].createElement("button", {
         className: "btn btn-secondary dropdown-toggle",
         type: "button",
         id: "dropdownMenuButton",
@@ -589,7 +591,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         "aria-haspopup": "true",
         "aria-expanded": "false",
         disabled: !state.checkedRows.length
-      }, "Actions"), _react["default"].createElement("div", {
+      }, "Actions"), /*#__PURE__*/_react["default"].createElement("div", {
         className: "dropdown-menu",
         "aria-labelledby": "dropdownMenuButton"
       }, this.props.actions.map(function (action) {
@@ -601,7 +603,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
     value: function renderActionButton(action) {
       var _this6 = this;
 
-      return _react["default"].createElement("button", {
+      return /*#__PURE__*/_react["default"].createElement("button", {
         key: "action_".concat(action.name),
         type: "button",
         className: "dropdown-item",
@@ -623,9 +625,9 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         return;
       }
 
-      var checkbox = _react["default"].createElement("div", {
+      var checkbox = /*#__PURE__*/_react["default"].createElement("div", {
         className: "form-check"
-      }, _react["default"].createElement("input", {
+      }, /*#__PURE__*/_react["default"].createElement("input", {
         type: "checkbox",
         value: value,
         checked: this.checkboxIsChecked(value),
@@ -636,13 +638,13 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
 
       if (value === 'all') {
         if (!this.props.renderMasterCheckbox) {
-          return _react["default"].createElement("th", null);
+          return /*#__PURE__*/_react["default"].createElement("th", null);
         }
 
-        return _react["default"].createElement("th", null, checkbox);
+        return /*#__PURE__*/_react["default"].createElement("th", null, checkbox);
       }
 
-      return _react["default"].createElement("td", null, checkbox);
+      return /*#__PURE__*/_react["default"].createElement("td", null, checkbox);
     }
   }, {
     key: "renderLoadingTable",
@@ -657,13 +659,13 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         return loadingComponent;
       }
 
-      return _react["default"].createElement("div", {
+      return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, /*#__PURE__*/_react["default"].createElement("table", {
         className: className
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", {
+      }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
-      }, !!loadingIndicator && _react["default"].createElement("div", null, loadingIndicator), !!loadingMessage && _react["default"].createElement("div", null, loadingMessage))))));
+      }, !!loadingIndicator && /*#__PURE__*/_react["default"].createElement("div", null, loadingIndicator), !!loadingMessage && /*#__PURE__*/_react["default"].createElement("div", null, loadingMessage))))));
     }
   }, {
     key: "renderErrorTable",
@@ -671,11 +673,11 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
       var _this$props11 = this.props,
           className = _this$props11.className,
           errorMessage = _this$props11.errorMessage;
-      return _react["default"].createElement("div", {
+      return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, /*#__PURE__*/_react["default"].createElement("table", {
         className: className
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", {
+      }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
       }, errorMessage)))));
     }
@@ -687,15 +689,15 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           noDataComponent = _this$props12.noDataComponent,
           className = _this$props12.className;
 
-      if (_react["default"].isValidElement(noDataComponent)) {
+      if ( /*#__PURE__*/_react["default"].isValidElement(noDataComponent)) {
         return noDataComponent;
       }
 
-      return _react["default"].createElement("div", {
+      return /*#__PURE__*/_react["default"].createElement("div", {
         className: "table-responsive"
-      }, _react["default"].createElement("table", {
+      }, /*#__PURE__*/_react["default"].createElement("table", {
         className: className
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", {
+      }, /*#__PURE__*/_react["default"].createElement("tbody", null, /*#__PURE__*/_react["default"].createElement("tr", null, /*#__PURE__*/_react["default"].createElement("td", {
         className: "text-center"
       }, noDataMessage)))));
     }
@@ -703,13 +705,14 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
     key: "renderPagination",
     value: function renderPagination() {
       var props = this.props;
-      return _react["default"].createElement(_Pagination["default"], {
+      return /*#__PURE__*/_react["default"].createElement(_Pagination["default"], {
         currentPage: props.currentPage,
         totalPages: props.totalPages,
         changePage: function changePage(page) {
           return props.changePage(page);
         },
-        paginationDelta: props.paginationDelta
+        paginationDelta: props.paginationDelta,
+        alwaysShowPagination: props.alwaysShowPagination
       });
     }
   }, {
@@ -736,8 +739,8 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
         return perPageRenderer(props);
       }
 
-      if (_react["default"].isValidElement(perPageRenderer)) {
-        return _react["default"].cloneElement(perPageRenderer, props);
+      if ( /*#__PURE__*/_react["default"].isValidElement(perPageRenderer)) {
+        return /*#__PURE__*/_react["default"].cloneElement(perPageRenderer, props);
       }
 
       return perPageRenderer;
@@ -765,7 +768,7 @@ var DynamicDataTable = /*#__PURE__*/function (_Component) {
           actions = _ref3.actions,
           editableColumns = _ref3.editableColumns,
           index = _ref3.index;
-      return _react["default"].createElement(_DataRow["default"], {
+      return /*#__PURE__*/_react["default"].createElement(_DataRow["default"], {
         key: row.id,
         row: row,
         onClick: onClick,
@@ -842,6 +845,7 @@ DynamicDataTable.propTypes = {
   renderMasterCheckbox: _propTypes["default"].bool,
   onCheckboxChange: _propTypes["default"].func,
   footer: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
+  alwaysShowPagination: _propTypes["default"].bool,
   className: _propTypes["default"].string
 };
 DynamicDataTable.defaultProps = {
@@ -890,13 +894,14 @@ DynamicDataTable.defaultProps = {
   changePerPage: null,
   perPage: 15,
   perPageRenderer: function perPageRenderer(props) {
-    return _react["default"].createElement(_PerPage["default"], props);
+    return /*#__PURE__*/_react["default"].createElement(_PerPage["default"], props);
   },
   isCheckboxChecked: DynamicDataTable.noop,
   onMasterCheckboxChange: DynamicDataTable.noop,
   renderMasterCheckbox: true,
   onCheckboxChange: DynamicDataTable.noop,
   footer: null,
+  alwaysShowPagination: false,
   className: 'table table-striped'
 };
 var _default = DynamicDataTable;

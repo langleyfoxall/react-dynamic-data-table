@@ -335,6 +335,16 @@ This delta can be changed by passing a `paginationDelta` prop into `DynamicDataT
     />
 ```
 
+### Always showing pagination controls
+
+By default the pagination controls are only shown if there are two or more pages of data to be displayed. You can override this behaviour by simply passing the `alwaysShowPagination` prop:
+
+```JSX
+<DynamicDataTable
+        alwaysShowPagination
+    />
+```
+
 ### Per page limiting
 
 Changing the number of entries displaying in the data table is easy. The `totalRows`, `perPage`, `changePerPage` and `perPageRenderer` allow you to customize a per page limit control.
