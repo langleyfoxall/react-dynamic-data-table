@@ -24,7 +24,7 @@ class DynamicDataTable extends Component {
         return null;
     }
 
-    static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, disableCheckbox, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index }) {
+    static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, disableCheckbox, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index, rowIsActive }) {
         return (
             <DataRow
                 key={row.id}
@@ -43,6 +43,7 @@ class DynamicDataTable extends Component {
                 dataItemManipulator={(field, value, row) => dataItemManipulator(field, value, row)}
                 dangerouslyRenderFields={dangerouslyRenderFields}
                 index={index}
+                rowIsActive={rowIsActive}
             />
         );
     }
@@ -387,7 +388,7 @@ class DynamicDataTable extends Component {
 
     renderRow(row, index) {
         const {
-            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
+            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns, rowIsActive,
         } = this.props;
 
         return rowRenderer({
@@ -407,6 +408,7 @@ class DynamicDataTable extends Component {
             actions,
             editableColumns,
             index,
+            rowIsActive,
         });
     }
 
@@ -697,6 +699,7 @@ DynamicDataTable.propTypes = {
     onClick: PropTypes.func,
     onMouseUp: PropTypes.func,
     onMouseDown: PropTypes.func,
+    rowIsActive: PropTypes.func,
     hoverable: PropTypes.bool,
     allowOrderingBy: PropTypes.array,
     disallowOrderingBy: PropTypes.array,
@@ -759,6 +762,7 @@ DynamicDataTable.defaultProps = {
     onClick: DynamicDataTable.noop,
     onMouseUp: DynamicDataTable.noop,
     onMouseDown: DynamicDataTable.noop,
+    rowIsActive: DynamicDataTable.noop,
     hoverable: false,
     allowOrderingBy: [],
     disallowOrderingBy: [],

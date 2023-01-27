@@ -976,3 +976,13 @@ to modify the displayed value.
 A controlled input will require you to store the value of the input in the state, the value of the input will be
 read from state meaning you will have to update state on user input to reflect it in component. In this case
 it will mean you will have to alter the data passed in as the `rows` prop.
+
+### Indicating active row(s)
+
+If you supply an `rowIsActive` predicate prop to the data table, any row
+matching the predicate is given the CSS class `table-active`:
+
+```jsx
+<DynamicDataTable
+    rowIsActive={(row) => row.id === 3}
+/>
