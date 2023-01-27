@@ -14,7 +14,7 @@ class DataRow extends Component {
     }
 
     render() {
-        const { row, fields, onClick, onMouseUp, onMouseDown, onContextMenu } = this.props;
+        const { row, fields, onClick, onMouseUp, onMouseDown, onContextMenu, rowIsActive } = this.props;
 
         return (
             <tr
@@ -22,6 +22,7 @@ class DataRow extends Component {
                 onMouseUp={e => onMouseUp(e, row)}
                 onMouseDown={e => onMouseDown(e, row)}
                 onContextMenu={e => onContextMenu(e, row)}
+                className={rowIsActive(row) ? 'table-active' : null}
             >
                 { this.renderCheckboxCell() }
                 { fields.map(field => this.renderCell(field, row)) }
