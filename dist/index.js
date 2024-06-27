@@ -40,6 +40,5 @@ var _AjaxDynamicDataTable = _interopRequireDefault(require("./AjaxDynamicDataTab
 var _DataRow = _interopRequireDefault(require("./Components/DataRow"));
 var _Pagination = _interopRequireDefault(require("./Components/Pagination"));
 var _PerPage = _interopRequireDefault(require("./Components/PerPage"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var _default = _DynamicDataTable["default"];
-exports["default"] = _default;
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+var _default = exports["default"] = _DynamicDataTable["default"];
