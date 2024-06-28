@@ -30,4 +30,4 @@ jobs:
     - run: npm run-script build
     - run: echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > ${NPM_CONFIG_USERCONFIG}
     - run: "sed -i \"s/\\\"version\\\": \\\"0.0.0\\\",/\\\"version\\\": \\\"${GITHUB_REF/refs\\/tags\\/v/}\\\",/g\" package.json"
-    - run: npm publish
+    - run: npm publish --access public
