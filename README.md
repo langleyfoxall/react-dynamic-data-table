@@ -995,3 +995,7 @@ matching the predicate is given the CSS class `table-active`:
 This package uses [ESLint](https://eslint.org/) for linting of JS/X.  You can run ESLint at any time by executing `npm run-script lint-fix`.  Install the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) to get real-time linting in Visual Studio Code.
 
 These linters additionally run in continuous integration as a GitHub Action.
+
+### Releases
+
+To release a new version of this package, simply [create a new release](https://github.com/langleyfoxall/react-dynamic-data-table/releases/new).
