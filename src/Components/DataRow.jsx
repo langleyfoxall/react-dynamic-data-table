@@ -151,7 +151,7 @@ class DataRow extends Component {
                 >
                     {this.renderFirstButton(button, row)}
                     <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span className="sr-only">Toggle Dropdown</span>
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
