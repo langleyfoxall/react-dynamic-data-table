@@ -46,7 +46,7 @@ The `rows` prop expects an array of objects, such as the following.
 ### Specifying a CSS class for the table
 
 By default tables are assigned the bootstrap `table` and `table-striped` CSS classes.
-If you need a different table style, you can override these defaults by providing the 
+If you need a different table style, you can override these defaults by providing the
 `className` prop:
 
 ```JSX
@@ -255,7 +255,7 @@ node into `orderByAscIcon` and `orderByDescIcon`.
 />
 ```
 
-You can optionally specify an icon to appear when a sortable field  is *not* the 
+You can optionally specify an icon to appear when a sortable field  is *not* the
 currently sorted field using the `orderByIcon` prop:
 
 ```JSX
@@ -986,3 +986,12 @@ matching the predicate is given the CSS class `table-active`:
 <DynamicDataTable
     rowIsActive={(row) => row.id === 3}
 />
+```
+
+## Development
+
+### Linting
+
+This package uses [ESLint](https://eslint.org/) for linting of JS/X.  You can run ESLint at any time by executing `npm run-script lint-fix`.  Install the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) to get real-time linting in Visual Studio Code.
+
+These linters additionally run in continuous integration as a GitHub Action.

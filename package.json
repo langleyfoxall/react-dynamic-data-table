@@ -11,7 +11,8 @@
   ],
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"No tests.\" && exit 0",
+    "lint": "eslint \"src/**/*.js\" \"src/**/*.jsx\"",
+    "lint-fix": "eslint --fix \"src/**/*.js\" \"src/**/*.jsx\"",
     "build": "node ./node_modules/@babel/cli/bin/babel src/ --out-dir dist/",
     "prepublishOnly": "npm run build"
   },
@@ -32,7 +33,16 @@
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.11.0",
-    "@babel/preset-react": "^7.7.0"
+    "@babel/preset-react": "^7.7.0",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.5.0",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.2.0",
+    "eslint-plugin-react": "^7.34.3",
+    "globals": "^15.6.0"
   },
   "dependencies": {
     "axios": "^1.7.2",

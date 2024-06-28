@@ -1,16 +1,16 @@
-import DynamicDataTable from './DynamicDataTable';
-import AjaxDynamicDataTable from './AjaxDynamicDataTable';
+import DynamicDataTable from './DynamicDataTable'
+import AjaxDynamicDataTable from './AjaxDynamicDataTable'
 
-import DataRow from './Components/DataRow';
-import Pagination from './Components/Pagination';
-import PerPage from './Components/PerPage';
+import DataRow from './Components/DataRow'
+import Pagination from './Components/Pagination'
+import PerPage from './Components/PerPage'
 
 export {
-    DynamicDataTable,
-    AjaxDynamicDataTable,
-    DataRow,
-    Pagination,
-    PerPage
-};
+  DynamicDataTable,
+  AjaxDynamicDataTable,
+  DataRow,
+  Pagination,
+  PerPage
+}
 
-export default DynamicDataTable;
+export default DynamicDataTable
