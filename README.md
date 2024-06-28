@@ -1,7 +1,7 @@
 # React Dynamic Data Table
 
-[![npm version](https://badge.fury.io/js/%40langleyfoxall%2Freact-dynamic-data-table.svg)](https://badge.fury.io/js/%40langleyfoxall%2Freact-dynamic-data-table)
-[![npm](https://img.shields.io/npm/dt/@langleyfoxall/react-dynamic-data-table.svg)](https://npm-stat.com/charts.html?package=%40langleyfoxall%2Freact-dynamic-data-table)
+[![npm version](https://badge.fury.io/js/%40code-based%2Freact-dynamic-data-table.svg)](https://badge.fury.io/js/%40code-based%2Freact-dynamic-data-table)
+[![npm](https://img.shields.io/npm/dt/@code-based/react-dynamic-data-table.svg)](https://npm-stat.com/charts.html?package=%40code-based%2Freact-dynamic-data-table)
 
 
 This package provides a React Dynamic Data Table component that supports sortable columns,
@@ -12,17 +12,17 @@ pagination, field mapping, data manipulation, and more.
 You can install this package with either `npm` or `yarn` as shown below.
 
 ```bash
-npm install @langleyfoxall/react-dynamic-data-table
+npm install @code-based/react-dynamic-data-table
 ```
 
 ```bash
-yarn add @langleyfoxall/react-dynamic-data-table
+yarn add @code-based/react-dynamic-data-table
 ```
 
 Remember to import the `DynamicDataTable` component where it is needed.
 
 ```JSX
-import DynamicDataTable from "@langleyfoxall/react-dynamic-data-table";
+import DynamicDataTable from "@code-based/react-dynamic-data-table";
 ```
 
 ## Usage
@@ -46,7 +46,7 @@ The `rows` prop expects an array of objects, such as the following.
 ### Specifying a CSS class for the table
 
 By default tables are assigned the bootstrap `table` and `table-striped` CSS classes.
-If you need a different table style, you can override these defaults by providing the 
+If you need a different table style, you can override these defaults by providing the
 `className` prop:
 
 ```JSX
@@ -191,7 +191,7 @@ be pushed to the end of the ordered fields.
 ```JSX
 <DynamicDataTable
     rows={[
-        { id: 1, email: 'info@langleyfoxall.co.uk', name: 'Langley Foxall' }
+        { id: 1, email: 'info@codebased.co.uk', name: 'Codebased' }
     ]}
     fieldOrder={[
         'id', 'name'
@@ -206,7 +206,7 @@ Mixing strings and regex is also supported.
 ```JSX
 <DynamicDataTable
     rows={[
-        { id: 1, email: 'info@langleyfoxall.co.uk', first_name: 'Langley', last_name: 'Foxall' }
+        { id: 1, email: 'info@codebased.co.uk', first_name: 'Code', last_name: 'Based' }
     ]}
     fieldOrder={[
         'id', /_name/
@@ -229,7 +229,7 @@ it respects whatever unit is set.
 ```jsx
 <DynamicDataTable
     rows={[
-        { id: 1, email: 'info@langleyfoxall.co.uk', first_name: 'Langley', last_name: 'Foxall' }
+        { id: 1, email: 'info@codebased.co.uk', first_name: 'Code', last_name: 'Foxall' }
     ]}
     columnWidths={{
         // 10%
@@ -255,7 +255,7 @@ node into `orderByAscIcon` and `orderByDescIcon`.
 />
 ```
 
-You can optionally specify an icon to appear when a sortable field  is *not* the 
+You can optionally specify an icon to appear when a sortable field  is *not* the
 currently sorted field using the `orderByIcon` prop:
 
 ```JSX
@@ -511,7 +511,7 @@ For more complex interactions, such as supporting the ability to Middle-click, y
 #### Context Menus
 
 The ability to right click rows can be enabled by using `onContextMenu` and `rowRenderer`.
-In the example we will use our own [`@langleyfoxall/react-dynamic-context-menu`](https://github.com/langleyfoxall/react-dynamic-context-menu):
+In the example we will use our own [`@code-based/react-dynamic-context-menu`](https://github.com/langleyfoxall/react-dynamic-context-menu):
 
 ```JSX
 <DynamicDataTable
@@ -986,3 +986,16 @@ matching the predicate is given the CSS class `table-active`:
 <DynamicDataTable
     rowIsActive={(row) => row.id === 3}
 />
+```
+
+## Development
+
+### Linting
+
+This package uses [ESLint](https://eslint.org/) for linting of JS/X.  You can run ESLint at any time by executing `npm run-script lint-fix`.  Install the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) to get real-time linting in Visual Studio Code.
+
+These linters additionally run in continuous integration as a GitHub Action.
+
+### Releases
+
+To release a new version of this package, simply [create a new release](https://github.com/langleyfoxall/react-dynamic-data-table/releases/new).
