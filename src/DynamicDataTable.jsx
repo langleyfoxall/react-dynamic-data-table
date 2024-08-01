@@ -6,8 +6,6 @@ import DataRow from './Components/DataRow'
 import Pagination from './Components/Pagination'
 import PerPage from './Components/PerPage'
 
-import flatten from 'core-js/fn/array/flatten'
-
 class DynamicDataTable extends Component {
   constructor (props) {
     super(props)
@@ -190,7 +188,7 @@ class DynamicDataTable extends Component {
         orderedFields.push(field)
       }
 
-      return flatten(orderedFields)
+      return orderedFields.flat()
     }
 
     return fields
