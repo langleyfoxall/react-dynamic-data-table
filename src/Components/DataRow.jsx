@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 class DataRow extends Component {
   static noop () {
@@ -13,7 +14,7 @@ class DataRow extends Component {
   }
 
   render () {
-    const { row, fields, onClick, onMouseUp, onMouseDown, onContextMenu, rowIsActive } = this.props
+    const { row, fields, onClick, onMouseUp, onMouseDown, onContextMenu, rowIsActive, className } = this.props
 
     return (
       <tr
@@ -21,7 +22,7 @@ class DataRow extends Component {
         onMouseUp={e => onMouseUp(e, row)}
         onMouseDown={e => onMouseDown(e, row)}
         onContextMenu={e => onContextMenu(e, row)}
-        className={rowIsActive(row) ? 'table-active' : null}
+        className={classNames(className, { 'table-active': rowIsActive(row) })}
       >
         {this.renderCheckboxCell()}
         {fields.map(field => this.renderCell(field, row))}
@@ -234,7 +235,8 @@ DataRow.propTypes = {
   index: PropTypes.number.isRequired,
   fields: PropTypes.array,
   rowIsActive: PropTypes.bool,
-  disableCheckbox: PropTypes.bool
+  disableCheckbox: PropTypes.bool,
+  className: PropTypes.string
 }
 
 export default DataRow
